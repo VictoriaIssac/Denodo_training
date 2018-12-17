@@ -1,0 +1,3269 @@
+﻿ENTER SINGLE USER MODE;
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+# 0 ====================================================================
+
+# #######################################
+# DATABASE
+# #######################################
+DROP DATABASE IF EXISTS denodo_training;
+
+CREATE DATABASE denodo_training ''
+AUTHENTICATION LDAP denodo_training.ds_ldap
+USERBASE = 'CN=Users,DC=denodo,DC=loc'
+USERATTRIBUTENAME = 'sAMAccountName'
+USERSEARCH = '(&(objectClass=person))'
+ROLEBASE = 'OU=groups,DC=denodo,DC=loc'
+ROLEATTRIBUTENAME = 'cn'
+ROLESEARCH = '(member=@{USERDN})'
+ROLESSEARCHAUTHENTICATION;
+
+CONNECT DATABASE denodo_training;
+
+# #######################################
+# FOLDERS
+# #######################################
+CREATE OR REPLACE FOLDER '/01 - data sources' ;
+
+CREATE OR REPLACE FOLDER '/02 - base views' ;
+
+CREATE OR REPLACE FOLDER '/03 - derived views' ;
+
+CREATE OR REPLACE FOLDER '/06 - interfaces' ;
+
+CREATE OR REPLACE FOLDER '/07-associations' ;
+
+CREATE OR REPLACE FOLDER '/09 - data services' ;
+
+CREATE OR REPLACE FOLDER '/1 - connectivity' ;
+
+CREATE OR REPLACE FOLDER '/1 - connectivity/1 - data sources' ;
+
+CREATE OR REPLACE FOLDER '/1 - connectivity/2 - base views' ;
+
+CREATE OR REPLACE FOLDER '/2 - integration' ;
+
+# #######################################
+# LISTENERS JMS
+# #######################################
+# No listeners jms
+# #######################################
+# DATASOURCES
+# #######################################
+DROP DATASOURCE CUSTOM IF EXISTS ds_invoices CASCADE;
+
+CREATE DATASOURCE CUSTOM ds_invoices
+    FOLDER = '/01 - data sources'
+    CLASSNAME='com.denodo.vdb.contrib.wrapper.xls.ExcelWrapper';
+
+DROP DATASOURCE DF IF EXISTS ds_connections CASCADE;
+
+CREATE DATASOURCE DF ds_connections
+    FOLDER = '/01 - data sources'
+    ROUTE LOCAL 'LocalConnection' 'C:/Users/vissac/Documents/Oracle/DEN60EDU0112LAB01' FILENAMEPATTERN = '(.*)\.log'
+    TUPLEPATTERN = '\[(.+)Z\]\t([0-9\.]+)\t([a-zA-Z ]+)\t([^,]+),([0-2]+) \(Apache-Coyote/1.1: (.+)\) size:(.+)'
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = FALSE;
+
+DROP DATASOURCE DF IF EXISTS ds_connections_date CASCADE;
+
+CREATE DATASOURCE DF ds_connections_date
+    FOLDER = '/01 - data sources'
+    ROUTE LOCAL 'LocalConnection' 'C:/Users/vissac/Documents/Oracle/DEN60EDU0112LAB01/^DateRange("yyyy-mm-dd",@start_date,@end_date,"yyyymmdd").log' FILENAMEPATTERN = '(.*)\.log'
+    TUPLEPATTERN = '\[(.+)Z\]\t([0-9\.]+)\t([a-zA-Z ]+)\t([^,]+),([0-2]+) \(Apache-Coyote/1.1: (.+)\) size:(.+)'
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = FALSE;
+
+DROP DATASOURCE DF IF EXISTS ds_old_invoices CASCADE;
+
+CREATE DATASOURCE DF ds_old_invoices
+    FOLDER = '/1 - connectivity/1 - data sources'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET 'http://ariel.denodo.com/files/vdp/old_invoices/old_invoices.csv'
+    AUTHENTICATION OFF
+    PROXY OFF
+    COLUMNDELIMITER = ','
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = TRUE;
+
+DROP DATASOURCE DF IF EXISTS ds_salesforce_account CASCADE;
+
+CREATE DATASOURCE DF ds_salesforce_account
+    FOLDER = '/01 - data sources'
+    ROUTE LOCAL 'LocalConnection' 'C:/Users/vissac/Documents/DEV basics/DEN60EDU0117LAB01/account.csv'
+    COLUMNDELIMITER = ','
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = TRUE;
+
+DROP DATASOURCE DF IF EXISTS ds_salesforce_contact CASCADE;
+
+CREATE DATASOURCE DF ds_salesforce_contact
+    FOLDER = '/01 - data sources'
+    ROUTE LOCAL 'LocalConnection' 'C:/Users/vissac/Documents/DEV basics/DEN60EDU0117LAB01/contact.csv'
+    COLUMNDELIMITER = ','
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = TRUE;
+
+DROP DATASOURCE JDBC IF EXISTS ds_human_resources CASCADE;
+
+CREATE DATASOURCE JDBC ds_human_resources
+    FOLDER = '/01 - data sources'
+    DRIVERCLASSNAME = 'org.sqlite.JDBC'
+    DATABASEURI = 'jdbc:sqlite:C:\Users\vissac\Documents\DEV basics\DEN60EDU0120LAB01\DEN60EDU0120LAB01.db'
+    USERNAME = ''
+    USERPASSWORD = ''
+    CLASSPATH = 'C:\Users\vissac\Documents\sqlite-jdbc-3.23.1.jar'
+    DATABASENAME = 'Generic'
+    DATABASEVERSION = ''
+    FETCHSIZE = 1000
+    BATCHINSERTSIZE = 200
+    VALIDATIONQUERY = ''
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8;
+
+DROP DATASOURCE JDBC IF EXISTS ds_support_site CASCADE;
+
+CREATE DATASOURCE JDBC ds_support_site
+    FOLDER = '/01 - data sources'
+    DRIVERCLASSNAME = 'oracle.jdbc.OracleDriver'
+    DATABASEURI = 'jdbc:oracle:thin:@localhost:1521:xe'
+    USERNAME = 'incident_cc'
+    USERPASSWORD = '60RZd2jgAD3pVHjgWe89oGhObOzWuNEB' ENCRYPTED
+    CLASSPATH = 'oracle-11g'
+    DATABASENAME = 'oracle'
+    DATABASEVERSION = '11g'
+    FETCHSIZE = 1000
+    BATCHINSERTSIZE = 200
+    VALIDATIONQUERY = 'SELECT COUNT(*) FROM SYS.DUAL'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATAMOVEMENT_TARGET=true;
+
+DROP DATASOURCE JDBC IF EXISTS ds_web_orders CASCADE;
+
+CREATE DATASOURCE JDBC ds_web_orders
+    FOLDER = '/01 - data sources'
+    DRIVERCLASSNAME = 'oracle.jdbc.OracleDriver'
+    DATABASEURI = 'jdbc:oracle:thin:@localhost:1521:xe'
+    USERNAME = 'website_sys'
+    USERPASSWORD = 'vctN8CIuGwNG+yc1XkXmEA==' ENCRYPTED
+    CLASSPATH = 'oracle-11g'
+    DATABASENAME = 'oracle'
+    DATABASEVERSION = '11g'
+    FETCHSIZE = 1000
+    BATCHINSERTSIZE = 200
+    VALIDATIONQUERY = 'SELECT COUNT(*) FROM SYS.DUAL'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    PROPERTIES ('includeSynonyms'='false', 'remarksReporting'='false');
+
+DROP DATASOURCE JSON IF EXISTS ds_sales CASCADE;
+
+CREATE DATASOURCE JSON ds_sales
+    FOLDER = '/01 - data sources'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET 'http://localhost:8082/sales-ws/sales/'
+    HEADERS (
+        'Accept'='application/json', 
+        'Content-Type'='application/json'
+    )
+    AUTHENTICATION BASIC ( 
+      USER 'admin'
+      PASSWORD 'VZIMrn/3BWx9DypSVfgOMQ==' ENCRYPTED )
+    PROXY OFF;
+
+DROP DATASOURCE JSON IF EXISTS ds_sales_search CASCADE;
+
+CREATE DATASOURCE JSON ds_sales_search
+    FOLDER = '/01 - data sources'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' POST 'http://localhost:8082/sales-ws/sales/'
+    POSTBODY '\{
+^ExecuteIfIsNotNull("\"customerId\" : \"",@CID,"\",","\"customerId\" : null,")
+^ExecuteIfIsNotNull("\"employeeId\" : \"",@EID,"\",","\"employeeId\" : null,")
+^ExecuteIfIsNotNull("\"productId\" : \"",@PID,"\"","\"productId\" : null")
+\}'
+    MIME 'application/json'
+    HEADERS (
+        'Content-Type'='application/json', 
+        'Accept'='application/json'
+    )
+    AUTHENTICATION BASIC ( 
+      USER 'customer'
+      PASSWORD 'omBOAx4sMPf6zbvtoELts1Fj6XwbqzRr' ENCRYPTED )
+    PROXY OFF;
+
+DROP DATASOURCE LDAP IF EXISTS ds_active_directory CASCADE;
+
+CREATE DATASOURCE LDAP ds_active_directory
+    FOLDER = '/01 - data sources'
+    URI='ldap://localhost:10389/dc=denodo,dc=loc'
+    USERNAME='uid=admin,ou=system'
+    USERPASSWORD='EaxnDE7veXrAzJxxrynsRA==' ENCRYPTED
+    USEPAGING=TRUE
+    MAXPAGESIZE=1000
+    POOL_ENABLED = TRUE
+    DESCRIPTION='LDAP data source';
+
+DROP DATASOURCE LDAP IF EXISTS ds_active_directory_copy CASCADE;
+
+CREATE DATASOURCE LDAP ds_active_directory_copy
+    FOLDER = '/01 - data sources'
+    URI='ldap://ariel.denodo.com:389/DC=denodo,DC=loc'
+    USERNAME='DENODO\ldap'
+    USERPASSWORD='a3MS0wum9I28M9noM67Ax8cJLH1r1ks9' ENCRYPTED
+    USEPAGING=TRUE
+    MAXPAGESIZE=1000
+    POOL_ENABLED = TRUE
+    DESCRIPTION='LDAP data source';
+
+DROP DATASOURCE LDAP IF EXISTS ds_ldap CASCADE;
+
+CREATE DATASOURCE LDAP ds_ldap
+    FOLDER = '/01 - data sources'
+    URI='ldap://ariel.denodo.com:389/DC=denodo,DC=loc'
+    USERNAME='DENODO\ldap'
+    USERPASSWORD='VpEiMeHw2UTqfbtunqzpo0rxCxWJjJCH' ENCRYPTED
+    USEPAGING=FALSE
+    MAXPAGESIZE=1000
+    POOL_ENABLED = TRUE;
+
+DROP DATASOURCE ODBC IF EXISTS ds_call_center CASCADE;
+
+CREATE DATASOURCE ODBC ds_call_center
+    FOLDER = '/01 - data sources'
+    DSN = 'ds_call_center'
+    WITH PASS-THROUGH SESSION CREDENTIALS ( 
+        USERNAME = 'phone'
+        USERPASSWORD = 'AXsxyM2nXSWvDkJsdoI5ZQ==' ENCRYPTED
+    ) 
+    PROPERTIES = ''
+    CLASSPATH = 'jdbc-odbc'
+    DATABASENAME = 'ACCESS'
+    DATABASEVERSION = '04.00.0000'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'Select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8;
+
+DROP DATASOURCE WS IF EXISTS ds_product CASCADE;
+
+CREATE DATASOURCE WS ds_product
+    FOLDER = '/01 - data sources'
+    WSDLURI = 'http://localhost:8081/services/products-ws?wsdl'
+    CHECKCERTIFICATES 
+    MAXCONNECTIONS 50
+    CONNECTIONPOOLTIMEOUT 0
+    AUTHENTICATION WSS BASIC( 
+      USER 'product'
+      PASSWORD 'weQm7TtwBJMWx2pTSrMPJnuFjFbLqL3Y' ENCRYPTED )
+    PROXY OFF;
+
+# #######################################
+# DATABASE CONFIGURATION
+# #######################################
+ALTER DATABASE denodo_training
+  CHARSET DEFAULT;
+
+ALTER DATABASE denodo_training
+  CACHE OFF (
+    MAINTENANCE OFF
+    MAINTAINERPERIOD 21600
+    TIMETOLIVE NOEXPIRE
+    DATASOURCE DEFAULT
+  );
+
+# #######################################
+# WRAPPERS
+# #######################################
+DROP WRAPPER CUSTOM IF EXISTS ds_invoices CASCADE;
+
+CREATE WRAPPER CUSTOM ds_invoices
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_invoices
+    PARAMETERS (
+      'Type of file' = 'Excel 2007 or later (*.xlsx)',
+      'File location' = ROUTE LOCAL 'LocalConnection' 'C:/Users/vissac/Documents/DEV basics/DEN60EDU0107LAB01.zip' FILTER (UNZIP ),
+      'Extract data from all sheets' = true,
+      'Extract sheet name as a new column' = false,
+      'Start cell' = 'A4',
+      'Has headers' = true,
+      'Stream tuples' = true
+    )
+    OUTPUTSCHEMA (
+        invoice_id = 'invoice_id' : 'java.lang.Integer' (OPT) (sourcetypeid='4')  SORTABLE,
+        date_invoice = 'date_invoice' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        order_id = 'order_id' : 'java.lang.Integer' (OPT) (sourcetypeid='4')  SORTABLE,
+        date_placed = 'date_placed' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        date_delivered = 'date_delivered' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        date_closed = 'date_closed' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        first_name = 'first_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        last_name = 'last_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        email = 'email' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        address = 'address' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        country = 'country' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        postal_code = 'postal_code' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        phone = 'phone' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        amount = 'amount' : 'java.lang.Integer' (OPT) (sourcetypeid='4')  SORTABLE,
+        tax = 'tax' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE
+    );
+
+DROP WRAPPER DF IF EXISTS bv_conn_events CASCADE;
+
+CREATE WRAPPER DF bv_conn_events
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_connections
+    OUTPUTSCHEMA (
+        event_date = 'Column0' (OPT),
+        source_ip = 'Column1' (OPT),
+        device = 'Column2' (OPT),
+        path = 'Column3' (OPT),
+        http_code = 'Column4' (OPT),
+        content_type = 'Column5' (OPT),
+        size = 'Column6' (OPT)
+    );
+
+DROP WRAPPER DF IF EXISTS bv_old_invoices CASCADE;
+
+CREATE WRAPPER DF bv_old_invoices
+    FOLDER = '/1 - connectivity/2 - base views'
+    DATASOURCENAME=ds_old_invoices
+    OUTPUTSCHEMA (
+        invoice = 'invoice' (OPT),
+        email = 'email' (OPT),
+        date_closed = 'date_closed' (OPT),
+        order = 'order' (OPT),
+        cost = 'cost' (OPT),
+        name = 'name' (OPT),
+        surname = 'surname' (OPT),
+        country = 'country' (OPT),
+        address = 'address' (OPT),
+        postal_code = 'postal_code' (OPT),
+        phone = 'phone' (OPT)
+    );
+
+DROP WRAPPER DF IF EXISTS bv_sf_account CASCADE;
+
+CREATE WRAPPER DF bv_sf_account
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_salesforce_account
+    OUTPUTSCHEMA (
+        id = 'id' (OPT),
+        isdeleted = 'isdeleted' (OPT),
+        masterrecordid = 'masterrecordid' (OPT),
+        name = 'name' (OPT),
+        type = 'type' (OPT),
+        parentid = 'parentid' (OPT),
+        billingstreet = 'billingstreet' (OPT),
+        billingcity = 'billingcity' (OPT),
+        billingstate = 'billingstate' (OPT),
+        billingpostalcode = 'billingpostalcode' (OPT),
+        billingcountry = 'billingcountry' (OPT),
+        billinglatitude = 'billinglatitude' (OPT),
+        billinglongitude = 'billinglongitude' (OPT),
+        billingaddress = 'billingaddress' (OPT),
+        shippingstreet = 'shippingstreet' (OPT),
+        shippingcity = 'shippingcity' (OPT),
+        shippingstate = 'shippingstate' (OPT),
+        shippingpostalcode = 'shippingpostalcode' (OPT),
+        shippingcountry = 'shippingcountry' (OPT),
+        shippinglatitude = 'shippinglatitude' (OPT),
+        shippinglongitude = 'shippinglongitude' (OPT),
+        shippingaddress = 'shippingaddress' (OPT),
+        phone = 'phone' (OPT),
+        fax = 'fax' (OPT),
+        accountnumber = 'accountnumber' (OPT),
+        website = 'website' (OPT),
+        photourl = 'photourl' (OPT),
+        sic = 'sic' (OPT),
+        industry = 'industry' (OPT),
+        annualrevenue = 'annualrevenue' (OPT),
+        numberofemployees = 'numberofemployees' (OPT),
+        ownership = 'ownership' (OPT),
+        tickersymbol = 'tickersymbol' (OPT),
+        description = 'description' (OPT),
+        rating = 'rating' (OPT),
+        site = 'site' (OPT),
+        ownerid = 'ownerid' (OPT),
+        createddate = 'createddate' (OPT),
+        createdbyid = 'createdbyid' (OPT),
+        lastmodifieddate = 'lastmodifieddate' (OPT),
+        lastmodifiedbyid = 'lastmodifiedbyid' (OPT),
+        systemmodstamp = 'systemmodstamp' (OPT),
+        lastactivitydate = 'lastactivitydate' (OPT),
+        lastvieweddate = 'lastvieweddate' (OPT),
+        lastreferenceddate = 'lastreferenceddate' (OPT),
+        jigsaw = 'jigsaw' (OPT),
+        jigsawcompanyid = 'jigsawcompanyid' (OPT),
+        cleanstatus = 'cleanstatus' (OPT),
+        accountsource = 'accountsource' (OPT),
+        dunsnumber = 'dunsnumber' (OPT),
+        tradestyle = 'tradestyle' (OPT),
+        naicscode = 'naicscode' (OPT),
+        naicsdesc = 'naicsdesc' (OPT),
+        yearstarted = 'yearstarted' (OPT),
+        sicdesc = 'sicdesc' (OPT),
+        dandbcompanyid = 'dandbcompanyid' (OPT),
+        customerpriority__c = 'customerpriority__c' (OPT),
+        sla__c = 'sla__c' (OPT),
+        active__c = 'active__c' (OPT),
+        numberoflocations__c = 'numberoflocations__c' (OPT),
+        upsellopportunity__c = 'upsellopportunity__c' (OPT),
+        slaserialnumber__c = 'slaserialnumber__c' (OPT),
+        slaexpirationdate__c = 'slaexpirationdate__c' (OPT),
+        last_creation_date = 'last_creation_date' (OPT)
+    );
+
+DROP WRAPPER DF IF EXISTS bv_sf_contact CASCADE;
+
+CREATE WRAPPER DF bv_sf_contact
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_salesforce_contact
+    OUTPUTSCHEMA (
+        id = 'id' (OPT),
+        isdeleted = 'isdeleted' (OPT),
+        masterrecordid = 'masterrecordid' (OPT),
+        accountid = 'accountid' (OPT),
+        lastname = 'lastname' (OPT),
+        firstname = 'firstname' (OPT),
+        salutation = 'salutation' (OPT),
+        name = 'name' (OPT),
+        otherstreet = 'otherstreet' (OPT),
+        othercity = 'othercity' (OPT),
+        otherstate = 'otherstate' (OPT),
+        otherpostalcode = 'otherpostalcode' (OPT),
+        othercountry = 'othercountry' (OPT),
+        otherlatitude = 'otherlatitude' (OPT),
+        otherlongitude = 'otherlongitude' (OPT),
+        otheraddress = 'otheraddress' (OPT),
+        mailingstreet = 'mailingstreet' (OPT),
+        mailingcity = 'mailingcity' (OPT),
+        mailingstate = 'mailingstate' (OPT),
+        mailingpostalcode = 'mailingpostalcode' (OPT),
+        mailingcountry = 'mailingcountry' (OPT),
+        mailinglatitude = 'mailinglatitude' (OPT),
+        mailinglongitude = 'mailinglongitude' (OPT),
+        mailingaddress = 'mailingaddress' (OPT),
+        phone = 'phone' (OPT),
+        fax = 'fax' (OPT),
+        mobilephone = 'mobilephone' (OPT),
+        homephone = 'homephone' (OPT),
+        otherphone = 'otherphone' (OPT),
+        assistantphone = 'assistantphone' (OPT),
+        reportstoid = 'reportstoid' (OPT),
+        email = 'email' (OPT),
+        title = 'title' (OPT),
+        department = 'department' (OPT),
+        assistantname = 'assistantname' (OPT),
+        leadsource = 'leadsource' (OPT),
+        birthdate = 'birthdate' (OPT),
+        description = 'description' (OPT),
+        ownerid = 'ownerid' (OPT),
+        createddate = 'createddate' (OPT),
+        createdbyid = 'createdbyid' (OPT),
+        lastmodifieddate = 'lastmodifieddate' (OPT),
+        lastmodifiedbyid = 'lastmodifiedbyid' (OPT),
+        systemmodstamp = 'systemmodstamp' (OPT),
+        lastactivitydate = 'lastactivitydate' (OPT),
+        lastcurequestdate = 'lastcurequestdate' (OPT),
+        lastcuupdatedate = 'lastcuupdatedate' (OPT),
+        lastvieweddate = 'lastvieweddate' (OPT),
+        lastreferenceddate = 'lastreferenceddate' (OPT),
+        emailbouncedreason = 'emailbouncedreason' (OPT),
+        emailbounceddate = 'emailbounceddate' (OPT),
+        isemailbounced = 'isemailbounced' (OPT),
+        photourl = 'photourl' (OPT),
+        jigsaw = 'jigsaw' (OPT),
+        jigsawcontactid = 'jigsawcontactid' (OPT),
+        cleanstatus = 'cleanstatus' (OPT),
+        level__c = 'level__c' (OPT),
+        languages__c = 'languages__c' (OPT),
+        last_creation_date = 'last_creation_date' (OPT)
+    );
+
+DROP WRAPPER DF IF EXISTS ds_connections_date CASCADE;
+
+CREATE WRAPPER DF ds_connections_date
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_connections_date
+    OUTPUTSCHEMA (
+        end_date = 'end_date' (OBL) (DEFAULTVALUE='2016-01-07') EXTERN,
+        start_date = 'start_date' (OBL) (DEFAULTVALUE='2016-01-01') EXTERN,
+        event_date = 'Column0' (OPT),
+        source_ip = 'Column1' (OPT),
+        device = 'Column2' (OPT),
+        path = 'Column3' (OPT),
+        http_code = 'Column4' (OPT),
+        content_type = 'Column5' (OPT),
+        size = 'Column6' (OPT)
+    );
+
+DROP WRAPPER JDBC IF EXISTS bv_wo_customer CASCADE;
+
+CREATE WRAPPER JDBC bv_wo_customer
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_web_orders
+    SCHEMANAME='WEBSITE_SYS' 
+    RELATIONNAME='CUSTOMER' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3')  NOT NULL SORTABLE,
+        customer_code_internal = 'CUSTOMER_CODE_INTERNAL' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='20')  NOT NULL SORTABLE,
+        first_name = 'FIRST_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='50')  NOT NULL SORTABLE,
+        last_name = 'LAST_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='100')  SORTABLE,
+        email = 'EMAIL' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='50')  NOT NULL SORTABLE,
+        phone = 'PHONE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='20')  SORTABLE,
+        main_address = 'MAIN_ADDRESS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='200')  SORTABLE,
+        main_postcode = 'MAIN_POSTCODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='20')  SORTABLE,
+        main_country = 'MAIN_COUNTRY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='100')  SORTABLE,
+        registered_date = 'REGISTERED_DATE' :'java.sql.Timestamp' (OPT) (sourcetyperadix='10', sourcetypename='TIMESTAMP(6)', sourcetypeid='93', sourcetypedecimals='6', sourcetypesize='11')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'CUSTOMER_PK' PRIMARY KEY ( 'ID' , 'CUSTOMER_CODE_INTERNAL' )
+    INDEX 'CUSTOMER_PK' CLUSTER UNIQUE PRIMARY ( 'ID' , 'CUSTOMER_CODE_INTERNAL' );
+
+DROP WRAPPER JDBC IF EXISTS bv_wo_distance_from_storage CASCADE;
+
+CREATE WRAPPER JDBC bv_wo_distance_from_storage
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_web_orders
+    SQLSENTENCE='select
+       LATITUDE as lat_storage, LONGITUDE as lon_storage,
+       ID as storage_id,
+       (NVL(6387.7,0)
+       * ACOS((sin(NVL(@lat_input,0) / 57.29577951)
+       * SIN(NVL(LATITUDE,0) / 57.29577951))
+       + (COS(NVL(@lat_input,0) / 57.29577951)
+       * COS(NVL(LATITUDE,0) / 57.29577951)
+       * COS(NVL(LONGITUDE,0) / 57.29577951
+       - NVL(@lon_input,0)/ 57.29577951)))) as distance
+from
+      STORAGES
+order by
+      distance asc'   
+    OUTPUTSCHEMA (
+        lat_storage = 'LAT_STORAGE' :'java.math.BigDecimal' (sourcetypename='NUMBER', sourcetypeid='2', sourcetypedecimals='10', sourcetypesize='20')  SORTABLE NOT UPDATEABLE,
+        lon_storage = 'LON_STORAGE' :'java.math.BigDecimal' (sourcetypename='NUMBER', sourcetypeid='2', sourcetypedecimals='10', sourcetypesize='20')  SORTABLE NOT UPDATEABLE,
+        storage_id = 'STORAGE_ID' :'java.lang.Integer' (sourcetypename='NUMBER', sourcetypeid='2')  NOT NULL SORTABLE NOT UPDATEABLE,
+        distance = 'DISTANCE' :'java.lang.Integer' (sourcetypename='NUMBER', sourcetypeid='2', sourcetypedecimals='0')  SORTABLE NOT UPDATEABLE,
+        lat_input = 'LAT_INPUT' :'java.lang.String' (OBL) (DEFAULTVALUE='0')  EXTERN SORTABLE,
+        lon_input = 'LON_INPUT' :'java.lang.String' (OBL) (DEFAULTVALUE='0')  EXTERN SORTABLE
+    );
+
+DROP WRAPPER JDBC IF EXISTS bv_wo_order_item CASCADE;
+
+CREATE WRAPPER JDBC bv_wo_order_item
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_web_orders
+    SCHEMANAME='WEBSITE_SYS' 
+    RELATIONNAME='ORDER_ITEM' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3')  NOT NULL SORTABLE,
+        order_id = 'ORDER_ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3')  NOT NULL SORTABLE,
+        product_id = 'PRODUCT_ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'ORDER_ITEM_PK' PRIMARY KEY ( 'ID' )
+    INDEX 'ORDER_ITEM_PK' CLUSTER UNIQUE PRIMARY ( 'ID' );
+
+DROP WRAPPER JDBC IF EXISTS bv_wo_orders CASCADE;
+
+CREATE WRAPPER JDBC bv_wo_orders
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_web_orders
+    SCHEMANAME='WEBSITE_SYS' 
+    RELATIONNAME='ORDERS' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3')  NOT NULL SORTABLE,
+        customer_code = 'CUSTOMER_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='20')  NOT NULL SORTABLE,
+        status = 'STATUS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='20')  NOT NULL SORTABLE,
+        date_placed = 'DATE_PLACED' :'java.sql.Timestamp' (OPT) (sourcetyperadix='10', sourcetypename='TIMESTAMP(6)', sourcetypeid='93', sourcetypedecimals='6', sourcetypesize='11')  SORTABLE,
+        date_delivered = 'DATE_DELIVERED' :'java.sql.Timestamp' (OPT) (sourcetyperadix='10', sourcetypename='TIMESTAMP(6)', sourcetypeid='93', sourcetypedecimals='6', sourcetypesize='11')  SORTABLE,
+        date_closed = 'DATE_CLOSED' :'java.sql.Timestamp' (OPT) (sourcetyperadix='10', sourcetypename='TIMESTAMP(6)', sourcetypeid='93', sourcetypedecimals='6', sourcetypesize='11')  SORTABLE
+    )
+    CONSTRAINT 'ORDERS_PK' PRIMARY KEY ( 'ID' )
+    INDEX 'ORDERS_PK' CLUSTER UNIQUE PRIMARY ( 'ID' );
+
+DROP WRAPPER JDBC IF EXISTS bv_wo_stock CASCADE;
+
+CREATE WRAPPER JDBC bv_wo_stock
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_web_orders
+    SCHEMANAME='WEBSITE_SYS' 
+    RELATIONNAME='STOCK' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3')  NOT NULL SORTABLE,
+        product_id = 'PRODUCT_ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3')  NOT NULL SORTABLE,
+        distribution_code = 'DISTRIBUTION_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='100')  NOT NULL SORTABLE,
+        storage_id = 'STORAGE_ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'STOCK_PK' PRIMARY KEY ( 'ID' )
+    INDEX 'STOCK_PK' CLUSTER UNIQUE PRIMARY ( 'ID' );
+
+DROP WRAPPER JDBC IF EXISTS bv_wo_storages CASCADE;
+
+CREATE WRAPPER JDBC bv_wo_storages
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_web_orders
+    SCHEMANAME='WEBSITE_SYS' 
+    RELATIONNAME='STORAGES' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3')  NOT NULL SORTABLE,
+        address = 'ADDRESS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='150')  SORTABLE,
+        city = 'CITY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='50')  SORTABLE,
+        postal_code = 'POSTAL_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='20')  SORTABLE,
+        country = 'COUNTRY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='70')  SORTABLE,
+        country_code = 'COUNTRY_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypesize='20')  SORTABLE,
+        latitude = 'LATITUDE' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3', sourcetypedecimals='10', sourcetypesize='20')  SORTABLE,
+        longitude = 'LONGITUDE' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3', sourcetypedecimals='10', sourcetypesize='20')  SORTABLE
+    )
+    CONSTRAINT 'STORAGES_PK' PRIMARY KEY ( 'ID' )
+    INDEX 'STORAGES_PK' CLUSTER UNIQUE PRIMARY ( 'ID' );
+
+DROP WRAPPER JDBC IF EXISTS countries CASCADE;
+
+CREATE WRAPPER JDBC countries
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='COUNTRIES' 
+    OUTPUTSCHEMA (
+        country_id = 'COUNTRY_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='CHAR(2)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        country_name = 'COUNTRY_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(40)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        region_id = 'REGION_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'COUNTRY_C_ID_PK' PRIMARY KEY ( 'COUNTRY_ID' )
+    CONSTRAINT 'COUNTR_REG_FK' FOREIGN KEY ( 'REGION_ID' ) 
+    REFERENCES 'REGIONS'( 'REGION_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    INDEX 'sqlite_autoindex_COUNTRIES_1' OTHER UNIQUE PRIMARY ( 'COUNTRY_ID' );
+
+DROP WRAPPER JDBC IF EXISTS departments CASCADE;
+
+CREATE WRAPPER JDBC departments
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='DEPARTMENTS' 
+    OUTPUTSCHEMA (
+        department_id = 'DEPARTMENT_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(4)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        department_name = 'DEPARTMENT_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(30)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        location_id = 'LOCATION_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(4)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        manager_id = 'MANAGER_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(6)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'DEPT_ID_PK' PRIMARY KEY ( 'DEPARTMENT_ID' )
+    FOREIGN KEY ( 'MANAGER_ID' ) 
+    REFERENCES 'EMPLOYEES'( 'EMPLOYEE_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    CONSTRAINT 'DEPT_LOC_FK' FOREIGN KEY ( 'LOCATION_ID' ) 
+    REFERENCES 'LOCATIONS'( 'LOCATION_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    INDEX 'sqlite_autoindex_DEPARTMENTS_1' OTHER UNIQUE PRIMARY ( 'DEPARTMENT_ID' );
+
+DROP WRAPPER JDBC IF EXISTS employees CASCADE;
+
+CREATE WRAPPER JDBC employees
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='EMPLOYEES' 
+    OUTPUTSCHEMA (
+        employee_id = 'EMPLOYEE_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(6)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        first_name = 'FIRST_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(20)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        last_name = 'LAST_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(25)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        email = 'EMAIL' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(50)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        phone_number = 'PHONE_NUMBER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(20)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        hire_date = 'HIRE_DATE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='DATE', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL SORTABLE,
+        job_id = 'JOB_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(10)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        salary = 'SALARY' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(8,2)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        commission_pct = 'COMMISSION_PCT' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(2,2)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        manager_id = 'MANAGER_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(6)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        department_id = 'DEPARTMENT_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(4)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'EMP_EMP_ID_PK' PRIMARY KEY ( 'EMPLOYEE_ID' )
+    CONSTRAINT 'EMP_DEPT_FK' FOREIGN KEY ( 'DEPARTMENT_ID' ) 
+    REFERENCES 'DEPARTMENTS'( 'DEPARTMENT_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    CONSTRAINT 'EMP_MANAGER_FK' FOREIGN KEY ( 'MANAGER_ID' ) 
+    REFERENCES 'EMPLOYEES'( 'EMPLOYEE_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    CONSTRAINT 'EMP_JOB_FK' FOREIGN KEY ( 'JOB_ID' ) 
+    REFERENCES 'JOBS'( 'JOB_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    INDEX 'sqlite_autoindex_EMPLOYEES_2' OTHER UNIQUE ( 'EMAIL' )
+    INDEX 'sqlite_autoindex_EMPLOYEES_1' OTHER UNIQUE PRIMARY ( 'EMPLOYEE_ID' );
+
+DROP WRAPPER JDBC IF EXISTS jobs CASCADE;
+
+CREATE WRAPPER JDBC jobs
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='JOBS' 
+    OUTPUTSCHEMA (
+        job_id = 'JOB_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(10)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        job_title = 'JOB_TITLE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(35)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        min_salary = 'MIN_SALARY' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(6)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        max_salary = 'MAX_SALARY' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(6)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'JOB_ID_PK' PRIMARY KEY ( 'JOB_ID' )
+    INDEX 'sqlite_autoindex_JOBS_1' OTHER UNIQUE PRIMARY ( 'JOB_ID' );
+
+DROP WRAPPER JDBC IF EXISTS locations CASCADE;
+
+CREATE WRAPPER JDBC locations
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='LOCATIONS' 
+    OUTPUTSCHEMA (
+        location_id = 'LOCATION_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(4)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        street_address = 'STREET_ADDRESS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(40)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        postal_code = 'POSTAL_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(12)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        city = 'CITY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(30)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        state_province = 'STATE_PROVINCE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(25)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        country_id = 'COUNTRY_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='CHAR(2)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'LOC_ID_PK' PRIMARY KEY ( 'LOCATION_ID' )
+    CONSTRAINT 'LOC_C_ID_FK' FOREIGN KEY ( 'COUNTRY_ID' ) 
+    REFERENCES 'COUNTRIES'( 'COUNTRY_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    INDEX 'sqlite_autoindex_LOCATIONS_1' OTHER UNIQUE PRIMARY ( 'LOCATION_ID' );
+
+DROP WRAPPER JDBC IF EXISTS pr_get_all_service_request CASCADE;
+
+CREATE WRAPPER JDBC pr_get_all_service_request
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_support_site
+    PACKAGENAME='PKG_SUPPORT_DB' 
+    PROCEDURENAME='PR_GET_ALL_SERVICE_REQUEST' 
+    OUTPUTSCHEMA (
+        global_case_id = 'GLOBAL_CASE_ID' :'java.math.BigDecimal' (sourcetypename='NUMBER', sourcetypeid='2')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        sr_description = 'SR_DESCRIPTION' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='2000')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        customer_ip = 'CUSTOMER_IP' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='100')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        case_summary = 'CASE_SUMMARY' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='2000')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        customer_address = 'CUSTOMER_ADDRESS' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='100')  NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        status_description = 'STATUS_DESCRIPTION' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='200')  NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        customer_phone = 'CUSTOMER_PHONE' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='20')  NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        case_closed_date = 'CASE_CLOSED_DATE' :'java.sql.Timestamp' (sourcetypename='TIMESTAMP', sourcetypeid='93', sourcetypedecimals='6', sourcetypesize='0')  NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        agent_id = 'AGENT_ID' :'java.math.BigDecimal' (sourcetypename='NUMBER', sourcetypeid='2')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        customer_job_title = 'CUSTOMER_JOB_TITLE' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='50')  NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        customer_name = 'CUSTOMER_NAME' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='50')  NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        status_code = 'STATUS_CODE' :'java.math.BigDecimal' (sourcetypename='NUMBER', sourcetypeid='2', sourcetypedecimals='0', sourcetypesize='38')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        sr_date = 'SR_DATE' :'java.sql.Timestamp' (sourcetypename='TIMESTAMP', sourcetypeid='93', sourcetypedecimals='6', sourcetypesize='0')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        customer_code = 'CUSTOMER_CODE' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='20')  NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        agent_code = 'AGENT_CODE' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='20')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        case_creation_date = 'CASE_CREATION_DATE' :'java.sql.Timestamp' (sourcetypename='TIMESTAMP', sourcetypeid='93', sourcetypedecimals='6', sourcetypesize='0')  NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD',
+        agent_name = 'AGENT_NAME' :'java.lang.String' (sourcetypename='VARCHAR2', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='100')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=4 FROMFLATTEN='O_RECORD'
+    );
+
+DROP WRAPPER JDBC IF EXISTS pr_get_service_request_by_id CASCADE;
+
+CREATE WRAPPER JDBC pr_get_service_request_by_id
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_support_site
+    PACKAGENAME='PKG_SUPPORT_DB' 
+    PROCEDURENAME='PR_GET_SERVICE_REQUEST_BY_ID' 
+    OUTPUTSCHEMA (
+        i_case_id = 'I_CASE_ID' :'java.math.BigDecimal' (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3', sourcetypesize='22')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=1,
+        o_sr_date = 'O_SR_DATE' :'java.sql.Timestamp' (sourcetyperadix='10', sourcetypename='TIMESTAMP', sourcetypeid='93', sourcetypesize='6')  NOT NULL NOT SORTABLE PARAMINDEX=2 PARAMTYPE=4,
+        o_sr_description = 'O_SR_DESCRIPTION' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=3 PARAMTYPE=4,
+        o_customer_ip = 'O_CUSTOMER_IP' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=4 PARAMTYPE=4,
+        o_global_case_id = 'O_GLOBAL_CASE_ID' :'java.math.BigDecimal' (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3', sourcetypesize='22')  NOT NULL NOT SORTABLE PARAMINDEX=5 PARAMTYPE=4,
+        o_case_creation_date = 'O_CASE_CREATION_DATE' :'java.sql.Timestamp' (sourcetyperadix='10', sourcetypename='TIMESTAMP', sourcetypeid='93', sourcetypesize='6')  NOT NULL NOT SORTABLE PARAMINDEX=6 PARAMTYPE=4,
+        o_case_closed_date = 'O_CASE_CLOSED_DATE' :'java.sql.Timestamp' (sourcetyperadix='10', sourcetypename='TIMESTAMP', sourcetypeid='93', sourcetypesize='6')  NOT NULL NOT SORTABLE PARAMINDEX=7 PARAMTYPE=4,
+        o_case_summary = 'O_CASE_SUMMARY' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=8 PARAMTYPE=4,
+        o_status_code = 'O_STATUS_CODE' :'java.math.BigDecimal' (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3', sourcetypesize='22')  NOT NULL NOT SORTABLE PARAMINDEX=9 PARAMTYPE=4,
+        o_status_description = 'O_STATUS_DESCRIPTION' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=10 PARAMTYPE=4,
+        o_customer_code = 'O_CUSTOMER_CODE' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=11 PARAMTYPE=4,
+        o_customer_name = 'O_CUSTOMER_NAME' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=12 PARAMTYPE=4,
+        o_customer_address = 'O_CUSTOMER_ADDRESS' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=13 PARAMTYPE=4,
+        o_customer_phone = 'O_CUSTOMER_PHONE' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=14 PARAMTYPE=4,
+        o_customer_job_title = 'O_CUSTOMER_JOB_TITLE' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=15 PARAMTYPE=4,
+        o_agent_id = 'O_AGENT_ID' :'java.math.BigDecimal' (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='3', sourcetypesize='22')  NOT NULL NOT SORTABLE PARAMINDEX=16 PARAMTYPE=4,
+        o_agent_code = 'O_AGENT_CODE' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=17 PARAMTYPE=4,
+        o_agent_name = 'O_AGENT_NAME' :'java.lang.String' (sourcetyperadix='10', sourcetypename='VARCHAR2', sourcetypeid='12')  NOT NULL NOT SORTABLE PARAMINDEX=18 PARAMTYPE=4
+    );
+
+DROP WRAPPER JDBC IF EXISTS regions CASCADE;
+
+CREATE WRAPPER JDBC regions
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='REGIONS' 
+    OUTPUTSCHEMA (
+        region_id = 'REGION_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        region_name = 'REGION_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(25)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'REG_ID_PK' PRIMARY KEY ( 'REGION_ID' )
+    INDEX 'sqlite_autoindex_REGIONS_1' OTHER UNIQUE PRIMARY ( 'REGION_ID' );
+
+DROP WRAPPER JSON IF EXISTS bv_sales CASCADE;
+
+CREATE WRAPPER JSON bv_sales
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_sales
+    TUPLEROOT '/JSONFile'
+    OUTPUTSCHEMA (jsonfile = 'JSONFile' : REGISTER OF (
+        salesdata = 'salesData' : ARRAY OF (
+            salesdata = 'salesData' : REGISTER OF (
+                productid = 'productId' : 'java.lang.String',
+                sales = 'sales' : ARRAY OF (
+                    sales = 'sales' : REGISTER OF (
+                        saleid = 'saleId' : 'java.lang.String',
+                        productid = 'productId' : 'java.lang.String',
+                        employeeid = 'employeeId' : 'java.lang.String',
+                        customerid = 'customerId' : 'java.lang.String',
+                        saledate = 'saleDate' : 'java.lang.String',
+                        bundleamount = 'bundleAmount' : 'java.lang.String',
+                        productsaleprice = 'productSalePrice' : 'java.lang.String',
+                        totalprice = 'totalPrice' : 'java.lang.String'
+                    )
+                )
+            )
+        )
+    )
+    );
+
+DROP WRAPPER JSON IF EXISTS bv_sales_search CASCADE;
+
+CREATE WRAPPER JSON bv_sales_search
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_sales_search
+    TUPLEROOT '/JSONFile/salesData/sales'
+    OUTPUTSCHEMA (jsonfile = 'JSONFile' : REGISTER OF (
+        cid = 'CID' : 'java.lang.String' (OBL) (DEFAULTVALUE='00158000002dVSjAAM') EXTERN,
+        eid = 'EID' : 'java.lang.String' (OBL) (DEFAULTVALUE='48') EXTERN,
+        pid = 'PID' : 'java.lang.String' (OBL) (DEFAULTVALUE='2') EXTERN,
+        productid_0 = 'JSONFile.salesData.productId' : 'java.lang.String',
+        saleid = 'JSONFile.salesData.sales.saleId' : 'java.lang.String',
+        productid = 'JSONFile.salesData.sales.productId' : 'java.lang.String',
+        employeeid = 'JSONFile.salesData.sales.employeeId' : 'java.lang.String',
+        customerid = 'JSONFile.salesData.sales.customerId' : 'java.lang.String',
+        saledate = 'JSONFile.salesData.sales.saleDate' : 'java.lang.String',
+        bundleamount = 'JSONFile.salesData.sales.bundleAmount' : 'java.lang.String',
+        productsaleprice = 'JSONFile.salesData.sales.productSalePrice' : 'java.lang.String',
+        totalprice = 'JSONFile.salesData.sales.totalPrice' : 'java.lang.String'
+    )
+    );
+
+DROP WRAPPER JSON IF EXISTS bv_sales_search_array CASCADE;
+
+CREATE WRAPPER JSON bv_sales_search_array
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_sales_search
+    TUPLEROOT '/JSONFile'
+    OUTPUTSCHEMA (jsonfile = 'JSONFile' : REGISTER OF (
+        cid = 'CID' : 'java.lang.String' (OBL) (DEFAULTVALUE='00158000002dVSjAAM') EXTERN,
+        eid = 'EID' : 'java.lang.String' (OBL) (DEFAULTVALUE='48') EXTERN,
+        pid = 'PID' : 'java.lang.String' (OBL) (DEFAULTVALUE='2') EXTERN,
+        salesdata = 'salesData' : ARRAY OF (
+            salesdata = 'salesData' : REGISTER OF (
+                productid = 'productId' : 'java.lang.String',
+                sales = 'sales' : ARRAY OF (
+                    sales = 'sales' : REGISTER OF (
+                        saleid = 'saleId' : 'java.lang.String',
+                        productid = 'productId' : 'java.lang.String',
+                        employeeid = 'employeeId' : 'java.lang.String',
+                        customerid = 'customerId' : 'java.lang.String',
+                        saledate = 'saleDate' : 'java.lang.String',
+                        bundleamount = 'bundleAmount' : 'java.lang.String',
+                        productsaleprice = 'productSalePrice' : 'java.lang.String',
+                        totalprice = 'totalPrice' : 'java.lang.String'
+                    )
+                )
+            )
+        )
+    )
+    );
+
+DROP WRAPPER LDAP IF EXISTS bv_ad_computer CASCADE;
+
+CREATE WRAPPER LDAP bv_ad_computer
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_active_directory
+    OBJECTCLASSES='computer'
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        cn = 'cn' : ARRAY OF (
+            cn = 'CN' : REGISTER OF (
+                cn = 'cn' : 'java.lang.String' (OPT)
+            )
+        ),
+        description = 'description' : ARRAY OF (
+            description = 'DESCRIPTION' : REGISTER OF (
+                description = 'description' : 'java.lang.String' (OPT)
+            )
+        ),
+        protocolinformation = 'protocolInformation' : ARRAY OF (
+            protocolinformation = 'protocolInformation' : REGISTER OF (
+                protocolinformation = 'protocolInformation' : 'java.lang.String' (OPT)
+            )
+        ),
+        serialnumber = 'serialNumber' : ARRAY OF (
+            serialnumber = 'serialNumber' : REGISTER OF (
+                serialnumber = 'serialNumber' : 'java.lang.String' (OPT)
+            )
+        ),
+        supportedalgorithms = 'supportedAlgorithms' : ARRAY OF (
+            supportedalgorithms = 'supportedAlgorithms' : REGISTER OF (
+                supportedalgorithms = 'supportedAlgorithms' : 'java.lang.String' (OPT)
+            )
+        )
+    )
+    SOURCECONFIGURATION (
+        datainorderfieldslist = ()
+    );
+
+DROP WRAPPER LDAP IF EXISTS bv_ad_user CASCADE;
+
+CREATE WRAPPER LDAP bv_ad_user
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_active_directory
+    OBJECTCLASSES='person', 'uidObject'
+    LDAPEXPRESSION='(&(objectClass=user)(objectClass=person) (!(objectClass=computer)))'   
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        cn = 'cn' : ARRAY OF (
+            cn = 'CN' : REGISTER OF (
+                cn = 'cn' : 'java.lang.String'
+            )
+        ),
+        distinguishedname = 'distinguishedName' : ARRAY OF (
+            distinguishedname = 'distinguishedName' : REGISTER OF (
+                distinguishedname = 'distinguishedName' : 'java.lang.String'
+            )
+        ),
+        givenname = 'givenName' : ARRAY OF (
+            givenname = 'givenName' : REGISTER OF (
+                givenname = 'givenName' : 'java.lang.String'
+            )
+        ),
+        mail = 'mail' : ARRAY OF (
+            mail = 'MAIL' : REGISTER OF (
+                mail = 'mail' : 'java.lang.String'
+            )
+        ),
+        sn = 'sn' : ARRAY OF (
+            sn = 'SN' : REGISTER OF (
+                sn = 'sn' : 'java.lang.String'
+            )
+        ),
+        uid = 'uid' : ARRAY OF (
+            uid = 'UID' : REGISTER OF (
+                uid = 'uid' : 'java.lang.String'
+            )
+        )
+    );
+
+DROP WRAPPER LDAP IF EXISTS bv_group CASCADE;
+
+CREATE WRAPPER LDAP bv_group
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_active_directory_copy
+    OBJECTCLASSES='top'
+    LDAPEXPRESSION='(&(objectclass=group))'   
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        cn = 'cn' : 'java.lang.String',
+        distinguishedname = 'distinguishedName' : 'java.lang.String',
+        objectcategory = 'objectCategory' : 'java.lang.String'
+    );
+
+DROP WRAPPER LDAP IF EXISTS bv_user CASCADE;
+
+CREATE WRAPPER LDAP bv_user
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_active_directory_copy
+    OBJECTCLASSES='user'
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        displayname = 'displayName' : 'java.lang.String' (OPT),
+        memberof = 'memberOf' : ARRAY OF (
+            memberof = 'memberOf' : REGISTER OF (
+                memberof = 'memberOf' : 'java.lang.String' (OPT)
+            )
+        ),
+        samaccountname = 'sAMAccountName' : 'java.lang.String' (OPT),
+        userprincipalname = 'userPrincipalName' : 'java.lang.String' (OPT)
+    );
+
+DROP WRAPPER ODBC IF EXISTS bv_cc_agent CASCADE;
+
+CREATE WRAPPER ODBC bv_cc_agent
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_call_center
+    SCHEMANAME='calltracking.mdb' 
+    RELATIONNAME='agent' 
+    OUTPUTSCHEMA (
+    agent_id = 'agent_id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='COUNTER', sourcetypeid='4', sourcetypedecimals='0', sourcetypesize='10')  NOT NULL NOT SORTABLE,
+    agent_code = 'agent_code' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='20')  SORTABLE,
+    agent_name = 'agent_name' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='150')  SORTABLE
+    );
+
+DROP WRAPPER ODBC IF EXISTS bv_cc_case_definition CASCADE;
+
+CREATE WRAPPER ODBC bv_cc_case_definition
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_call_center
+    SCHEMANAME='calltracking.mdb' 
+    RELATIONNAME='case_definition' 
+    OUTPUTSCHEMA (
+    case_id = 'case_id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='COUNTER', sourcetypeid='4', sourcetypedecimals='0', sourcetypesize='10')  NOT NULL NOT SORTABLE,
+    date_raised = 'date_raised' :'java.sql.Timestamp' (OPT) (sourcetypename='DATETIME', sourcetypeid='93', sourcetypedecimals='0', sourcetypesize='19')  NOT SORTABLE,
+    date_closed = 'date_closed' :'java.sql.Timestamp' (OPT) (sourcetypename='DATETIME', sourcetypeid='93', sourcetypedecimals='0', sourcetypesize='19')  NOT SORTABLE,
+    case_status = 'case_status' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='2', sourcetypedecimals='0', sourcetypesize='18')  SORTABLE,
+    case_summary = 'case_summary' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='250')  SORTABLE,
+    case_comments = 'case_comments' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='250')  SORTABLE,
+    customer_code = 'customer_code' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='20')  SORTABLE
+    );
+
+DROP WRAPPER ODBC IF EXISTS bv_cc_customer CASCADE;
+
+CREATE WRAPPER ODBC bv_cc_customer
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_call_center
+    SCHEMANAME='calltracking.mdb' 
+    RELATIONNAME='customer' 
+    OUTPUTSCHEMA (
+    customer_id = 'customer_id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='COUNTER', sourcetypeid='4', sourcetypedecimals='0', sourcetypesize='10')  NOT NULL NOT SORTABLE,
+    customer_name = 'customer_name' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='150')  SORTABLE,
+    customer_address = 'customer_address' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='250')  SORTABLE,
+    phone_number = 'phone_number' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='20')  SORTABLE,
+    customer_code = 'customer_code' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='20')  SORTABLE,
+    job_title = 'job_title' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='50')  SORTABLE,
+    other_details = 'other_details' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='250')  SORTABLE
+    );
+
+DROP WRAPPER ODBC IF EXISTS bv_cc_problem CASCADE;
+
+CREATE WRAPPER ODBC bv_cc_problem
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_call_center
+    SCHEMANAME='calltracking.mdb' 
+    RELATIONNAME='problem' 
+    OUTPUTSCHEMA (
+    problem_code = 'problem_code' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='COUNTER', sourcetypeid='4', sourcetypedecimals='0', sourcetypesize='10')  NOT NULL NOT SORTABLE,
+    problem_description = 'problem_description' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='250')  SORTABLE
+    );
+
+DROP WRAPPER ODBC IF EXISTS bv_cc_service_call CASCADE;
+
+CREATE WRAPPER ODBC bv_cc_service_call
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_call_center
+    SCHEMANAME='calltracking.mdb' 
+    RELATIONNAME='service_call' 
+    OUTPUTSCHEMA (
+    call_id = 'call_id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='COUNTER', sourcetypeid='4', sourcetypedecimals='0', sourcetypesize='10')  NOT NULL NOT SORTABLE,
+    location_id = 'location_id' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='2', sourcetypedecimals='0', sourcetypesize='18')  SORTABLE,
+    problem_code = 'problem_code' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='2', sourcetypedecimals='0', sourcetypesize='18')  SORTABLE,
+    status_code = 'status_code' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='2', sourcetypedecimals='0', sourcetypesize='18')  SORTABLE,
+    date_ticket_issued = 'date_ticket_issued' :'java.sql.Timestamp' (OPT) (sourcetypename='DATETIME', sourcetypeid='93', sourcetypedecimals='0', sourcetypesize='19')  NOT SORTABLE,
+    date_call_received = 'date_call_received' :'java.sql.Timestamp' (OPT) (sourcetypename='DATETIME', sourcetypeid='93', sourcetypedecimals='0', sourcetypesize='19')  NOT SORTABLE,
+    other_details = 'other_details' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='250')  SORTABLE,
+    caller_phone = 'caller_phone' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='20')  SORTABLE,
+    case_id = 'case_id' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='2', sourcetypedecimals='0', sourcetypesize='18')  SORTABLE,
+    agent_id = 'agent_id' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='2', sourcetypedecimals='0', sourcetypesize='18')  SORTABLE,
+    customer_code = 'customer_code' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='30')  SORTABLE
+    );
+
+DROP WRAPPER ODBC IF EXISTS bv_cc_service_location CASCADE;
+
+CREATE WRAPPER ODBC bv_cc_service_location
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_call_center
+    SCHEMANAME='calltracking.mdb' 
+    RELATIONNAME='service_location' 
+    OUTPUTSCHEMA (
+    id = 'id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='COUNTER', sourcetypeid='4', sourcetypedecimals='0', sourcetypesize='10')  NOT NULL NOT SORTABLE,
+    location_id = 'location_id' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='2', sourcetypedecimals='0', sourcetypesize='18')  SORTABLE,
+    customer_id = 'customer_id' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='2', sourcetypedecimals='0', sourcetypesize='18')  SORTABLE,
+    business_name = 'business_name' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='50')  SORTABLE,
+    service_location = 'service_location' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='50')  SORTABLE,
+    other_details = 'other_details' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='250')  SORTABLE
+    );
+
+DROP WRAPPER ODBC IF EXISTS bv_cc_status_code CASCADE;
+
+CREATE WRAPPER ODBC bv_cc_status_code
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_call_center
+    SCHEMANAME='calltracking.mdb' 
+    RELATIONNAME='status_code' 
+    OUTPUTSCHEMA (
+    code_id = 'code_id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='COUNTER', sourcetypeid='4', sourcetypedecimals='0', sourcetypesize='10')  NOT NULL NOT SORTABLE,
+    code_description = 'code_description' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='250')  SORTABLE
+    );
+
+DROP WRAPPER WS IF EXISTS bv_get_products_by_category CASCADE;
+
+CREATE WRAPPER WS bv_get_products_by_category
+    FOLDER = '/03 - derived views'
+    DATASOURCENAME=ds_product
+    SERVICENAME='products-ws'
+    PORTNAME='ProductImplPort'
+    OPERATIONNAME='getProductsByCategory'
+    INPUTMESSAGE='getProductsByCategory'
+    OUTPUTMESSAGE='getProductsByCategoryResponse'
+    TUPLEROOT='/Envelope/Body/getProductsByCategoryResponse/products/product'
+    OUTPUTSCHEMA (
+    parameters = '$0': REGISTER OF (
+        categoryname='categoryName' (OBL)
+    ),
+    productid='Envelope.Body.getProductsByCategoryResponse.products.product.productId',
+    productname='Envelope.Body.getProductsByCategoryResponse.products.product.productName',
+    productprice='Envelope.Body.getProductsByCategoryResponse.products.product.productPrice'
+    );
+
+# #######################################
+# STORED PROCEDURES
+# #######################################
+# No stored procedures
+# #######################################
+# TYPES
+# #######################################
+DROP TYPE IF EXISTS _register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip CASCADE;
+
+CREATE TYPE _register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip AS REGISTER OF (agent_id:decimal, interaction_date:date, global_case_id:decimal, interaction_phone:text, interaction_ip:text);
+
+DROP TYPE IF EXISTS _register_main_address_main_postcode_main_country CASCADE;
+
+CREATE TYPE _register_main_address_main_postcode_main_country AS REGISTER OF (main_address:text, main_postcode:text, main_country:text);
+
+DROP TYPE IF EXISTS _register_text CASCADE;
+
+CREATE TYPE _register_text AS REGISTER OF (value:text);
+
+DROP TYPE IF EXISTS bv_ad_user_cn_cn CASCADE;
+
+CREATE TYPE bv_ad_user_cn_cn AS REGISTER OF (cn:text);
+
+DROP TYPE IF EXISTS bv_ad_user_distinguishedname_distinguishedname CASCADE;
+
+CREATE TYPE bv_ad_user_distinguishedname_distinguishedname AS REGISTER OF (distinguishedname:text);
+
+DROP TYPE IF EXISTS bv_ad_user_givenname_givenname CASCADE;
+
+CREATE TYPE bv_ad_user_givenname_givenname AS REGISTER OF (givenname:text);
+
+DROP TYPE IF EXISTS bv_ad_user_mail_mail CASCADE;
+
+CREATE TYPE bv_ad_user_mail_mail AS REGISTER OF (mail:text);
+
+DROP TYPE IF EXISTS bv_ad_user_sn_sn CASCADE;
+
+CREATE TYPE bv_ad_user_sn_sn AS REGISTER OF (sn:text);
+
+DROP TYPE IF EXISTS bv_ad_user_uid_uid CASCADE;
+
+CREATE TYPE bv_ad_user_uid_uid AS REGISTER OF (uid:text);
+
+DROP TYPE IF EXISTS bv_get_products_by_category_parameters CASCADE;
+
+CREATE TYPE bv_get_products_by_category_parameters AS REGISTER OF (categoryname:text);
+
+DROP TYPE IF EXISTS computer_cn_cn CASCADE;
+
+CREATE TYPE computer_cn_cn AS REGISTER OF (cn:text);
+
+DROP TYPE IF EXISTS computer_description_description CASCADE;
+
+CREATE TYPE computer_description_description AS REGISTER OF (description:text);
+
+DROP TYPE IF EXISTS computer_protocolinformation_protocolinformation CASCADE;
+
+CREATE TYPE computer_protocolinformation_protocolinformation AS REGISTER OF (protocolinformation:text);
+
+DROP TYPE IF EXISTS computer_serialnumber_serialnumber CASCADE;
+
+CREATE TYPE computer_serialnumber_serialnumber AS REGISTER OF (serialnumber:text);
+
+DROP TYPE IF EXISTS computer_supportedalgorithms_supportedalgorithms CASCADE;
+
+CREATE TYPE computer_supportedalgorithms_supportedalgorithms AS REGISTER OF (supportedalgorithms:text);
+
+DROP TYPE IF EXISTS ds_sales_salesdata_salesdata_sales_sales_6506 CASCADE;
+
+CREATE TYPE ds_sales_salesdata_salesdata_sales_sales_6506 AS REGISTER OF (saleid:text, productid:text, employeeid:text, customerid:text, saledate:text, bundleamount:text, productsaleprice:text, totalprice:text);
+
+DROP TYPE IF EXISTS ds_sales_search_salesdata_salesdata_sales_sales CASCADE;
+
+CREATE TYPE ds_sales_search_salesdata_salesdata_sales_sales AS REGISTER OF (saleid:text, productid:text, employeeid:text, customerid:text, saledate:text, bundleamount:text, productsaleprice:text, totalprice:text);
+
+DROP TYPE IF EXISTS getproductsbycategory_parameters CASCADE;
+
+CREATE TYPE getproductsbycategory_parameters AS REGISTER OF (categoryname:text);
+
+DROP TYPE IF EXISTS getproductsbycategory_return_products_productdata CASCADE;
+
+CREATE TYPE getproductsbycategory_return_products_productdata AS REGISTER OF (productid:int, productname:text, productprice:float);
+
+DROP TYPE IF EXISTS user_0_memberof_memberof CASCADE;
+
+CREATE TYPE user_0_memberof_memberof AS REGISTER OF (memberof:text);
+
+DROP TYPE IF EXISTS _array_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip CASCADE;
+
+CREATE TYPE _array_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip AS ARRAY OF _register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip;
+
+DROP TYPE IF EXISTS _array_register_text CASCADE;
+
+CREATE TYPE _array_register_text AS ARRAY OF _register_text;
+
+DROP TYPE IF EXISTS bv_ad_user_cn CASCADE;
+
+CREATE TYPE bv_ad_user_cn AS ARRAY OF bv_ad_user_cn_cn;
+
+DROP TYPE IF EXISTS bv_ad_user_distinguishedname CASCADE;
+
+CREATE TYPE bv_ad_user_distinguishedname AS ARRAY OF bv_ad_user_distinguishedname_distinguishedname;
+
+DROP TYPE IF EXISTS bv_ad_user_givenname CASCADE;
+
+CREATE TYPE bv_ad_user_givenname AS ARRAY OF bv_ad_user_givenname_givenname;
+
+DROP TYPE IF EXISTS bv_ad_user_mail CASCADE;
+
+CREATE TYPE bv_ad_user_mail AS ARRAY OF bv_ad_user_mail_mail;
+
+DROP TYPE IF EXISTS bv_ad_user_sn CASCADE;
+
+CREATE TYPE bv_ad_user_sn AS ARRAY OF bv_ad_user_sn_sn;
+
+DROP TYPE IF EXISTS bv_ad_user_uid CASCADE;
+
+CREATE TYPE bv_ad_user_uid AS ARRAY OF bv_ad_user_uid_uid;
+
+DROP TYPE IF EXISTS computer_cn CASCADE;
+
+CREATE TYPE computer_cn AS ARRAY OF computer_cn_cn;
+
+DROP TYPE IF EXISTS computer_description CASCADE;
+
+CREATE TYPE computer_description AS ARRAY OF computer_description_description;
+
+DROP TYPE IF EXISTS computer_protocolinformation CASCADE;
+
+CREATE TYPE computer_protocolinformation AS ARRAY OF computer_protocolinformation_protocolinformation;
+
+DROP TYPE IF EXISTS computer_serialnumber CASCADE;
+
+CREATE TYPE computer_serialnumber AS ARRAY OF computer_serialnumber_serialnumber;
+
+DROP TYPE IF EXISTS computer_supportedalgorithms CASCADE;
+
+CREATE TYPE computer_supportedalgorithms AS ARRAY OF computer_supportedalgorithms_supportedalgorithms;
+
+DROP TYPE IF EXISTS ds_sales_salesdata_salesdata_sales_2516 CASCADE;
+
+CREATE TYPE ds_sales_salesdata_salesdata_sales_2516 AS ARRAY OF ds_sales_salesdata_salesdata_sales_sales_6506;
+
+DROP TYPE IF EXISTS ds_sales_search_salesdata_salesdata_sales CASCADE;
+
+CREATE TYPE ds_sales_search_salesdata_salesdata_sales AS ARRAY OF ds_sales_search_salesdata_salesdata_sales_sales;
+
+DROP TYPE IF EXISTS getproductsbycategory_return_products CASCADE;
+
+CREATE TYPE getproductsbycategory_return_products AS ARRAY OF getproductsbycategory_return_products_productdata;
+
+DROP TYPE IF EXISTS user_0_memberof CASCADE;
+
+CREATE TYPE user_0_memberof AS ARRAY OF user_0_memberof_memberof;
+
+DROP TYPE IF EXISTS ds_sales_salesdata_salesdata_5351 CASCADE;
+
+CREATE TYPE ds_sales_salesdata_salesdata_5351 AS REGISTER OF (productid:text, sales:ds_sales_salesdata_salesdata_sales_2516);
+
+DROP TYPE IF EXISTS ds_sales_search_salesdata_salesdata CASCADE;
+
+CREATE TYPE ds_sales_search_salesdata_salesdata AS REGISTER OF (productid:text, sales:ds_sales_search_salesdata_salesdata_sales);
+
+DROP TYPE IF EXISTS getproductsbycategory_return CASCADE;
+
+CREATE TYPE getproductsbycategory_return AS REGISTER OF (products:getproductsbycategory_return_products);
+
+DROP TYPE IF EXISTS ds_sales_salesdata_5345 CASCADE;
+
+CREATE TYPE ds_sales_salesdata_5345 AS ARRAY OF ds_sales_salesdata_salesdata_5351;
+
+DROP TYPE IF EXISTS ds_sales_search_salesdata CASCADE;
+
+CREATE TYPE ds_sales_search_salesdata AS ARRAY OF ds_sales_search_salesdata_salesdata;
+
+# #######################################
+# MAPS
+# #######################################
+# No maps
+# #######################################
+# BASE VIEWS
+# #######################################
+DROP VIEW IF EXISTS bv_ad_computer CASCADE;
+
+CREATE TABLE bv_ad_computer I18N au_cst (
+        cn:computer_cn, 
+        description:computer_description, 
+        protocolinformation:computer_protocolinformation, 
+        serialnumber:computer_serialnumber, 
+        supportedalgorithms:computer_supportedalgorithms
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_ad_computer(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD cn NOS ZERO ()
+             ADD cn NOS ZERO ()
+             ADD cn.cn (any) OPT ANY
+             ADD description NOS ZERO ()
+             ADD description NOS ZERO ()
+             ADD description.description (any) OPT ANY
+             ADD protocolinformation NOS ZERO ()
+             ADD protocolinformation NOS ZERO ()
+             ADD protocolinformation.protocolinformation (any) OPT ANY
+             ADD serialnumber NOS ZERO ()
+             ADD serialnumber NOS ZERO ()
+             ADD serialnumber.serialnumber (any) OPT ANY
+             ADD supportedalgorithms NOS ZERO ()
+             ADD supportedalgorithms NOS ZERO ()
+             ADD supportedalgorithms.supportedalgorithms (any) OPT ANY
+        )
+        OUTPUTLIST (cn, description, protocolinformation, serialnumber, supportedalgorithms
+        )
+        WRAPPER (ldap bv_ad_computer)
+    );
+
+DROP VIEW IF EXISTS bv_ad_user CASCADE;
+
+CREATE TABLE bv_ad_user I18N au_cst (
+        cn:bv_ad_user_cn, 
+        distinguishedname:bv_ad_user_distinguishedname, 
+        givenname:bv_ad_user_givenname, 
+        mail:bv_ad_user_mail, 
+        sn:bv_ad_user_sn, 
+        uid:bv_ad_user_uid
+    )
+    FOLDER = '/02 - base views'
+    CACHE FULL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_ad_user(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD cn NOS ZERO ()
+             ADD cn NOS ZERO ()
+             ADD cn.cn NOS ZERO ()
+             ADD distinguishedname NOS ZERO ()
+             ADD distinguishedname NOS ZERO ()
+             ADD distinguishedname.distinguishedname NOS ZERO ()
+             ADD givenname NOS ZERO ()
+             ADD givenname NOS ZERO ()
+             ADD givenname.givenname NOS ZERO ()
+             ADD mail NOS ZERO ()
+             ADD mail NOS ZERO ()
+             ADD mail.mail NOS ZERO ()
+             ADD sn NOS ZERO ()
+             ADD sn NOS ZERO ()
+             ADD sn.sn NOS ZERO ()
+             ADD uid NOS ZERO ()
+             ADD uid NOS ZERO ()
+             ADD uid.uid NOS ZERO ()
+        )
+        OUTPUTLIST (cn, distinguishedname, givenname, mail, sn, uid
+        )
+        WRAPPER (ldap bv_ad_user)
+    );
+
+DROP VIEW IF EXISTS bv_cc_agent CASCADE;
+
+CREATE TABLE bv_cc_agent I18N au_cst (
+        agent_id:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4'), 
+        agent_code:text (sourcetypesize = '20', sourcetypeid = '12'), 
+        agent_name:text (sourcetypesize = '150', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_cc_agent(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD agent_id (any) OPT ANY
+             ADD agent_code (any) OPT ANY
+             ADD agent_name (any) OPT ANY
+        )
+        OUTPUTLIST (agent_code, agent_id, agent_name
+        )
+        WRAPPER (odbc bv_cc_agent)
+    );
+
+DROP VIEW IF EXISTS bv_cc_case_definition CASCADE;
+
+CREATE TABLE bv_cc_case_definition I18N au_cst (
+        case_id:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4'), 
+        date_raised:date (sourcetypedecimals = '0', sourcetypesize = '19', sourcetypeid = '93'), 
+        date_closed:date (sourcetypedecimals = '0', sourcetypesize = '19', sourcetypeid = '93'), 
+        case_status:long (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '18', sourcetypeid = '-5'), 
+        case_summary:text (sourcetypesize = '250', sourcetypeid = '12'), 
+        case_comments:text (sourcetypesize = '250', sourcetypeid = '12'), 
+        customer_code:text (sourcetypesize = '20', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_cc_case_definition(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD case_id (any) OPT ANY
+             ADD date_raised (any) OPT ANY
+             ADD date_closed (any) OPT ANY
+             ADD case_status (any) OPT ANY
+             ADD case_summary (any) OPT ANY
+             ADD case_comments (any) OPT ANY
+             ADD customer_code (any) OPT ANY
+        )
+        OUTPUTLIST (case_comments, case_id, case_status, case_summary, customer_code, date_closed, date_raised
+        )
+        WRAPPER (odbc bv_cc_case_definition)
+    );
+
+DROP VIEW IF EXISTS bv_cc_customer CASCADE;
+
+CREATE TABLE bv_cc_customer I18N au_cst (
+        customer_id:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '11', sourcetypeid = '4'), 
+        customer_name:text (sourcetypesize = '150', sourcetypeid = '12'), 
+        customer_address:text (sourcetypesize = '250', sourcetypeid = '12'), 
+        phone_number:text (sourcetypesize = '20', sourcetypeid = '12'), 
+        customer_code:text (sourcetypesize = '20', sourcetypeid = '12'), 
+        job_title:text (sourcetypesize = '50', sourcetypeid = '12'), 
+        other_details:text (sourcetypesize = '250', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_cc_customer(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD customer_id (any) OPT ANY
+             ADD customer_name (any) OPT ANY
+             ADD customer_address (any) OPT ANY
+             ADD phone_number (any) OPT ANY
+             ADD customer_code (any) OPT ANY
+             ADD job_title (any) OPT ANY
+             ADD other_details (any) OPT ANY
+        )
+        OUTPUTLIST (customer_address, customer_code, customer_id, customer_name, job_title, other_details, phone_number
+        )
+        WRAPPER (odbc bv_cc_customer)
+    );
+
+DROP VIEW IF EXISTS bv_cc_problem CASCADE;
+
+CREATE TABLE bv_cc_problem I18N au_cst (
+        problem_code:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4'), 
+        problem_description:text (sourcetypesize = '250', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_cc_problem(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD problem_code (any) OPT ANY
+             ADD problem_description (any) OPT ANY
+        )
+        OUTPUTLIST (problem_code, problem_description
+        )
+        WRAPPER (odbc bv_cc_problem)
+    );
+
+DROP VIEW IF EXISTS bv_cc_service_call CASCADE;
+
+CREATE TABLE bv_cc_service_call I18N au_cst (
+        call_id:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4'), 
+        location_id:long (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '18', sourcetypeid = '-5'), 
+        problem_code:long (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '18', sourcetypeid = '-5'), 
+        status_code:long (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '18', sourcetypeid = '-5'), 
+        date_ticket_issued:date (sourcetypedecimals = '0', sourcetypesize = '19', sourcetypeid = '93'), 
+        date_call_received:date (sourcetypedecimals = '0', sourcetypesize = '19', sourcetypeid = '93'), 
+        other_details:text (sourcetypesize = '250', sourcetypeid = '12'), 
+        caller_phone:text (sourcetypesize = '20', sourcetypeid = '12'), 
+        case_id:long (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '18', sourcetypeid = '-5'), 
+        agent_id:long (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '18', sourcetypeid = '-5'), 
+        customer_code:text (sourcetypesize = '30', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_cc_service_call(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD call_id (any) OPT ANY
+             ADD location_id (any) OPT ANY
+             ADD problem_code (any) OPT ANY
+             ADD status_code (any) OPT ANY
+             ADD date_ticket_issued (any) OPT ANY
+             ADD date_call_received (any) OPT ANY
+             ADD other_details (any) OPT ANY
+             ADD caller_phone (any) OPT ANY
+             ADD case_id (any) OPT ANY
+             ADD agent_id (any) OPT ANY
+             ADD customer_code (any) OPT ANY
+        )
+        OUTPUTLIST (agent_id, call_id, caller_phone, case_id, customer_code, date_call_received, date_ticket_issued, location_id, other_details, problem_code, status_code
+        )
+        WRAPPER (odbc bv_cc_service_call)
+    );
+
+DROP VIEW IF EXISTS bv_cc_service_location CASCADE;
+
+CREATE TABLE bv_cc_service_location I18N au_cst (
+        id:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4'), 
+        location_id:long (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '18', sourcetypeid = '-5'), 
+        customer_id:long (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '18', sourcetypeid = '-5'), 
+        business_name:text (sourcetypesize = '50', sourcetypeid = '12'), 
+        service_location:text (sourcetypesize = '50', sourcetypeid = '12'), 
+        other_details:text (sourcetypesize = '250', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_cc_service_location(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD location_id (any) OPT ANY
+             ADD customer_id (any) OPT ANY
+             ADD business_name (any) OPT ANY
+             ADD service_location (any) OPT ANY
+             ADD other_details (any) OPT ANY
+        )
+        OUTPUTLIST (business_name, customer_id, id, location_id, other_details, service_location
+        )
+        WRAPPER (odbc bv_cc_service_location)
+    );
+
+DROP VIEW IF EXISTS bv_cc_status_code CASCADE;
+
+CREATE TABLE bv_cc_status_code I18N au_cst (
+        code_id:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4'), 
+        code_description:text (sourcetypesize = '250', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    PRIMARY KEY ( 'code_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_cc_status_code(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD code_id (any) OPT ANY
+             ADD code_description (any) OPT ANY
+        )
+        OUTPUTLIST (code_description, code_id
+        )
+        WRAPPER (odbc bv_cc_status_code)
+    );
+
+DROP VIEW IF EXISTS bv_conn_events CASCADE;
+
+CREATE TABLE bv_conn_events I18N au_cst (
+        event_date:text, 
+        source_ip:text, 
+        device:text, 
+        path:text, 
+        http_code:text, 
+        content_type:text, 
+        size:text
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_conn_events(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD event_date (=,in) OPT ANY
+             ADD source_ip (=,in) OPT ANY
+             ADD device (=,in) OPT ANY
+             ADD path (=,in) OPT ANY
+             ADD http_code (=,in) OPT ANY
+             ADD content_type (=,in) OPT ANY
+             ADD size (=,in) OPT ANY
+        )
+        OUTPUTLIST (content_type, device, event_date, http_code, path, size, source_ip
+        )
+        WRAPPER (df bv_conn_events)
+    );
+
+DROP VIEW IF EXISTS bv_conn_events_date CASCADE;
+
+CREATE TABLE bv_conn_events_date I18N au_cst (
+        end_date:text (defaultvalue = '2016-01-07'), 
+        start_date:text (defaultvalue = '2016-01-01'), 
+        event_date:text, 
+        source_ip:text, 
+        device:text, 
+        path:text, 
+        http_code:text, 
+        content_type:text, 
+        size:text
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_connections_date(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD end_date (=) OBL ONE
+             ADD start_date (=) OBL ONE
+             ADD event_date (=,in) OPT ANY
+             ADD source_ip (=,in) OPT ANY
+             ADD device (=,in) OPT ANY
+             ADD path (=,in) OPT ANY
+             ADD http_code (=,in) OPT ANY
+             ADD content_type (=,in) OPT ANY
+             ADD size (=,in) OPT ANY
+        )
+        OUTPUTLIST (content_type, device, event_date, http_code, path, size, source_ip
+        )
+        WRAPPER (df ds_connections_date)
+    );
+
+DROP VIEW IF EXISTS bv_group CASCADE;
+
+CREATE TABLE bv_group I18N au_cst (
+        cn:text, 
+        distinguishedname:text, 
+        objectcategory:text
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_group(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD cn NOS ZERO ()
+             ADD distinguishedname NOS ZERO ()
+             ADD objectcategory NOS ZERO ()
+        )
+        OUTPUTLIST (cn, distinguishedname, objectcategory
+        )
+        WRAPPER (ldap bv_group)
+    );
+
+DROP VIEW IF EXISTS bv_hr_countries CASCADE;
+
+CREATE TABLE bv_hr_countries I18N au_cst (
+        country_id:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        country_name:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        region_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'COUNTRY_C_ID_PK' PRIMARY KEY ( 'country_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD countries(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD country_id (any) OPT ANY
+             ADD country_name (any) OPT ANY
+             ADD region_id (any) OPT ANY
+        )
+        OUTPUTLIST (country_id, country_name, region_id
+        )
+        WRAPPER (jdbc countries)
+    );
+
+DROP VIEW IF EXISTS bv_hr_departments CASCADE;
+
+CREATE TABLE bv_hr_departments I18N au_cst (
+        department_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        department_name:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        location_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        manager_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'DEPT_ID_PK' PRIMARY KEY ( 'department_id' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD departments(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD department_id (any) OPT ANY
+             ADD department_name (any) OPT ANY
+             ADD location_id (any) OPT ANY
+             ADD manager_id (any) OPT ANY
+        )
+        OUTPUTLIST (department_id, department_name, location_id, manager_id
+        )
+        WRAPPER (jdbc departments)
+    );
+
+DROP VIEW IF EXISTS bv_hr_employees CASCADE;
+
+CREATE TABLE bv_hr_employees I18N au_cst (
+        employee_id:decimal (sourcetyperadix = '10', sourcetypeid = '6', sourcetypedecimals = '0', sourcetypesize = '2000000000'), 
+        first_name:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        last_name:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        email:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        phone_number:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        hire_date:text, 
+        job_id:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        salary:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        commission_pct:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        manager_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        department_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'EMP_EMP_ID_PK' PRIMARY KEY ( 'employee_id' )
+    CACHE PARTIAL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD employees(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD employee_id (any) OPT ANY
+             ADD first_name (any) OPT ANY
+             ADD last_name (any) OPT ANY
+             ADD email (any) OPT ANY
+             ADD phone_number (any) OPT ANY
+             ADD hire_date (any) OPT ANY
+             ADD job_id (any) OPT ANY
+             ADD salary (any) OPT ANY
+             ADD commission_pct (any) OPT ANY
+             ADD manager_id (any) OPT ANY
+             ADD department_id (any) OPT ANY
+        )
+        OUTPUTLIST (commission_pct, department_id, email, employee_id, first_name, hire_date, job_id, last_name, manager_id, phone_number, salary
+        )
+        WRAPPER (jdbc employees)
+    );
+
+DROP VIEW IF EXISTS bv_hr_jobs CASCADE;
+
+CREATE TABLE bv_hr_jobs I18N au_cst (
+        job_id:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        job_title:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        min_salary:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        max_salary:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'JOB_ID_PK' PRIMARY KEY ( 'job_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD jobs(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD job_id (any) OPT ANY
+             ADD job_title (any) OPT ANY
+             ADD min_salary (any) OPT ANY
+             ADD max_salary (any) OPT ANY
+        )
+        OUTPUTLIST (job_id, job_title, max_salary, min_salary
+        )
+        WRAPPER (jdbc jobs)
+    );
+
+DROP VIEW IF EXISTS bv_hr_locations CASCADE;
+
+CREATE TABLE bv_hr_locations I18N au_cst (
+        location_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        street_address:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        postal_code:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        city:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        state_province:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        country_id:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'LOC_ID_PK' PRIMARY KEY ( 'location_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD locations(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD location_id (any) OPT ANY
+             ADD street_address (any) OPT ANY
+             ADD postal_code (any) OPT ANY
+             ADD city (any) OPT ANY
+             ADD state_province (any) OPT ANY
+             ADD country_id (any) OPT ANY
+        )
+        OUTPUTLIST (city, country_id, location_id, postal_code, state_province, street_address
+        )
+        WRAPPER (jdbc locations)
+    );
+
+DROP VIEW IF EXISTS bv_hr_regions CASCADE;
+
+CREATE TABLE bv_hr_regions I18N au_cst (
+        region_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        region_name:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'REG_ID_PK' PRIMARY KEY ( 'region_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD regions(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD region_id (any) OPT ANY
+             ADD region_name (any) OPT ANY
+        )
+        OUTPUTLIST (region_id, region_name
+        )
+        WRAPPER (jdbc regions)
+    );
+
+DROP VIEW IF EXISTS bv_invoices CASCADE;
+
+CREATE TABLE bv_invoices I18N au_cst (
+        invoice_id:int (sourcetypeid = '4'), 
+        date_invoice:text (sourcetypeid = '12'), 
+        order_id:int (sourcetypeid = '4'), 
+        date_placed:text (sourcetypeid = '12'), 
+        date_delivered:text (sourcetypeid = '12'), 
+        date_closed:text (sourcetypeid = '12'), 
+        first_name:text (sourcetypeid = '12'), 
+        last_name:text (sourcetypeid = '12'), 
+        email:text (sourcetypeid = '12'), 
+        address:text (sourcetypeid = '12'), 
+        country:text (sourcetypeid = '12'), 
+        postal_code:text (sourcetypeid = '12'), 
+        phone:text (sourcetypeid = '12'), 
+        amount:int (sourcetypeid = '4'), 
+        tax:text (sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_invoices(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD invoice_id (any) OPT ANY
+             ADD date_invoice (any) OPT ANY
+             ADD order_id (any) OPT ANY
+             ADD date_placed (any) OPT ANY
+             ADD date_delivered (any) OPT ANY
+             ADD date_closed (any) OPT ANY
+             ADD first_name (any) OPT ANY
+             ADD last_name (any) OPT ANY
+             ADD email (any) OPT ANY
+             ADD address (any) OPT ANY
+             ADD country (any) OPT ANY
+             ADD postal_code (any) OPT ANY
+             ADD phone (any) OPT ANY
+             ADD amount (any) OPT ANY
+             ADD tax (any) OPT ANY
+        )
+        OUTPUTLIST (address, amount, country, date_closed, date_delivered, date_invoice, date_placed, email, first_name, invoice_id, last_name, order_id, phone, postal_code, tax
+        )
+        WRAPPER (custom ds_invoices)
+    );
+
+DROP VIEW IF EXISTS bv_old_invoices CASCADE;
+
+CREATE TABLE bv_old_invoices I18N us_pst (
+        invoice:text, 
+        email:text, 
+        date_closed:text (sourcetypeid = '12'), 
+        order:long, 
+        cost:long, 
+        name:text, 
+        surname:text, 
+        country:text, 
+        address:text, 
+        postal_code:text, 
+        phone:text
+    )
+    FOLDER = '/1 - connectivity/2 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_old_invoices(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD invoice (=,in) OPT ANY
+             ADD email (=,in) OPT ANY
+             ADD date_closed (=,in) OPT ANY
+             ADD order (=,in) OPT ANY
+             ADD cost (=,in) OPT ANY
+             ADD name (=,in) OPT ANY
+             ADD surname (=,in) OPT ANY
+             ADD country (=,in) OPT ANY
+             ADD address (=,in) OPT ANY
+             ADD postal_code (=,in) OPT ANY
+             ADD phone (=,in) OPT ANY
+        )
+        OUTPUTLIST (address, cost, country, date_closed, email, invoice, name, order, phone, postal_code, surname
+        )
+        WRAPPER (df bv_old_invoices)
+    );
+
+DROP VIEW IF EXISTS bv_sales CASCADE;
+
+CREATE TABLE bv_sales I18N au_cst (
+        salesdata:ds_sales_salesdata_5345
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_sales(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD salesdata NOS ZERO ()
+             ADD salesdata NOS ZERO ()
+             ADD salesdata.productid NOS ZERO ()
+             ADD salesdata.sales NOS ZERO ()
+             ADD salesdata.sales NOS ZERO ()
+             ADD salesdata.sales.saleid NOS ZERO ()
+             ADD salesdata.sales.productid NOS ZERO ()
+             ADD salesdata.sales.employeeid NOS ZERO ()
+             ADD salesdata.sales.customerid NOS ZERO ()
+             ADD salesdata.sales.saledate NOS ZERO ()
+             ADD salesdata.sales.bundleamount NOS ZERO ()
+             ADD salesdata.sales.productsaleprice NOS ZERO ()
+             ADD salesdata.sales.totalprice NOS ZERO ()
+        )
+        OUTPUTLIST (salesdata
+        )
+        WRAPPER (json bv_sales)
+    );
+
+DROP VIEW IF EXISTS bv_sales_search CASCADE;
+
+CREATE TABLE bv_sales_search I18N au_cst (
+        cid:text (defaultvalue = '00158000002dVSjAAM'), 
+        eid:text (defaultvalue = '48'), 
+        pid:text (defaultvalue = '2'), 
+        productid_0:text, 
+        saleid:text, 
+        productid:text, 
+        employeeid:text, 
+        customerid:text, 
+        saledate:text, 
+        bundleamount:text, 
+        productsaleprice:text, 
+        totalprice:text
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_sales_search(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD productid_0 NOS ZERO ()
+             ADD saleid NOS ZERO ()
+             ADD productid NOS ZERO ()
+             ADD employeeid NOS ZERO ()
+             ADD customerid NOS ZERO ()
+             ADD saledate NOS ZERO ()
+             ADD bundleamount NOS ZERO ()
+             ADD productsaleprice NOS ZERO ()
+             ADD totalprice NOS ZERO ()
+             ADD pid (=) OPT ANY
+             ADD cid (=) OPT ANY
+             ADD eid (=) OPT ANY
+        )
+        OUTPUTLIST (bundleamount, customerid, employeeid, productid, productid_0, productsaleprice, saledate, saleid, totalprice
+        )
+        WRAPPER (json bv_sales_search)
+    );
+
+DROP VIEW IF EXISTS bv_sales_search_array CASCADE;
+
+CREATE TABLE bv_sales_search_array I18N au_cst (
+        cid:text (defaultvalue = '00158000002dVSjAAM'), 
+        eid:text (defaultvalue = '48'), 
+        pid:text (defaultvalue = '2'), 
+        salesdata:ds_sales_search_salesdata
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_sales_search_array(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD salesdata NOS ZERO ()
+             ADD salesdata NOS ZERO ()
+             ADD salesdata.productid NOS ZERO ()
+             ADD salesdata.sales NOS ZERO ()
+             ADD salesdata.sales NOS ZERO ()
+             ADD salesdata.sales.saleid NOS ZERO ()
+             ADD salesdata.sales.productid NOS ZERO ()
+             ADD salesdata.sales.employeeid NOS ZERO ()
+             ADD salesdata.sales.customerid NOS ZERO ()
+             ADD salesdata.sales.saledate NOS ZERO ()
+             ADD salesdata.sales.bundleamount NOS ZERO ()
+             ADD salesdata.sales.productsaleprice NOS ZERO ()
+             ADD salesdata.sales.totalprice NOS ZERO ()
+             ADD cid (=) OPT ANY
+             ADD eid (=) OPT ANY
+             ADD pid (=) OPT ANY
+        )
+        OUTPUTLIST (salesdata
+        )
+        WRAPPER (json bv_sales_search_array)
+    );
+
+DROP VIEW IF EXISTS bv_sf_account CASCADE;
+
+CREATE TABLE bv_sf_account I18N au_cst (
+        id:text, 
+        isdeleted:text, 
+        masterrecordid:text, 
+        name:text, 
+        type:text, 
+        parentid:text, 
+        billingstreet:text, 
+        billingcity:text, 
+        billingstate:text, 
+        billingpostalcode:text, 
+        billingcountry:text, 
+        billinglatitude:text, 
+        billinglongitude:text, 
+        billingaddress:text, 
+        shippingstreet:text, 
+        shippingcity:text, 
+        shippingstate:text, 
+        shippingpostalcode:text, 
+        shippingcountry:text, 
+        shippinglatitude:text, 
+        shippinglongitude:text, 
+        shippingaddress:text, 
+        phone:text, 
+        fax:text, 
+        accountnumber:text, 
+        website:text, 
+        photourl:text, 
+        sic:text, 
+        industry:text, 
+        annualrevenue:text, 
+        numberofemployees:text, 
+        ownership:text, 
+        tickersymbol:text, 
+        description:text, 
+        rating:text, 
+        site:text, 
+        ownerid:text, 
+        createddate:text, 
+        createdbyid:text, 
+        lastmodifieddate:text, 
+        lastmodifiedbyid:text, 
+        systemmodstamp:text, 
+        lastactivitydate:text, 
+        lastvieweddate:text, 
+        lastreferenceddate:text, 
+        jigsaw:text, 
+        jigsawcompanyid:text, 
+        cleanstatus:text, 
+        accountsource:text, 
+        dunsnumber:text, 
+        tradestyle:text, 
+        naicscode:text, 
+        naicsdesc:text, 
+        yearstarted:text, 
+        sicdesc:text, 
+        dandbcompanyid:text, 
+        customerpriority__c:text, 
+        sla__c:text, 
+        active__c:text, 
+        numberoflocations__c:text, 
+        upsellopportunity__c:text, 
+        slaserialnumber__c:text, 
+        slaexpirationdate__c:text, 
+        last_creation_date:date
+    )
+    FOLDER = '/02 - base views'
+    CACHE FULL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_sf_account(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (=,in) OPT ANY
+             ADD isdeleted (=,in) OPT ANY
+             ADD masterrecordid (=,in) OPT ANY
+             ADD name (=,in) OPT ANY
+             ADD type (=,in) OPT ANY
+             ADD parentid (=,in) OPT ANY
+             ADD billingstreet (=,in) OPT ANY
+             ADD billingcity (=,in) OPT ANY
+             ADD billingstate (=,in) OPT ANY
+             ADD billingpostalcode (=,in) OPT ANY
+             ADD billingcountry (=,in) OPT ANY
+             ADD billinglatitude (=,in) OPT ANY
+             ADD billinglongitude (=,in) OPT ANY
+             ADD billingaddress (=,in) OPT ANY
+             ADD shippingstreet (=,in) OPT ANY
+             ADD shippingcity (=,in) OPT ANY
+             ADD shippingstate (=,in) OPT ANY
+             ADD shippingpostalcode (=,in) OPT ANY
+             ADD shippingcountry (=,in) OPT ANY
+             ADD shippinglatitude (=,in) OPT ANY
+             ADD shippinglongitude (=,in) OPT ANY
+             ADD shippingaddress (=,in) OPT ANY
+             ADD phone (=,in) OPT ANY
+             ADD fax (=,in) OPT ANY
+             ADD accountnumber (=,in) OPT ANY
+             ADD website (=,in) OPT ANY
+             ADD photourl (=,in) OPT ANY
+             ADD sic (=,in) OPT ANY
+             ADD industry (=,in) OPT ANY
+             ADD annualrevenue (=,in) OPT ANY
+             ADD numberofemployees (=,in) OPT ANY
+             ADD ownership (=,in) OPT ANY
+             ADD tickersymbol (=,in) OPT ANY
+             ADD description (=,in) OPT ANY
+             ADD rating (=,in) OPT ANY
+             ADD site (=,in) OPT ANY
+             ADD ownerid (=,in) OPT ANY
+             ADD createddate (=,in) OPT ANY
+             ADD createdbyid (=,in) OPT ANY
+             ADD lastmodifieddate (=,in) OPT ANY
+             ADD lastmodifiedbyid (=,in) OPT ANY
+             ADD systemmodstamp (=,in) OPT ANY
+             ADD lastactivitydate (=,in) OPT ANY
+             ADD lastvieweddate (=,in) OPT ANY
+             ADD lastreferenceddate (=,in) OPT ANY
+             ADD jigsaw (=,in) OPT ANY
+             ADD jigsawcompanyid (=,in) OPT ANY
+             ADD cleanstatus (=,in) OPT ANY
+             ADD accountsource (=,in) OPT ANY
+             ADD dunsnumber (=,in) OPT ANY
+             ADD tradestyle (=,in) OPT ANY
+             ADD naicscode (=,in) OPT ANY
+             ADD naicsdesc (=,in) OPT ANY
+             ADD yearstarted (=,in) OPT ANY
+             ADD sicdesc (=,in) OPT ANY
+             ADD dandbcompanyid (=,in) OPT ANY
+             ADD customerpriority__c (=,in) OPT ANY
+             ADD sla__c (=,in) OPT ANY
+             ADD active__c (=,in) OPT ANY
+             ADD numberoflocations__c (=,in) OPT ANY
+             ADD upsellopportunity__c (=,in) OPT ANY
+             ADD slaserialnumber__c (=,in) OPT ANY
+             ADD slaexpirationdate__c (=,in) OPT ANY
+             ADD last_creation_date (=,in) OPT ANY
+        )
+        OUTPUTLIST (accountnumber, accountsource, active__c, annualrevenue, billingaddress, billingcity, billingcountry, billinglatitude, billinglongitude, billingpostalcode, billingstate, billingstreet, cleanstatus, createdbyid, createddate, customerpriority__c, dandbcompanyid, description, dunsnumber, fax, id, industry, isdeleted, jigsaw, jigsawcompanyid, last_creation_date, lastactivitydate, lastmodifiedbyid, lastmodifieddate, lastreferenceddate, lastvieweddate, masterrecordid, naicscode, naicsdesc, name, numberofemployees, numberoflocations__c, ownerid, ownership, parentid, phone, photourl, rating, shippingaddress, shippingcity, shippingcountry, shippinglatitude, shippinglongitude, shippingpostalcode, shippingstate, shippingstreet, sic, sicdesc, site, sla__c, slaexpirationdate__c, slaserialnumber__c, systemmodstamp, tickersymbol, tradestyle, type, upsellopportunity__c, website, yearstarted
+        )
+        WRAPPER (df bv_sf_account)
+    );
+
+DROP VIEW IF EXISTS bv_sf_contact CASCADE;
+
+CREATE TABLE bv_sf_contact I18N au_cst (
+        id:text, 
+        isdeleted:text, 
+        masterrecordid:text, 
+        accountid:text, 
+        lastname:text, 
+        firstname:text, 
+        salutation:text, 
+        name:text, 
+        otherstreet:text, 
+        othercity:text, 
+        otherstate:text, 
+        otherpostalcode:text, 
+        othercountry:text, 
+        otherlatitude:text, 
+        otherlongitude:text, 
+        otheraddress:text, 
+        mailingstreet:text, 
+        mailingcity:text, 
+        mailingstate:text, 
+        mailingpostalcode:text, 
+        mailingcountry:text, 
+        mailinglatitude:text, 
+        mailinglongitude:text, 
+        mailingaddress:text, 
+        phone:text, 
+        fax:text, 
+        mobilephone:text, 
+        homephone:text, 
+        otherphone:text, 
+        assistantphone:text, 
+        reportstoid:text, 
+        email:text, 
+        title:text, 
+        department:text, 
+        assistantname:text, 
+        leadsource:text, 
+        birthdate:text, 
+        description:text, 
+        ownerid:text, 
+        createddate:text, 
+        createdbyid:text, 
+        lastmodifieddate:text, 
+        lastmodifiedbyid:text, 
+        systemmodstamp:text, 
+        lastactivitydate:text, 
+        lastcurequestdate:text, 
+        lastcuupdatedate:text, 
+        lastvieweddate:text, 
+        lastreferenceddate:text, 
+        emailbouncedreason:text, 
+        emailbounceddate:text, 
+        isemailbounced:text, 
+        photourl:text, 
+        jigsaw:text, 
+        jigsawcontactid:text, 
+        cleanstatus:text, 
+        level__c:text, 
+        languages__c:text, 
+        last_creation_date:text
+    )
+    FOLDER = '/02 - base views'
+    CACHE FULL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_sf_contact(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (=,in) OPT ANY
+             ADD isdeleted (=,in) OPT ANY
+             ADD masterrecordid (=,in) OPT ANY
+             ADD accountid (=,in) OPT ANY
+             ADD lastname (=,in) OPT ANY
+             ADD firstname (=,in) OPT ANY
+             ADD salutation (=,in) OPT ANY
+             ADD name (=,in) OPT ANY
+             ADD otherstreet (=,in) OPT ANY
+             ADD othercity (=,in) OPT ANY
+             ADD otherstate (=,in) OPT ANY
+             ADD otherpostalcode (=,in) OPT ANY
+             ADD othercountry (=,in) OPT ANY
+             ADD otherlatitude (=,in) OPT ANY
+             ADD otherlongitude (=,in) OPT ANY
+             ADD otheraddress (=,in) OPT ANY
+             ADD mailingstreet (=,in) OPT ANY
+             ADD mailingcity (=,in) OPT ANY
+             ADD mailingstate (=,in) OPT ANY
+             ADD mailingpostalcode (=,in) OPT ANY
+             ADD mailingcountry (=,in) OPT ANY
+             ADD mailinglatitude (=,in) OPT ANY
+             ADD mailinglongitude (=,in) OPT ANY
+             ADD mailingaddress (=,in) OPT ANY
+             ADD phone (=,in) OPT ANY
+             ADD fax (=,in) OPT ANY
+             ADD mobilephone (=,in) OPT ANY
+             ADD homephone (=,in) OPT ANY
+             ADD otherphone (=,in) OPT ANY
+             ADD assistantphone (=,in) OPT ANY
+             ADD reportstoid (=,in) OPT ANY
+             ADD email (=,in) OPT ANY
+             ADD title (=,in) OPT ANY
+             ADD department (=,in) OPT ANY
+             ADD assistantname (=,in) OPT ANY
+             ADD leadsource (=,in) OPT ANY
+             ADD birthdate (=,in) OPT ANY
+             ADD description (=,in) OPT ANY
+             ADD ownerid (=,in) OPT ANY
+             ADD createddate (=,in) OPT ANY
+             ADD createdbyid (=,in) OPT ANY
+             ADD lastmodifieddate (=,in) OPT ANY
+             ADD lastmodifiedbyid (=,in) OPT ANY
+             ADD systemmodstamp (=,in) OPT ANY
+             ADD lastactivitydate (=,in) OPT ANY
+             ADD lastcurequestdate (=,in) OPT ANY
+             ADD lastcuupdatedate (=,in) OPT ANY
+             ADD lastvieweddate (=,in) OPT ANY
+             ADD lastreferenceddate (=,in) OPT ANY
+             ADD emailbouncedreason (=,in) OPT ANY
+             ADD emailbounceddate (=,in) OPT ANY
+             ADD isemailbounced (=,in) OPT ANY
+             ADD photourl (=,in) OPT ANY
+             ADD jigsaw (=,in) OPT ANY
+             ADD jigsawcontactid (=,in) OPT ANY
+             ADD cleanstatus (=,in) OPT ANY
+             ADD level__c (=,in) OPT ANY
+             ADD languages__c (=,in) OPT ANY
+             ADD last_creation_date (=,in) OPT ANY
+        )
+        OUTPUTLIST (accountid, assistantname, assistantphone, birthdate, cleanstatus, createdbyid, createddate, department, description, email, emailbounceddate, emailbouncedreason, fax, firstname, homephone, id, isdeleted, isemailbounced, jigsaw, jigsawcontactid, languages__c, last_creation_date, lastactivitydate, lastcurequestdate, lastcuupdatedate, lastmodifiedbyid, lastmodifieddate, lastname, lastreferenceddate, lastvieweddate, leadsource, level__c, mailingaddress, mailingcity, mailingcountry, mailinglatitude, mailinglongitude, mailingpostalcode, mailingstate, mailingstreet, masterrecordid, mobilephone, name, otheraddress, othercity, othercountry, otherlatitude, otherlongitude, otherphone, otherpostalcode, otherstate, otherstreet, ownerid, phone, photourl, reportstoid, salutation, systemmodstamp, title
+        )
+        WRAPPER (df bv_sf_contact)
+    );
+
+DROP VIEW IF EXISTS bv_support_get_all_service_request CASCADE;
+
+CREATE TABLE bv_support_get_all_service_request I18N au_cst (
+        global_case_id:decimal (sourcetypeid = '3'), 
+        sr_description:text (sourcetypedecimals = '0', sourcetypesize = '2000', sourcetypeid = '12'), 
+        customer_ip:text (sourcetypedecimals = '0', sourcetypesize = '100', sourcetypeid = '12'), 
+        case_summary:text (sourcetypedecimals = '0', sourcetypesize = '2000', sourcetypeid = '12'), 
+        customer_address:text (sourcetypedecimals = '0', sourcetypesize = '100', sourcetypeid = '12'), 
+        status_description:text (sourcetypedecimals = '0', sourcetypesize = '200', sourcetypeid = '12'), 
+        customer_phone:text (sourcetypedecimals = '0', sourcetypesize = '20', sourcetypeid = '12'), 
+        case_closed_date:date (sourcetypedecimals = '6', sourcetypesize = '0', sourcetypeid = '93'), 
+        agent_id:decimal (sourcetypeid = '3'), 
+        customer_job_title:text (sourcetypedecimals = '0', sourcetypesize = '50', sourcetypeid = '12'), 
+        customer_name:text (sourcetypedecimals = '0', sourcetypesize = '50', sourcetypeid = '12'), 
+        status_code:decimal (sourcetypedecimals = '0', sourcetypesize = '38', sourcetypeid = '3'), 
+        sr_date:date (sourcetypedecimals = '6', sourcetypesize = '0', sourcetypeid = '93'), 
+        customer_code:text (sourcetypedecimals = '0', sourcetypesize = '20', sourcetypeid = '12'), 
+        agent_code:text (sourcetypedecimals = '0', sourcetypesize = '20', sourcetypeid = '12'), 
+        case_creation_date:date (sourcetypedecimals = '6', sourcetypesize = '0', sourcetypeid = '93'), 
+        agent_name:text (sourcetypedecimals = '0', sourcetypesize = '100', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD pr_get_all_service_request(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD global_case_id NOS ZERO ()
+             ADD sr_description NOS ZERO ()
+             ADD customer_ip NOS ZERO ()
+             ADD case_summary NOS ZERO ()
+             ADD customer_address NOS ZERO ()
+             ADD status_description NOS ZERO ()
+             ADD customer_phone NOS ZERO ()
+             ADD case_closed_date NOS ZERO ()
+             ADD agent_id NOS ZERO ()
+             ADD customer_job_title NOS ZERO ()
+             ADD customer_name NOS ZERO ()
+             ADD status_code NOS ZERO ()
+             ADD sr_date NOS ZERO ()
+             ADD customer_code NOS ZERO ()
+             ADD agent_code NOS ZERO ()
+             ADD case_creation_date NOS ZERO ()
+             ADD agent_name NOS ZERO ()
+        )
+        OUTPUTLIST (agent_code, agent_id, agent_name, case_closed_date, case_creation_date, case_summary, customer_address, customer_code, customer_ip, customer_job_title, customer_name, customer_phone, global_case_id, sr_date, sr_description, status_code, status_description
+        )
+        WRAPPER (jdbc pr_get_all_service_request)
+    );
+
+DROP VIEW IF EXISTS bv_support_get_service_request_by_id CASCADE;
+
+CREATE TABLE bv_support_get_service_request_by_id I18N au_cst (
+        i_case_id:decimal (sourcetyperadix = '10', sourcetypesize = '22', sourcetypeid = '3'), 
+        o_sr_date:date (sourcetyperadix = '10', sourcetypesize = '6', sourcetypeid = '93'), 
+        o_sr_description:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_customer_ip:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_global_case_id:decimal (sourcetyperadix = '10', sourcetypesize = '22', sourcetypeid = '3'), 
+        o_case_creation_date:date (sourcetyperadix = '10', sourcetypesize = '6', sourcetypeid = '93'), 
+        o_case_closed_date:date (sourcetyperadix = '10', sourcetypesize = '6', sourcetypeid = '93'), 
+        o_case_summary:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_status_code:decimal (sourcetyperadix = '10', sourcetypesize = '22', sourcetypeid = '3'), 
+        o_status_description:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_customer_code:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_customer_name:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_customer_address:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_customer_phone:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_customer_job_title:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_agent_id:decimal (sourcetyperadix = '10', sourcetypesize = '22', sourcetypeid = '3'), 
+        o_agent_code:text (sourcetyperadix = '10', sourcetypeid = '12'), 
+        o_agent_name:text (sourcetyperadix = '10', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD pr_get_service_request_by_id(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD i_case_id (=,is null) OBL ONE
+             ADD o_sr_date NOS ZERO ()
+             ADD o_sr_description NOS ZERO ()
+             ADD o_customer_ip NOS ZERO ()
+             ADD o_global_case_id NOS ZERO ()
+             ADD o_case_creation_date NOS ZERO ()
+             ADD o_case_closed_date NOS ZERO ()
+             ADD o_case_summary NOS ZERO ()
+             ADD o_status_code NOS ZERO ()
+             ADD o_status_description NOS ZERO ()
+             ADD o_customer_code NOS ZERO ()
+             ADD o_customer_name NOS ZERO ()
+             ADD o_customer_address NOS ZERO ()
+             ADD o_customer_phone NOS ZERO ()
+             ADD o_customer_job_title NOS ZERO ()
+             ADD o_agent_id NOS ZERO ()
+             ADD o_agent_code NOS ZERO ()
+             ADD o_agent_name NOS ZERO ()
+        )
+        OUTPUTLIST (i_case_id, o_agent_code, o_agent_id, o_agent_name, o_case_closed_date, o_case_creation_date, o_case_summary, o_customer_address, o_customer_code, o_customer_ip, o_customer_job_title, o_customer_name, o_customer_phone, o_global_case_id, o_sr_date, o_sr_description, o_status_code, o_status_description
+        )
+        WRAPPER (jdbc pr_get_service_request_by_id)
+    );
+
+DROP VIEW IF EXISTS bv_user CASCADE;
+
+CREATE TABLE bv_user I18N au_cst (
+        displayname:text, 
+        memberof:user_0_memberof, 
+        samaccountname:text, 
+        userprincipalname:text
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_user(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD displayname (any) OPT ANY
+             ADD memberof NOS ZERO ()
+             ADD memberof NOS ZERO ()
+             ADD memberof.memberof (any) OPT ANY
+             ADD samaccountname (any) OPT ANY
+             ADD userprincipalname (any) OPT ANY
+        )
+        OUTPUTLIST (displayname, memberof, samaccountname, userprincipalname
+        )
+        WRAPPER (ldap bv_user)
+    );
+
+DROP VIEW IF EXISTS bv_wo_customer CASCADE;
+
+CREATE TABLE bv_wo_customer I18N au_cst (
+        id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        customer_code_internal:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        first_name:text (sourcetyperadix = '10', sourcetypesize = '50', sourcetypeid = '12'), 
+        last_name:text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '12'), 
+        email:text (sourcetyperadix = '10', sourcetypesize = '50', sourcetypeid = '12'), 
+        phone:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        main_address:text (sourcetyperadix = '10', sourcetypesize = '200', sourcetypeid = '12'), 
+        main_postcode:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        main_country:text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '12'), 
+        registered_date:date (sourcetyperadix = '10', sourcetypedecimals = '6', sourcetypesize = '11', sourcetypeid = '93')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'CUSTOMER_PK' PRIMARY KEY ( 'id' , 'customer_code_internal' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_wo_customer(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD customer_code_internal (any) OPT ANY
+             ADD first_name (any) OPT ANY
+             ADD last_name (any) OPT ANY
+             ADD email (any) OPT ANY
+             ADD phone (any) OPT ANY
+             ADD main_address (any) OPT ANY
+             ADD main_postcode (any) OPT ANY
+             ADD main_country (any) OPT ANY
+             ADD registered_date (any) OPT ANY
+        )
+        OUTPUTLIST (customer_code_internal, email, first_name, id, last_name, main_address, main_country, main_postcode, phone, registered_date
+        )
+        WRAPPER (jdbc bv_wo_customer)
+    )
+    SMART_ONLY;
+
+DROP VIEW IF EXISTS bv_wo_distance_from_storage CASCADE;
+
+CREATE TABLE bv_wo_distance_from_storage I18N au_cst (
+        lat_storage:decimal (sourcetypedecimals = '10', sourcetypesize = '20', sourcetypeid = '3'), 
+        lon_storage:decimal (sourcetypedecimals = '10', sourcetypesize = '20', sourcetypeid = '3'), 
+        storage_id:int (sourcetypeid = '3'), 
+        distance:int (sourcetypedecimals = '0', sourcetypeid = '4'), 
+        lat_input:text (defaultvalue = '0'), 
+        lon_input:text (defaultvalue = '0')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_wo_distance_from_storage(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD lat_storage NOS ZERO ()
+             ADD lon_storage NOS ZERO ()
+             ADD storage_id NOS ZERO ()
+             ADD distance NOS ZERO ()
+             ADD lat_input (=) OBL ONE
+             ADD lon_input (=) OBL ONE
+        )
+        OUTPUTLIST (distance, lat_storage, lon_storage, storage_id
+        )
+        WRAPPER (jdbc bv_wo_distance_from_storage)
+    );
+
+DROP VIEW IF EXISTS bv_wo_order_item CASCADE;
+
+CREATE TABLE bv_wo_order_item I18N au_cst (
+        id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        order_id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        product_id:decimal (sourcetyperadix = '10', sourcetypeid = '3')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'ORDER_ITEM_PK' PRIMARY KEY ( 'id' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_wo_order_item(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD order_id (any) OPT ANY
+             ADD product_id (any) OPT ANY
+        )
+        OUTPUTLIST (id, order_id, product_id
+        )
+        WRAPPER (jdbc bv_wo_order_item)
+    )
+    SMART_ONLY;
+
+DROP VIEW IF EXISTS bv_wo_orders CASCADE;
+
+CREATE TABLE bv_wo_orders I18N au_cst (
+        id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        customer_code:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        status:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        date_placed:date (sourcetyperadix = '10', sourcetypedecimals = '6', sourcetypesize = '11', sourcetypeid = '93'), 
+        date_delivered:date (sourcetyperadix = '10', sourcetypedecimals = '6', sourcetypesize = '11', sourcetypeid = '93'), 
+        date_closed:date (sourcetyperadix = '10', sourcetypedecimals = '6', sourcetypesize = '11', sourcetypeid = '93')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'ORDERS_PK' PRIMARY KEY ( 'id' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_wo_orders(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD customer_code (any) OPT ANY
+             ADD status (any) OPT ANY
+             ADD date_placed (any) OPT ANY
+             ADD date_delivered (any) OPT ANY
+             ADD date_closed (any) OPT ANY
+        )
+        OUTPUTLIST (customer_code, date_closed, date_delivered, date_placed, id, status
+        )
+        WRAPPER (jdbc bv_wo_orders)
+    )
+    SMART_ONLY;
+
+DROP VIEW IF EXISTS bv_wo_stock CASCADE;
+
+CREATE TABLE bv_wo_stock I18N au_cst (
+        id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        product_id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        distribution_code:text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '12'), 
+        storage_id:decimal (sourcetyperadix = '10', sourcetypeid = '3')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'STOCK_PK' PRIMARY KEY ( 'id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_wo_stock(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD product_id (any) OPT ANY
+             ADD distribution_code (any) OPT ANY
+             ADD storage_id (any) OPT ANY
+        )
+        OUTPUTLIST (distribution_code, id, product_id, storage_id
+        )
+        WRAPPER (jdbc bv_wo_stock)
+    );
+
+DROP VIEW IF EXISTS bv_wo_storages CASCADE;
+
+CREATE TABLE bv_wo_storages I18N au_cst (
+        id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        address:text (sourcetyperadix = '10', sourcetypesize = '150', sourcetypeid = '12'), 
+        city:text (sourcetyperadix = '10', sourcetypesize = '50', sourcetypeid = '12'), 
+        postal_code:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        country:text (sourcetyperadix = '10', sourcetypesize = '70', sourcetypeid = '12'), 
+        country_code:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        latitude:decimal (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '20', sourcetypeid = '3'), 
+        longitude:decimal (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '20', sourcetypeid = '3')
+    )
+    FOLDER = '/02 - base views'
+    CONSTRAINT 'STORAGES_PK' PRIMARY KEY ( 'id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_wo_storages(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD address (any) OPT ANY
+             ADD city (any) OPT ANY
+             ADD postal_code (any) OPT ANY
+             ADD country (any) OPT ANY
+             ADD country_code (any) OPT ANY
+             ADD latitude (any) OPT ANY
+             ADD longitude (any) OPT ANY
+        )
+        OUTPUTLIST (address, city, country, country_code, id, latitude, longitude, postal_code
+        )
+        WRAPPER (jdbc bv_wo_storages)
+    );
+
+DROP VIEW IF EXISTS dv_product_by_category_selection CASCADE;
+
+CREATE TABLE dv_product_by_category_selection I18N au_cst (
+        parameters:bv_get_products_by_category_parameters, 
+        productid:int, 
+        productname:text, 
+        productprice:float
+    )
+    FOLDER = '/03 - derived views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_get_products_by_category(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD parameters (=,is null) OPT ONE
+             ADD parameters.categoryname (=) OBL ONE
+             ADD productid NOS ZERO ()
+             ADD productname NOS ZERO ()
+             ADD productprice NOS ZERO ()
+        )
+        OUTPUTLIST (parameters, productid, productname, productprice
+        )
+        WRAPPER (ws bv_get_products_by_category)
+    );
+
+# #######################################
+# VIEWS
+# #######################################
+DROP VIEW IF EXISTS dv_get_final_views CASCADE;
+
+CREATE VIEW dv_get_final_views FOLDER = '/03 - derived views' AS SELECT DISTINCT view_name, view_type, view_database_name FROM view_dependencies() v WHERE (v.view_database_name = 'denodo_training' AND v.depth = 1 AND v.view_name not in (SELECT dependency_name FROM view_dependencies() WHERE (dependency_database_name = v.view_database_name AND dependency_type = v.view_type AND depth = 1)));
+
+DROP INTERFACE VIEW IF EXISTS product CASCADE;
+
+CREATE INTERFACE VIEW product (
+        productid:int,
+        productname:text,
+        productprice:float
+    )
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW product
+ LAYOUT (bv_product_84853775423065956685746884121320102709434328827881199423912050552700184317576297231764225 = [534, 59, 200, 86]);
+
+DROP INTERFACE VIEW IF EXISTS sales CASCADE;
+
+CREATE INTERFACE VIEW sales (
+        employeeid:text,
+        productid:text,
+        customerid:text,
+        saleid:text,
+        saledate:text,
+        bundleamount:text,
+        productsaleprice:text,
+        totalprice:text
+    )
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW sales
+ LAYOUT (bv_sales_all_2704142969243261646812163576925708369907291134040524830061249740560211272031859178714 = [493, 29, 203, 206]);
+
+DROP INTERFACE VIEW IF EXISTS account CASCADE;
+
+CREATE INTERFACE VIEW account (
+        id:text,
+        name:text,
+        billingstreet:text,
+        billingcity:text,
+        billingstate:text,
+        billingpostalcode:text,
+        billingcountry:text,
+        phone:text,
+        annualrevenue:decimal,
+        numberofemployees:long,
+        ownerid:text,
+        createddate:date,
+        createdbyid:text,
+        lastmodifieddate:date,
+        lastmodifiedbyid:text,
+        systemmodstamp:date
+    )
+    SET IMPLEMENTATION bv_sf_account(
+        id = id,
+        name = name,
+        billingstreet = billingstreet,
+        billingcity = billingcity,
+        billingstate = billingstate,
+        billingpostalcode = billingpostalcode,
+        billingcountry = billingcountry,
+        phone = phone,
+        annualrevenue = cast('decimal', annualrevenue),
+        numberofemployees = cast('long', numberofemployees),
+        ownerid = ownerid,
+        createddate = cast('date', createddate),
+        createdbyid = createdbyid,
+        lastmodifieddate = cast('date', lastmodifieddate),
+        lastmodifiedbyid = lastmodifiedbyid,
+        systemmodstamp = cast('date', systemmodstamp)    
+)
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW account
+ LAYOUT (bv_sf_account = [520, 20, 290, 633]);
+
+DROP INTERFACE VIEW IF EXISTS customer CASCADE;
+
+CREATE INTERFACE VIEW customer (
+        customer_code_internal:text,
+        id:decimal,
+        complete_name:text,
+        email:text,
+        phone:text,
+        main_address:text,
+        main_postcode:int,
+        main_country:text,
+        registered_date:date
+    )
+    SET IMPLEMENTATION bv_wo_customer(
+        customer_code_internal = customer_code_internal,
+        id = id,
+        complete_name = (first_name||last_name),
+        email = email,
+        phone = phone,
+        main_address = main_address,
+        main_postcode = cast('int', main_postcode),
+        main_country = main_country,
+        registered_date = registered_date    
+)
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW customer
+ LAYOUT (bv_wo_customer = [520, 30, 350, 226]);
+
+DROP VIEW IF EXISTS dv_customer_address CASCADE;
+
+CREATE VIEW dv_customer_address FOLDER = '/03 - derived views' AS SELECT bv_wo_customer.id AS id, bv_wo_customer.customer_code_internal AS customer_code_internal, bv_wo_customer.first_name AS first_name, bv_wo_customer.last_name AS last_name, bv_wo_customer.email AS email, bv_wo_customer.phone AS phone, bv_wo_customer.registered_date AS registered_date, register(bv_wo_customer.main_address, bv_wo_customer.main_postcode, bv_wo_customer.main_country) AS address FROM bv_wo_customer;
+
+ALTER VIEW dv_customer_address
+ LAYOUT (bv_wo_customer = [20, 20, 270, 226]);
+
+DROP VIEW IF EXISTS dv_customer_calls CASCADE;
+
+CREATE VIEW dv_customer_calls FOLDER = '/03 - derived views' AS SELECT bv_cc_service_call.call_id AS call_id, bv_cc_service_call.location_id AS location_id, bv_cc_service_call.problem_code AS problem_code, bv_cc_service_call.status_code AS status_code, bv_cc_service_call.date_ticket_issued AS date_ticket_issued, bv_cc_service_call.date_call_received AS date_call_received, bv_cc_service_call.other_details AS other_details, bv_cc_service_call.caller_phone AS caller_phone, bv_cc_service_call.case_id AS case_id, bv_cc_service_call.agent_id AS agent_id, bv_cc_service_call.customer_code AS customer_code, bv_wo_customer.id AS id, bv_wo_customer.customer_code_internal AS customer_code_internal, bv_wo_customer.first_name AS first_name, bv_wo_customer.last_name AS last_name, bv_wo_customer.email AS email, bv_wo_customer.phone AS phone, bv_wo_customer.main_address AS main_address, bv_wo_customer.main_postcode AS main_postcode, bv_wo_customer.main_country AS main_country, bv_wo_customer.registered_date AS registered_date FROM bv_cc_service_call AS bv_cc_service_call RIGHT OUTER JOIN bv_wo_customer AS bv_wo_customer ON bv_cc_service_call.customer_code = bv_wo_customer.customer_code_internal ;
+
+ALTER VIEW dv_customer_calls
+ LAYOUT (bv_cc_service_call = [110, 80, 240, 246], bv_wo_customer = [660, 80, 340, 226]);
+
+DROP VIEW IF EXISTS dv_data_movement CASCADE;
+
+CREATE VIEW dv_data_movement FOLDER = '/01 - data sources' AS SELECT bv_hr_locations.location_id AS location_id, bv_hr_locations.street_address AS street_address, bv_hr_locations.postal_code AS postal_code, bv_hr_locations.city AS city, bv_hr_locations.state_province AS state_province, bv_hr_locations.country_id AS country_id, bv_wo_customer.id AS id, bv_wo_customer.customer_code_internal AS customer_code_internal, bv_wo_customer.first_name AS first_name, bv_wo_customer.last_name AS last_name, bv_wo_customer.email AS email, bv_wo_customer.phone AS phone, bv_wo_customer.main_address AS main_address, bv_wo_customer.main_postcode AS main_postcode, bv_wo_customer.main_country AS main_country, bv_wo_customer.registered_date AS registered_date FROM bv_hr_locations AS bv_hr_locations INNER JOIN bv_wo_customer AS bv_wo_customer ON bv_hr_locations.state_province = bv_wo_customer.main_country  CONTEXT (DATAMOVEMENTPLAN = bv_hr_locations : OFF bv_wo_customer : JDBC admin.vdpcachedatasource);
+
+ALTER VIEW dv_data_movement
+ LAYOUT (bv_hr_locations = [150, 210, 200, 146], bv_wo_customer = [610, 130, 430, 226]);
+
+DROP VIEW IF EXISTS dv_employee_income CASCADE;
+
+CREATE VIEW dv_employee_income FOLDER = '/03 - derived views' (
+    final_salary (sourcetypeid = '6')
+)
+ AS SELECT bv_hr_employees.employee_id AS employee_id, bv_hr_employees.first_name AS first_name, bv_hr_employees.last_name AS last_name, bv_hr_employees.email AS email, bv_hr_employees.phone_number AS phone_number, bv_hr_employees.hire_date AS hire_date, bv_hr_employees.salary AS salary, bv_hr_employees.commission_pct AS commission_pct, bv_hr_employees.manager_id AS manager_id, bv_hr_employees.department_id AS department_id, bv_hr_jobs.job_id AS job_id, bv_hr_jobs.job_title AS job_title, bv_hr_jobs.min_salary AS min_salary, bv_hr_jobs.max_salary AS max_salary, (bv_hr_employees.salary+bv_hr_employees.commission_pct) AS income, min(bv_hr_jobs.max_salary, (bv_hr_employees.salary+bv_hr_employees.commission_pct)) AS final_salary, round(cast('decimal', ((current_date()-cast(bv_hr_employees.hire_date AS DATE))/365)), 1) AS seniority FROM bv_hr_employees AS bv_hr_employees INNER JOIN bv_hr_jobs AS bv_hr_jobs ON bv_hr_employees.job_id = bv_hr_jobs.job_id ;
+
+ALTER VIEW dv_employee_income
+ LAYOUT (bv_hr_employees = [130, 110, 210, 246], bv_hr_jobs = [530, 169, 200, 106]);
+
+DROP VIEW IF EXISTS dv_hr_employees_flatten CASCADE;
+
+CREATE VIEW dv_hr_employees_flatten FOLDER = '/03 - derived views' AS SELECT bv_hr_employees.employee_id AS employee_id, bv_hr_employees.first_name AS first_name, bv_hr_employees.last_name AS last_name, bv_hr_employees.email AS email, bv_hr_employees.phone_number AS phone_number, bv_hr_employees.hire_date AS hire_date, bv_hr_employees.job_id AS job_id, bv_hr_employees.salary AS salary, bv_hr_employees.commission_pct AS commission_pct, bv_hr_employees.manager_id AS manager_id, bv_hr_employees.department_id AS department_id FROM bv_hr_employees;
+
+ALTER VIEW dv_hr_employees_flatten
+ LAYOUT (bv_hr_employees = [20, 20, 228, 246]);
+
+DROP VIEW IF EXISTS dv_interactions CASCADE;
+
+CREATE VIEW dv_interactions FOLDER = '/03 - derived views' AS SELECT interaction_ip, interaction_phone, interaction_date, global_case_id, customer_code, agent_id FROM (SELECT customer_code, sr_date AS interaction_date, status_code, customer_ip AS interaction_ip, agent_id, global_case_id FROM bv_support_get_all_service_request UNION SELECT agent_id, caller_phone AS interaction_phone, date_call_received AS interaction_date, status_code, case_id AS global_case_id, customer_code FROM bv_cc_service_call) ORDER BY interaction_date DESC;
+
+ALTER VIEW dv_interactions
+ LAYOUT (bv_support_get_all_service_request = [80, 90, 380, 366], bv_cc_service_call = [840, 150, 330, 246]);
+
+DROP VIEW IF EXISTS dv_orders CASCADE;
+
+CREATE VIEW dv_orders FOLDER = '/03 - derived views' AS SELECT bv_wo_orders.id AS id, bv_wo_orders.customer_code AS customer_code, bv_wo_orders.status AS status, bv_wo_orders.date_placed AS date_placed, bv_wo_orders.date_delivered AS date_delivered, bv_wo_orders.date_closed AS date_closed, bv_wo_order_item.order_id AS order_id, bv_wo_order_item.product_id AS product_id FROM bv_wo_orders AS bv_wo_orders INNER JOIN bv_wo_order_item AS bv_wo_order_item ON bv_wo_orders.id = bv_wo_order_item.id ;
+
+ALTER VIEW dv_orders
+ LAYOUT (bv_wo_orders = [340, 320, 230, 146], bv_wo_order_item = [730, 340, 220, 86]);
+
+DROP VIEW IF EXISTS dv_products_by_category_flatten CASCADE;
+
+CREATE VIEW dv_products_by_category_flatten FOLDER = '/03 - derived views' AS SELECT dv_product_by_category_selection.productid AS productid, dv_product_by_category_selection.productname AS productname, dv_product_by_category_selection.productprice AS productprice, (dv_product_by_category_selection.parameters).categoryname AS categoryname, category FROM dv_product_by_category_selection USING PARAMETERS ( category : text 'smartphone');
+
+ALTER VIEW dv_products_by_category_flatten
+ LAYOUT (dv_product_by_category_selection = [20, 20, 350, 106]);
+
+DROP VIEW IF EXISTS dv_sales_flatten CASCADE;
+
+CREATE VIEW dv_sales_flatten FOLDER = '/01 - data sources' AS SELECT productid, saleid, salesdata_sales_productid, employeeid, customerid, saledate, bundleamount, productsaleprice, totalprice FROM FLATTEN bv_sales AS v ( v.salesdata.sales);
+
+ALTER VIEW dv_sales_flatten
+ LAYOUT (bv_sales = [20, 20, 438, 246]);
+
+DROP INTERFACE VIEW IF EXISTS employee CASCADE;
+
+CREATE INTERFACE VIEW employee (
+        employee_id:int,
+        first_name:text,
+        last_name:text,
+        email:text,
+        phone_number:text,
+        hire_date:date,
+        job_id:text,
+        salary:decimal,
+        commission_pct:decimal,
+        manager_id:int,
+        department_id:int
+    )
+    SET IMPLEMENTATION bv_hr_employees(
+        employee_id = cast('int', employee_id),
+        first_name = first_name,
+        last_name = last_name,
+        email = email,
+        phone_number = phone_number,
+        hire_date = cast('date', hire_date),
+        job_id = job_id,
+        salary = salary,
+        commission_pct = commission_pct,
+        manager_id = cast('int', manager_id),
+        department_id = cast('int', department_id)    
+)
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW employee
+ LAYOUT (bv_hr_employees = [395, 26, 228, 246]);
+
+DROP VIEW IF EXISTS flatten_bv_user CASCADE;
+
+CREATE VIEW flatten_bv_user FOLDER = '/02 - base views' AS SELECT displayname, samaccountname, userprincipalname, memberof FROM FLATTEN bv_user AS v ( v.memberof);
+
+ALTER VIEW flatten_bv_user
+ LAYOUT (bv_user = [20, 20, 274, 126]);
+
+DROP VIEW IF EXISTS iv_all_invoices CASCADE;
+
+CREATE VIEW iv_all_invoices FOLDER = '/2 - integration' AS SELECT date_invoice, date_placed, date_delivered, date_closed, first_name, last_name, email, address, country, postal_code, phone, invoice, order, cost FROM (SELECT country, last_name, order_id AS order, date_invoice, date_placed, amount AS cost, invoice_id AS invoice, email, date_closed, address, date_delivered, first_name, phone, postal_code FROM bv_invoices UNION SELECT invoice, phone, address, country, cost, postal_code, email, surname AS last_name, date_closed, name AS first_name, order FROM bv_old_invoices);
+
+DROP VIEW IF EXISTS dv_interactions_customer CASCADE;
+
+CREATE VIEW dv_interactions_customer FOLDER = '/03 - derived views' AS SELECT customer_code AS customer_code, nest(agent_id, interaction_date, global_case_id, interaction_phone, interaction_ip) AS interactions FROM dv_interactions GROUP BY customer_code;
+
+ALTER VIEW dv_interactions_customer
+ LAYOUT (dv_interactions = [20, 20, 210, 146]);
+
+DROP VIEW IF EXISTS dv_invoices_cast CASCADE;
+
+CREATE VIEW dv_invoices_cast FOLDER = '/2 - integration' AS SELECT to_date('EEE MMM dd HH:mm:ss z yyyy', date_invoice) AS date_invoice, iv_all_invoices.date_placed AS date_placed, iv_all_invoices.date_delivered AS date_delivered, iv_all_invoices.date_closed AS date_closed, iv_all_invoices.first_name AS first_name, iv_all_invoices.last_name AS last_name, iv_all_invoices.email AS email, iv_all_invoices.address AS address, iv_all_invoices.country AS country, iv_all_invoices.postal_code AS postal_code, iv_all_invoices.phone AS phone, iv_all_invoices.invoice AS invoice, iv_all_invoices.order AS order, iv_all_invoices.cost AS cost FROM iv_all_invoices;
+
+ALTER VIEW dv_invoices_cast
+ LAYOUT (iv_all_invoices = [20, 20, 200, 306]);
+
+DROP VIEW IF EXISTS dv_seller_sales_array_selection CASCADE;
+
+CREATE VIEW dv_seller_sales_array_selection FOLDER = '/03 - derived views' AS SELECT dv_products_by_category_flatten.categoryname AS categoryname, dv_sales_flatten.employeeid AS seller_id, sum(cast('int', dv_sales_flatten.bundleamount)) AS total_amount FROM dv_products_by_category_flatten AS dv_products_by_category_flatten INNER JOIN dv_sales_flatten AS dv_sales_flatten ON dv_products_by_category_flatten.productid = dv_sales_flatten.productid  GROUP BY dv_products_by_category_flatten.categoryname, dv_sales_flatten.employeeid ORDER BY total_amount DESC;
+
+ALTER VIEW dv_seller_sales_array_selection
+ LAYOUT (dv_products_by_category_flatten = [250, 100, 200, 126], dv_sales_flatten = [665, 76, 200, 206]);
+
+DROP VIEW IF EXISTS dv_user_roles CASCADE;
+
+CREATE VIEW dv_user_roles FOLDER = '/03 - derived views' AS SELECT f_bv_user.displayname AS displayname, bv_group.cn AS cn, bv_group.distinguishedname AS distinguishedname, f_bv_user.samaccountname AS samaccountname, f_bv_user.userprincipalname AS userprincipalname FROM flatten_bv_user AS f_bv_user INNER JOIN bv_group AS bv_group ON f_bv_user.memberof = bv_group.distinguishedname  WHERE f_bv_user.displayname is not null ;
+
+ALTER VIEW dv_user_roles
+ LAYOUT (flatten_bv_user = [188, 222, 200, 106], bv_group = [640, 200, 200, 86]);
+
+DROP INTERFACE VIEW IF EXISTS interaction CASCADE;
+
+CREATE INTERFACE VIEW interaction (
+        customer_code:text,
+        agent_id:decimal,
+        interaction_date:date,
+        case_id:decimal,
+        interaction_phone:text,
+        interaction_ip:text
+    )
+    SET IMPLEMENTATION dv_interactions(
+        customer_code = customer_code,
+        agent_id = agent_id,
+        interaction_date = interaction_date,
+        case_id = global_case_id,
+        interaction_phone = interaction_phone,
+        interaction_ip = interaction_ip    
+)
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW interaction
+ LAYOUT (dv_interactions = [492, 20, 210, 146]);
+
+DROP INTERFACE VIEW IF EXISTS order CASCADE;
+
+CREATE INTERFACE VIEW order (
+        customer_code:text,
+        product_id:decimal,
+        id:decimal,
+        status:text,
+        date_placed:date,
+        date_delivered:date,
+        date_closed:date
+    )
+    SET IMPLEMENTATION dv_orders(
+        customer_code = customer_code,
+        product_id = product_id,
+        id = id,
+        status = status,
+        date_placed = date_placed,
+        date_delivered = date_delivered,
+        date_closed = date_closed    
+)
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW order
+ LAYOUT (dv_orders = [453, 40, 200, 186]);
+
+DROP VIEW IF EXISTS dv_seller_sales_array CASCADE;
+
+CREATE VIEW dv_seller_sales_array FOLDER = '/03 - derived views' AS SELECT dv_seller_sales_array_selection.categoryname AS categoryname, dv_seller_sales_array_selection.seller_id AS seller_id, dv_seller_sales_array_selection.total_amount AS total_amount, rownum() AS ranking FROM dv_seller_sales_array_selection;
+
+ALTER VIEW dv_seller_sales_array
+ LAYOUT (dv_seller_sales_array_selection = [20, 20, 200, 86]);
+
+# #######################################
+# ASSOCIATIONS
+# #######################################
+DROP ASSOCIATION IF EXISTS a_account_sales;
+
+CREATE ASSOCIATION a_account_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/07-associations'
+    ENDPOINT sales account PRINCIPAL (1)
+    ENDPOINT account sales (0,*)
+    ADD MAPPING id=employeeid;
+
+ALTER ASSOCIATION a_account_sales
+ LAYOUT (account = [240, 200, 250, 300], sales = [659, 216, 200, 186]);
+
+DROP ASSOCIATION IF EXISTS a_customer_interaction;
+
+CREATE ASSOCIATION a_customer_interaction REFERENTIAL CONSTRAINT 
+FOLDER = '/07-associations'
+    ENDPOINT interaction customer PRINCIPAL (1)
+    ENDPOINT customer interaction (0,*)
+    ADD MAPPING customer_code_internal=customer_code;
+
+ALTER ASSOCIATION a_customer_interaction
+ LAYOUT (customer = [40, 190, 270, 222], interaction = [460, 260, 270, 162]);
+
+# #######################################
+# WEBSERVICES
+# #######################################
+DROP SOAP WEBSERVICE IF EXISTS ws_interactions;
+
+CREATE SOAP WEBSERVICE ws_interactions
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    I18N  = au_cst
+    DATETYPEMAPPING DATE
+    NOWRAPARRAYS
+    RAISEFAULTONIDU
+    DONOTAPPLYOUTPUTXSLTTOERRORS
+    AUTHENTICATION (WSS BASIC
+    USER 'admin'
+    PASSWORD 'ESCo6clk6dIZ8+hHXRJ1Xg==' ENCRYPTED )
+    OUTPUT 
+        ( STYLE DOCUMENT
+            XSLT (
+                OPERATION = 'getInteractionsByCustomer'
+                INPUTXSLT = '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+   <xsl:output omit-xml-declaration="yes" indent="yes"/>
+   <xsl:template match="node()|@*">
+      <xsl:copy>
+        <xsl:apply-templates select="node()|@*"/>
+      </xsl:copy>
+   </xsl:template>
+   <xsl:template match="RequestID|RequestTime"/>
+</xsl:stylesheet>' ENABLED ) )
+    OPERATION 'getInteractionsByCustomer' (
+        TYPE SELECT
+        SCHEMA VIEW dv_interactions_customer
+        VQL = 'SELECT interactions FROM dv_interactions_customer ^ExecuteIfIsNotNull("WHERE ",@WHEREEXPRESSION,"") CONTEXT (''i18n'' = ''au_cst''^ExecuteIfIsNotNull(", ",@VERBOSEERRORS,"")^ExecuteIfIsNotNull(", ",@CONTEXTEXPRESSION,""))'
+        INPUTS 'getInteractionsByCustomer' (
+            'CUSTOMER_CODE' customer_code:'text' '=' 
+        )
+        OUTPUT 
+            'DV_INTERACTIONS_CUSTOMERReturn': Array of ( 'getDV_INTERACTIONS_CUSTOMERByCUSTOMER_CODEAndINTERACTIONSRow': Register of (
+                interactions : '_array_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip'
+            ) (
+                    '/customer_code'='CUSTOMER_CODE',
+                    '/interactions'='INTERACTIONS':'_array_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip' / '_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip',
+                    '/interactions/agent_id'='AGENT_ID',
+                    '/interactions/global_case_id'='GLOBAL_CASE_ID',
+                    '/interactions/interaction_date'='INTERACTION_DATE',
+                    '/interactions/interaction_ip'='INTERACTION_IP',
+                    '/interactions/interaction_phone'='INTERACTION_PHONE'))
+    )
+    FOLDER = '/09 - data services';
+
+DROP SOAP WEBSERVICE IF EXISTS ws_interactions_customer;
+
+CREATE SOAP WEBSERVICE ws_interactions_customer
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    I18N  = au_cst
+    DATETYPEMAPPING DATE
+    NOWRAPARRAYS
+    RAISEFAULTONIDU
+    DONOTAPPLYOUTPUTXSLTTOERRORS
+    OUTPUT 
+        ( STYLE DOCUMENT )
+    OPERATION 'getDV_INTERACTIONS_CUSTOMERByCUSTOMER_CODEAndINTERACTIONS' (
+        TYPE SELECT
+        SCHEMA VIEW dv_interactions_customer
+        VQL = 'SELECT interactions FROM dv_interactions_customer ^ExecuteIfIsNotNull("WHERE ",@WHEREEXPRESSION,"") CONTEXT (''i18n'' = ''au_cst''^ExecuteIfIsNotNull(", ",@VERBOSEERRORS,"")^ExecuteIfIsNotNull(", ",@CONTEXTEXPRESSION,""))'
+        INPUTS 'GetDV_INTERACTIONS_CUSTOMERByCUSTOMER_CODEAndINTERACTIONS' (
+            'CUSTOMER_CODE' customer_code:'text' '=' 
+        )
+        OUTPUT 
+            'DV_INTERACTIONS_CUSTOMERReturn': Array of ( 'getDV_INTERACTIONS_CUSTOMERByCUSTOMER_CODEAndINTERACTIONSRow': Register of (
+                interactions : '_array_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip'
+            ) (
+                    '/customer_code'='CUSTOMER_CODE',
+                    '/interactions'='INTERACTIONS':'_array_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip' / '_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip',
+                    '/interactions/agent_id'='AGENT_ID',
+                    '/interactions/global_case_id'='GLOBAL_CASE_ID',
+                    '/interactions/interaction_date'='INTERACTION_DATE',
+                    '/interactions/interaction_ip'='INTERACTION_IP',
+                    '/interactions/interaction_phone'='INTERACTION_PHONE'))
+    )
+    FOLDER = '/09 - data services';
+
+DROP REST WEBSERVICE IF EXISTS ws_orders;
+
+CREATE REST WEBSERVICE ws_orders
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    RESOURCES (
+        VIEW bv_wo_orders FIELDS (
+            id : 'decimal', 
+            customer_code : 'text', 
+            status : 'text', 
+            date_placed : 'date', 
+            date_delivered : 'date', 
+            date_closed : 'date'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false ) 
+    FOLDER = '/02 - base views';
+
+DROP REST WEBSERVICE IF EXISTS ws_rest_api;
+
+CREATE REST WEBSERVICE ws_rest_api
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    AUTHENTICATION (BASIC VDP )
+    RESOURCES (
+        VIEW account FIELDS (
+            id : 'text', 
+            name : 'text', 
+            billingstreet : 'text', 
+            billingcity : 'text', 
+            billingstate : 'text', 
+            billingpostalcode : 'text', 
+            billingcountry : 'text', 
+            phone : 'text', 
+            annualrevenue : 'decimal', 
+            numberofemployees : 'long', 
+            ownerid : 'text', 
+            createddate : 'date', 
+            createdbyid : 'text', 
+            lastmodifieddate : 'date', 
+            lastmodifiedbyid : 'text', 
+            systemmodstamp : 'date'
+        ),
+        VIEW customer FIELDS (
+            customer_code_internal : 'text', 
+            id : 'decimal', 
+            complete_name : 'text', 
+            email : 'text', 
+            phone : 'text', 
+            main_address : 'text', 
+            main_postcode : 'int', 
+            main_country : 'text', 
+            registered_date : 'date'
+        ),
+        VIEW employee FIELDS (
+            employee_id : 'int', 
+            first_name : 'text', 
+            last_name : 'text', 
+            email : 'text', 
+            phone_number : 'text', 
+            hire_date : 'date', 
+            job_id : 'text', 
+            salary : 'decimal', 
+            commission_pct : 'decimal', 
+            manager_id : 'int', 
+            department_id : 'int'
+        ),
+        VIEW interaction FIELDS (
+            customer_code : 'text', 
+            agent_id : 'decimal', 
+            interaction_date : 'date', 
+            case_id : 'decimal', 
+            interaction_phone : 'text', 
+            interaction_ip : 'text'
+        ),
+        VIEW order FIELDS (
+            customer_code : 'text', 
+            product_id : 'decimal', 
+            id : 'decimal', 
+            status : 'text', 
+            date_placed : 'date', 
+            date_delivered : 'date', 
+            date_closed : 'date'
+        ),
+        VIEW product FIELDS (
+            productid : 'int', 
+            productname : 'text', 
+            productprice : 'float'
+        ),
+        VIEW sales FIELDS (
+            employeeid : 'text', 
+            productid : 'text', 
+            customerid : 'text', 
+            saleid : 'text', 
+            saledate : 'text', 
+            bundleamount : 'text', 
+            productsaleprice : 'text', 
+            totalprice : 'text'
+        )
+    )
+    ASSOCIATIONS ( a_account_sales, a_customer_interaction )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        MAX_ROWS_PER_PAGE = 10 ) 
+    FOLDER = '/09 - data services';
+
+# #######################################
+# WIDGETS
+# #######################################
+# No widgets
+# #######################################
+# WEBCONTAINER WEB SERVICE DEPLOYMENTS
+# #######################################
+UNDEPLOY IF EXISTS WEBSERVICE ws_orders;
+
+DEPLOY WEBSERVICE ws_orders LOGIN = 'admin' PASSWORD = 'rOpafDhFm4lrTjQskZ+W3g==' ENCRYPTED;
+
+UNDEPLOY IF EXISTS WEBSERVICE ws_rest_api;
+
+DEPLOY WEBSERVICE ws_rest_api;
+
+# #######################################
+# WEBCONTAINER WIDGET DEPLOYMENTS
+# #######################################
+# No deployed widgets
+# #######################################
+# VIEW STATISTICS
+# #######################################
+CREATE OR REPLACE VIEWSTATSUMMARY bv_wo_customer (
+    SET ENABLED = false
+    SET NUMOFROWS = 2856
+    SET STATS (fieldname, avgsize, maxvalue, minvalue, numofdistinctvalues, numofnullvalues) VALUES 
+      (id,132.0,2856,1,2856,0),
+      (main_country,7.4870448179271705,'Zimbabwe','Afghanistan',161,0),
+      (first_name,5.745098039215686,'Willie','Aaron',200,0),
+      (phone,16.165966386554622,'998-(988)907-0205','-(469)313-3332',2856,0),
+      (customer_code_internal,8.991946778711485,'zy7248mc','02Kq6B',2856,0),
+      (main_address,17.71323529411765,'99820 Hooker Crossing','0 Anzinger Trail',2856,0),
+      (email,21.01015406162465,'wwrightp5@meetup.com','aalexandercs@ebay.co.uk',2856,0),
+      (last_name,6.067577030812325,'Young','Adams',250,0),
+      (main_postcode,4.327102803738318,'9950','02204',394,2428),
+      (registered_date,186.0,'2015-12-29T15:22:00+0530','2014-01-12T00:15:00+0530',2853,0)
+);
+
+CREATE OR REPLACE VIEWSTATSUMMARY bv_wo_orders (
+    SET ENABLED = false
+    SET NUMOFROWS = 2665
+    SET STATS (fieldname, avgsize, maxvalue, minvalue, numofdistinctvalues, numofnullvalues) VALUES 
+      (id,132.0,2665,1,2665,0),
+      (customer_code,8.928705440900563,'zy7248mc','05oq5ckMeV81',1743,0),
+      (date_delivered,186.0,'2015-12-03T07:21:16+0530','2015-02-04T23:14:20+0530',237,2428),
+      (status,7.330956848030019,'Pending','Accepted',5,0),
+      (date_closed,186.0,'2015-12-06T00:13:44+0530','2015-02-04T12:23:55+0530',950,1715),
+      (date_placed,186.0,'2015-12-31T04:38:01+0530','2015-01-01T14:54:07+0530',2665,0)
+);
+
+CREATE OR REPLACE VIEWSTATSUMMARY bv_wo_order_item (
+    SET ENABLED = false
+    SET NUMOFROWS = 3620
+    SET STATS (fieldname, avgsize, maxvalue, minvalue, numofdistinctvalues, numofnullvalues) VALUES 
+      (id,132.0,3620,1,3620,0),
+      (product_id,132.0,31,1,31,0),
+      (order_id,132.0,68451,12,3535,0)
+);
+
+# #######################################
+# Closing connection with database denodo_training
+# #######################################
+CLOSE;
+
+
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+EXIT SINGLE USER MODE;
