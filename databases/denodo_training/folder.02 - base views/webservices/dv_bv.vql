@@ -1,0 +1,27 @@
+﻿CREATE OR REPLACE REST WEBSERVICE dv_bv
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    RESOURCES (
+        VIEW dv_bv FIELDS (
+            case_id : 'int', 
+            date_raised : 'date', 
+            date_closed : 'date', 
+            case_status : 'long', 
+            case_summary : 'text', 
+            case_comments : 'text', 
+            customer_code : 'text'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        PROCESS_FUNCTIONS_IN_SELECT_PARAMETER = true ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/02 - base views';
+

@@ -1,0 +1,5 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+UNDEPLOY IF EXISTS WEBSERVICE resttest;
+
+DEPLOY WEBSERVICE resttest LOGIN = '${databases.denodo_training.webcontainer.webservices.resttest.LOGIN}' PASSWORD = '${databases.denodo_training.webcontainer.webservices.resttest.PASSWORD}' ${databases.denodo_training.webcontainer.webservices.resttest.PASSWORD.ENCRYPTED};
+

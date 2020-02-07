@@ -1,0 +1,9 @@
+﻿CREATE OR REPLACE ASSOCIATION a_account_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/07-associations'
+    ENDPOINT sales account PRINCIPAL (1)
+    ENDPOINT account sales (0,*)
+    ADD MAPPING id=employeeid;
+
+ALTER ASSOCIATION a_account_sales
+ LAYOUT (account = [240, 200, 250, 300], sales = [659, 216, 200, 186]);
+

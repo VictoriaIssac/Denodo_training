@@ -1,0 +1,30 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC departoracle
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_human_resources
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.departoracle.SCHEMANAME}' ESCAPE
+    RELATIONNAME='DEPARTORACLE' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        description = 'DESCRIPTION' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='1000', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE departoracle I18N es (
+        id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        description:text (sourcetyperadix = '10', sourcetypesize = '1000', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE FULL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD departoracle(
+        I18N es
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD description (any) OPT ANY
+        )
+        OUTPUTLIST (description, id
+        )
+        WRAPPER (jdbc departoracle)
+    );
+

@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dm_join FOLDER = '/01 - data sources' AS SELECT bv_employee.empid AS empid, bv_employee.ename AS ename, bv_employee.salary AS salary, bv_employee.deptid AS deptid, bv_employee.description AS description, bv_employee.date AS date, countries.country_id AS country_id, countries.country_name AS country_name, countries.region_id AS region_id FROM bv_employee AS bv_employee, countries AS countries CONTEXT ('I18N' = 'us_pst_pdt', DATAMOVEMENTPLAN = bv_employee : OFF countries : JDBC ds_new);
+
+ALTER VIEW dm_join
+ LAYOUT (bv_employee = [20, 20, 200, 146], countries = [351, 278, 200, 86]);
+

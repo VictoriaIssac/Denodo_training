@@ -1,0 +1,21 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE DF ds_chinna
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.URL}'
+    AUTHENTICATION OAUTH20 ( 
+      ACCESSTOKEN = '${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.ACCESSTOKEN}' ${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.ACCESSTOKEN.ENCRYPTED}
+      REQUESTSIGNINGMETHOD = ${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.REQUESTSIGNINGMETHOD}
+      AUTHENTICATION_GRANT = ${databases.denodo_training.datasources.df.ds_chinna.ROUTE.AUTHENTICATION.GRANT}
+      TOKENENDPOINTURL = '${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.TOKENENDPOINTURL}'
+      CLIENTIDENTIFIER = '${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.CLIENTIDENTIFIER}'
+      CLIENTSECRET = '${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.CLIENTSECRET}' ${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.CLIENTSECRET.ENCRYPTED}
+      REFRESHTOKEN = '${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.REFRESHTOKEN}' ${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.REFRESHTOKEN.ENCRYPTED}
+      ACCESSTOKENEXPIRESIN = ${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.ACCESSTOKENEXPIRESIN}
+      AUTHORIZATIONSERVERURL = '${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.AUTHORIZATIONSERVERURL}'
+      REDIRECTIONENDPOINTURL = ${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.REDIRECTIONENDPOINTURL}
+      SETSTATEPARAMETER = ${databases.denodo_training.datasources.df.ds_chinna.ROUTE.HTTP.SETSTATEPARAMETER}
+    )
+    PROXY OFF
+    COLUMNDELIMITER = ','
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = FALSE;
+

@@ -1,0 +1,33 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC timecheck
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_human_resources
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.timecheck.SCHEMANAME}' 
+    RELATIONNAME='TIMECHECK' 
+    OUTPUTSCHEMA (
+        time1 = 'TIME1' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='6', sourcetyperadix='10', sourcetypesize='11', sourcetypeid='93', sourcetypename='TIMESTAMP(6)')  SORTABLE,
+        date1 = 'DATE1' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE,
+        system = 'SYSTEM' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE timecheck I18N us_pst_pdt (
+        time1:timestamp (sourcetypedecimals = '6', sourcetyperadix = '10', sourcetypesize = '11', sourcetypeid = '93'), 
+        date1:timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93'), 
+        system:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD timecheck(
+        I18N us_pst_pdt
+        CONSTRAINTS (
+             ADD time1 (any) OPT ANY
+             ADD date1 (any) OPT ANY
+             ADD system (any) OPT ANY
+        )
+        OUTPUTLIST (date1, system, time1
+        )
+        WRAPPER (jdbc timecheck)
+    );
+

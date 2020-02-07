@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW pv_time_dim_j_pv_time_dim FOLDER = '/01 - data sources' AS SELECT pv_time_dim1.calendar_yr AS calendar_yr, pv_time_dim1.calendar_qtr AS calendar_qtr, pv_time_dim1.last_qtr_dt AS last_qtr_dt, pv_time_dim1.in_to_effective_date AS in_to_effective_date, pv_time_dim1.in_from_effective_date AS in_from_effective_date FROM pv_time_dim AS pv_time_dim INNER JOIN pv_time_dim AS pv_time_dim1 ON (pv_time_dim.in_to_effective_date = pv_time_dim1.in_to_effective_date AND pv_time_dim.in_from_effective_date = pv_time_dim1.in_from_effective_date)  WHERE (pv_time_dim.calendar_yr = '2019' AND pv_time_dim.calendar_qtr = 2 AND pv_time_dim.last_qtr_dt = 1) CONTEXT ('I18N' = 'us_pst');
+
+ALTER VIEW pv_time_dim_j_pv_time_dim
+ LAYOUT (pv_time_dim = [20, 20, 270, 126], pv_time_dim = [420, 70, 620, 126]);
+

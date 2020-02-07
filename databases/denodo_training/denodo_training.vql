@@ -1,0 +1,21 @@
+﻿CREATE OR REPLACE DATABASE denodo_training ''
+  AUTHENTICATION LDAP denodo_training.ds_ldap
+    USERBASE = 'CN=Users,DC=denodo,DC=loc'
+    USERATTRIBUTENAME = 'sAMAccountName'
+    USERSEARCH = '(&(objectClass=person))'
+    ROLEBASE = 'OU=groups,DC=denodo,DC=loc'
+    ROLEATTRIBUTENAME = 'cn'
+    ROLESEARCH = '(member=@{{USERDN}})'
+    ROLESSEARCHAUTHENTICATION;
+
+ALTER DATABASE denodo_training
+  CHARSET RESTRICTED;
+
+ALTER DATABASE denodo_training
+  CACHE OFF (
+    MAINTENANCE OFF
+    MAINTAINERPERIOD 21600
+    TIMETOLIVE NOEXPIRE
+    DATASOURCE DEFAULT
+  );
+

@@ -1,0 +1,45 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_employee2
+    DATASOURCENAME=ds_new
+    CATALOGNAME='${databases.denodo_training.views.jdbc.bv_employee2.CATALOGNAME}' ESCAPE
+    SCHEMANAME='${databases.denodo_training.views.jdbc.bv_employee2.SCHEMANAME}' 
+    RELATIONNAME='bv_employee' 
+    OUTPUTSCHEMA (
+        empid = 'empid' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        ename = 'ename' :'java.lang.String' (OPT) (sourcetypesize='20', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        salary = 'salary' :'java.lang.Double' (OPT) (sourcetyperadix='2', sourcetypesize='53', sourcetypeid='8', sourcetypename='float')  SORTABLE,
+        deptid = 'deptid' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        description = 'description' :'java.lang.String' (OPT) (sourcetypesize='2147483647', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        field_0 = 'field_0' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='date')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_employee2 I18N us_pst_pdt (
+        empid:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '-5'), 
+        ename:text (sourcetypesize = '20', sourcetypeid = '12'), 
+        salary:double (sourcetyperadix = '2', sourcetypesize = '53', sourcetypeid = '8'), 
+        deptid:text (sourcetypesize = '10', sourcetypeid = '12'), 
+        description:text (sourcetypesize = '2147483647', sourcetypeid = '12'), 
+        field_0:localdate (sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '91')
+    )
+    FOLDER = '/02 - base views'
+    DESCRIPTION = 'denodo'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_employee2(
+        I18N us_pst_pdt
+        CONSTRAINTS (
+             ADD empid (any) OPT ANY
+             ADD ename (any) OPT ANY
+             ADD salary (any) OPT ANY
+             ADD deptid (any) OPT ANY
+             ADD description (any) OPT ANY
+             ADD field_0 (any) OPT ANY
+        )
+        OUTPUTLIST (deptid, description, empid, ename, field_0, salary
+        )
+        WRAPPER (jdbc bv_employee2)
+    )
+    DATA_LOAD_QUERY = 'SELECT empid, ename, salary, deptid, description, date
+FROM denodo_training.bv_employee';
+

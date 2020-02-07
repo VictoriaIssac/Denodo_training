@@ -1,0 +1,65 @@
+﻿CREATE OR REPLACE WRAPPER JSON ds_order1_2740
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_order1
+    TUPLEROOT '/JSONFile'
+    OUTPUTSCHEMA (jsonfile = 'JSONFile' : REGISTER OF (
+        start = 'START' : 'java.lang.String' (OBL) (DEFAULTVALUE='2019-10-30') EXTERN,
+        end = 'END' : 'java.lang.String' (OBL) (DEFAULTVALUE='2019-11-06') EXTERN,
+        name = 'name' : 'java.lang.String',
+        elements = 'elements' : ARRAY OF (
+            elements = 'elements' : REGISTER OF (
+                id = 'id' : 'java.lang.Integer',
+                name = 'name' : 'java.lang.String',
+                startdate = 'startdate' : 'java.lang.String',
+                enddate = 'enddate' : 'java.lang.String'
+            )
+        ),
+        links = 'links' : ARRAY OF (
+            links = 'links' : REGISTER OF (
+                rel = 'rel' : 'java.lang.String',
+                href = 'href' : 'java.lang.String'
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE ds_order1_elements_elements_559 AS REGISTER OF (id:int, name:text, startdate:text, enddate:text);
+
+CREATE OR REPLACE TYPE ds_order1_elements_1612 AS ARRAY OF ds_order1_elements_elements_559;
+
+CREATE OR REPLACE TYPE ds_order1_links_links AS REGISTER OF (rel:text, href:text);
+
+CREATE OR REPLACE TYPE ds_order1_links AS ARRAY OF ds_order1_links_links;
+
+CREATE OR REPLACE TABLE ds_order1 I18N us_pst_pdt (
+        start:text (extern), 
+        end:text (extern), 
+        name:text, 
+        elements:ds_order1_elements_1612, 
+        links:ds_order1_links
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_order1(
+        I18N us_pst_pdt
+        CONSTRAINTS (
+             ADD start (=) OBL ONE
+             ADD end (=) OBL ONE
+             ADD name NOS ZERO ()
+             ADD elements NOS ZERO ()
+             ADD elements NOS ZERO ()
+             ADD elements.id NOS ZERO ()
+             ADD elements.name NOS ZERO ()
+             ADD elements.startdate NOS ZERO ()
+             ADD elements.enddate NOS ZERO ()
+             ADD links NOS ZERO ()
+             ADD links NOS ZERO ()
+             ADD links.rel NOS ZERO ()
+             ADD links.href NOS ZERO ()
+        )
+        OUTPUTLIST (elements, links, name
+        )
+        WRAPPER (json ds_order1_2740)
+    );
+

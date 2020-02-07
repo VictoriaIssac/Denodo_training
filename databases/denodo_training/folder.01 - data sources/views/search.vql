@@ -1,0 +1,72 @@
+﻿CREATE OR REPLACE WRAPPER JSON search_9295
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=search
+    TUPLEROOT '/JSONFile'
+    OUTPUTSCHEMA (jsonfile = 'JSONFile' : REGISTER OF (
+        f = 'F' : 'java.lang.String' (OBL) (DEFAULTVALUE='20') EXTERN,
+        name = 'name' : 'java.lang.String',
+        viewsmetadata_0 = 'views-metadata' : ARRAY OF (
+            viewsmetadata_0 = 'views-metadata' : REGISTER OF (
+                name = 'name' : 'java.lang.String',
+                links = 'links' : ARRAY OF (
+                    links = 'links' : REGISTER OF (
+                        rel = 'rel' : 'java.lang.String',
+                        href = 'href' : 'java.lang.String',
+                        title = 'title' : 'java.lang.String'
+                    )
+                )
+            )
+        ),
+        links = 'links' : ARRAY OF (
+            links = 'links' : REGISTER OF (
+                rel = 'rel' : 'java.lang.String',
+                href = 'href' : 'java.lang.String'
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE search_viewsmetadata_0_viewsmetadata_0_links_links AS REGISTER OF (rel:text, href:text, title:text);
+
+CREATE OR REPLACE TYPE search_viewsmetadata_0_viewsmetadata_0_links AS ARRAY OF search_viewsmetadata_0_viewsmetadata_0_links_links;
+
+CREATE OR REPLACE TYPE search_viewsmetadata_0_viewsmetadata_0 AS REGISTER OF (name:text, links:search_viewsmetadata_0_viewsmetadata_0_links);
+
+CREATE OR REPLACE TYPE search_viewsmetadata_0 AS ARRAY OF search_viewsmetadata_0_viewsmetadata_0;
+
+CREATE OR REPLACE TYPE search_links_links AS REGISTER OF (rel:text, href:text);
+
+CREATE OR REPLACE TYPE search_links AS ARRAY OF search_links_links;
+
+CREATE OR REPLACE TABLE search I18N es (
+        f:text (extern), 
+        name:text, 
+        viewsmetadata_0:search_viewsmetadata_0, 
+        links:search_links
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD search(
+        I18N es
+        CONSTRAINTS (
+             ADD f (=) OBL ONE
+             ADD name NOS ZERO ()
+             ADD viewsmetadata_0 NOS ZERO ()
+             ADD viewsmetadata_0 NOS ZERO ()
+             ADD viewsmetadata_0.name NOS ZERO ()
+             ADD viewsmetadata_0.links NOS ZERO ()
+             ADD viewsmetadata_0.links NOS ZERO ()
+             ADD viewsmetadata_0.links.rel NOS ZERO ()
+             ADD viewsmetadata_0.links.href NOS ZERO ()
+             ADD viewsmetadata_0.links.title NOS ZERO ()
+             ADD links NOS ZERO ()
+             ADD links NOS ZERO ()
+             ADD links.rel NOS ZERO ()
+             ADD links.href NOS ZERO ()
+        )
+        OUTPUTLIST (links, name, viewsmetadata_0
+        )
+        WRAPPER (json search_9295)
+    );
+

@@ -1,0 +1,9 @@
+﻿CREATE OR REPLACE ASSOCIATION a_customer_interaction REFERENTIAL CONSTRAINT 
+FOLDER = '/07-associations'
+    ENDPOINT interaction customer PRINCIPAL (1)
+    ENDPOINT customer interaction (0,*)
+    ADD MAPPING customer_code_internal=customer_code;
+
+ALTER ASSOCIATION a_customer_interaction
+ LAYOUT (customer = [40, 190, 270, 222], interaction = [460, 260, 270, 162]);
+

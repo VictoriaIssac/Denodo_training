@@ -1,0 +1,41 @@
+﻿CREATE OR REPLACE INTERFACE VIEW account (
+        id:text,
+        name:text,
+        billingstreet:text,
+        billingcity:text,
+        billingstate:text,
+        billingpostalcode:text,
+        billingcountry:text,
+        phone:text,
+        annualrevenue:decimal,
+        numberofemployees:long,
+        ownerid:text,
+        createddate:date,
+        createdbyid:text,
+        lastmodifieddate:date,
+        lastmodifiedbyid:text,
+        systemmodstamp:date
+    )
+    SET IMPLEMENTATION bv_sf_account(
+        id = id,
+        name = name,
+        billingstreet = billingstreet,
+        billingcity = billingcity,
+        billingstate = billingstate,
+        billingpostalcode = billingpostalcode,
+        billingcountry = billingcountry,
+        phone = phone,
+        annualrevenue = cast('decimal', annualrevenue),
+        numberofemployees = cast('long', numberofemployees),
+        ownerid = ownerid,
+        createddate = cast('date', createddate),
+        createdbyid = createdbyid,
+        lastmodifieddate = cast('date', lastmodifieddate),
+        lastmodifiedbyid = lastmodifiedbyid,
+        systemmodstamp = cast('date', systemmodstamp)    
+)
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW account
+ LAYOUT (bv_sf_account = [520, 20, 290, 633]);
+

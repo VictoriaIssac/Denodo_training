@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_bv_hr_departments FOLDER = '/01 - data sources' AS SELECT bv_hr_departments.department_id AS department_id, bv_hr_departments.department_name AS department_name, bv_hr_departments.manager_id AS manager_id, bv_hr_departments.location_id AS location_id FROM bv_hr_departments CONTEXT ('I18N' = 'us_pst_pdt');
+
+ALTER VIEW p_bv_hr_departments
+ LAYOUT (bv_hr_departments = [20, 20, 232, 106]);
+

@@ -1,0 +1,57 @@
+﻿CREATE OR REPLACE WRAPPER LDAP bv_ad_computer
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_active_directory
+    OBJECTCLASSES='computer'
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        cn = 'cn' : 'java.lang.String' (OPT),
+        description = 'description' : ARRAY OF (
+            description = 'DESCRIPTION' : REGISTER OF (
+                description = 'description' : 'java.lang.String' (OPT)
+            )
+        ),
+        serialnumber = 'serialNumber' : ARRAY OF (
+            "serialNumber" = 'SERIALNUMBER' : REGISTER OF (
+                serialnumber = 'serialNumber' : 'java.lang.String' (OPT)
+            )
+        )
+    );
+
+CREATE OR REPLACE TYPE computer_cn_cn AS REGISTER OF (cn:text);
+
+CREATE OR REPLACE TYPE computer_cn AS ARRAY OF computer_cn_cn;
+
+CREATE OR REPLACE TYPE bv_ad_computer_description_description AS REGISTER OF (description:text);
+
+CREATE OR REPLACE TYPE bv_ad_computer_description AS ARRAY OF bv_ad_computer_description_description;
+
+CREATE OR REPLACE TYPE "bv_ad_computer_serialNumber_serialNumber" AS REGISTER OF (serialnumber:text);
+
+CREATE OR REPLACE TYPE "bv_ad_computer_serialNumber" AS ARRAY OF "bv_ad_computer_serialNumber_serialNumber";
+
+CREATE OR REPLACE TABLE bv_ad_computer I18N au_cst (
+        cn:computer_cn (description = 'field'), 
+        description:bv_ad_computer_description, 
+        serialnumber:"bv_ad_computer_serialNumber"
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_ad_computer(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD cn (any) OPT ANY
+             ADD description NOS ZERO ()
+             ADD description NOS ZERO ()
+             ADD description.description (any) OPT ANY
+             ADD serialnumber NOS ZERO ()
+             ADD serialnumber NOS ZERO ()
+             ADD serialnumber.serialnumber (any) OPT ANY
+        )
+        OUTPUTLIST (cn, description, serialnumber
+        )
+        WRAPPER (ldap bv_ad_computer)
+    );
+

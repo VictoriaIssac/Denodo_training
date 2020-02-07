@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW test_comm FOLDER = '/02 - base views' AS SELECT bv_employ2.empid AS empid, bv_employ2.ename AS ename, bv_employ2.salary AS salary, bv_employ2.deptid AS deptid, bv_employ2.description AS description, bv_employ2.field_0 AS field_0, departments1.department_id AS department_id, departments1.department_name AS department_name, departments1.manager_id AS manager_id, departments1.location_id AS location_id FROM bv_employ2 AS bv_employ2 INNER JOIN departments1 AS departments1 ON bv_employ2.deptid = departments1.department_id  CONTEXT ('I18N' = 'us_pst');
+
+ALTER VIEW test_comm
+ LAYOUT (bv_employ2 = [20, 20, 200, 146], departments1 = [422, 67, 200, 106]);
+

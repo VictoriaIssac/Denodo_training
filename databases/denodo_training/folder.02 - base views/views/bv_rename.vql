@@ -1,0 +1,33 @@
+﻿CREATE OR REPLACE WRAPPER CUSTOM bv_rename
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_ssh
+    PARAMETERS (
+      'Host' = '10.132.23.17',
+      'Port' = 22,
+      'User' = 'vissac',
+      'Password' = 'vagb+2joKd+AIx6nNWLtTCJ8pw1u3QteVXcjchjnEPC+z9ZesJsfY317fdaLsjbawafPvjyomT70GWZSpmyHVxdivj5Ce+/MOpRCgw6edY5LQ8XNbPW7WvzDc+QSIa6R' ENCRYPTED,
+      'Command' = 'rename C:/Denodo_new_7.0/work/scheduler/data/csv/2019-09-03.csv 2019-09-04.csv'
+    )
+    OUTPUTSCHEMA (
+        exitcode_0 = 'Exit code' : 'java.lang.String' (sourcetypeid='12')  NOT SORTABLE NOT UPDATEABLE,
+        executionresult_0 = 'Execution result' : 'java.lang.String' (sourcetypeid='12')  NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE bv_rename I18N au_cst (
+        exitcode_0:text (sourcetypeid = '12'), 
+        executionresult_0:text (sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_rename(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD exitcode_0 NOS ZERO ()
+             ADD executionresult_0 NOS ZERO ()
+        )
+        OUTPUTLIST (executionresult_0, exitcode_0
+        )
+        WRAPPER (custom bv_rename)
+    );
+

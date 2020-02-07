@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_emp_dep FOLDER = '/03 - derived views' AS SELECT bv_employee.empid AS empid, bv_employee.ename AS ename, bv_employee.salary AS salary, bv_employee.deptid AS deptid, department.id AS id, department.department AS department, newid, bv_employee.description AS description, bv_employee.date AS date FROM bv_employee AS bv_employee INNER JOIN department AS department ON bv_employee.deptid = department.id  USING PARAMETERS ( newid : int) CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW dv_emp_dep
+ LAYOUT (bv_employee = [20, 20, 200, 106], department = [415, 140, 200, 66]);
+

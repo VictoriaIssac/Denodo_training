@@ -1,0 +1,26 @@
+﻿CREATE OR REPLACE WRAPPER DF bv_describe
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_test
+    OUTPUTSCHEMA (
+        id = 'id' (OPT),
+        description1 = 'description1' (OPT)
+    );
+
+CREATE OR REPLACE TABLE bv_describe I18N es (
+        id:text, 
+        description1:text
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_describe(
+        I18N es
+        CONSTRAINTS (
+             ADD id (=,in) OPT ANY
+             ADD description1 (=,in) OPT ANY
+        )
+        OUTPUTLIST (description1, id
+        )
+        WRAPPER (df bv_describe)
+    );
+

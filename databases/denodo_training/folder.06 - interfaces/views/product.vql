@@ -1,0 +1,15 @@
+﻿CREATE OR REPLACE INTERFACE VIEW product (
+        productid:int,
+        productname:text,
+        productprice:float
+    )
+    SET IMPLEMENTATION bv_products_by_category(
+        productid = productid,
+        productname = productname,
+        productprice = productprice    
+)
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW product
+ LAYOUT (bv_products_by_category = [365, 71, 334, 106]);
+

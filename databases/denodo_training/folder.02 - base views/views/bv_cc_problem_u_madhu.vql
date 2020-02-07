@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW bv_cc_problem_u_madhu FOLDER = '/02 - base views' AS SELECT problem_code, problem_description, count FROM (SELECT * FROM bv_cc_problem UNION SELECT * FROM madhu) CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW bv_cc_problem_u_madhu
+ LAYOUT (bv_cc_problem = [20, 20, 200, 66], madhu = [379, 29, 200, 46]);
+

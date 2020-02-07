@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW bv_employee_j_bv_million FOLDER = '/01 - data sources' AS SELECT bv_employee.empid AS empid, bv_employee.ename AS ename, bv_employee.salary AS salary, bv_employee.deptid AS deptid, bv_employee.description AS description, bv_employee.date AS date, bv_million.globalrank AS globalrank, bv_million.tldrank AS tldrank, bv_million.domain AS domain, bv_million.tld AS tld, bv_million.refsubnets AS refsubnets, bv_million.refips AS refips, bv_million.idn_domain AS idn_domain, bv_million.idn_tld AS idn_tld, bv_million.prevglobalrank AS prevglobalrank, bv_million.prevtldrank AS prevtldrank, bv_million.prevrefsubnets AS prevrefsubnets, bv_million.prevrefips AS prevrefips FROM bv_employee AS bv_employee INNER JOIN denodo.bv_million AS bv_million ON bv_employee.empid = bv_million.globalrank  CONTEXT ('I18N' = 'us_pst_pdt');
+
+ALTER VIEW bv_employee_j_bv_million
+ LAYOUT (bv_employee = [20, 20, 200, 146], bv_million = [458, 116, 200, 225]);
+

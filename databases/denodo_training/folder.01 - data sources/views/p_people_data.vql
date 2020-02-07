@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_people_data FOLDER = '/01 - data sources' AS SELECT people_data.effective_date AS effective_date, people_data.in_from_effective_date AS in_from_effective_date, people_data.in_to_effective_date AS in_to_effective_date, effective FROM people_data USING PARAMETERS ( effective : localdate) CONTEXT ('I18N' = 'us_pst');
+
+ALTER VIEW p_people_data
+ LAYOUT (people_data = [20, 20, 250, 86]);
+

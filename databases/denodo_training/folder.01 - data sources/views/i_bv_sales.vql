@@ -1,0 +1,13 @@
+﻿CREATE OR REPLACE TYPE ds_sales_salesdata_salesdata_sales_sales_6506 AS REGISTER OF (saleid:text, productid:text, employeeid:text, customerid:text, saledate:text, bundleamount:text, productsaleprice:text, totalprice:text);
+
+CREATE OR REPLACE TYPE ds_sales_salesdata_salesdata_sales_2516 AS ARRAY OF ds_sales_salesdata_salesdata_sales_sales_6506;
+
+CREATE OR REPLACE TYPE ds_sales_salesdata_salesdata_5351 AS REGISTER OF (productid:text, sales:ds_sales_salesdata_salesdata_sales_2516);
+
+CREATE OR REPLACE TYPE ds_sales_salesdata_5345 AS ARRAY OF ds_sales_salesdata_salesdata_5351;
+
+CREATE OR REPLACE INTERFACE VIEW i_bv_sales (
+        salesdata:ds_sales_salesdata_5345
+    )
+    FOLDER = '/01 - data sources';
+

@@ -1,0 +1,43 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC newemployee
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_victoria
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.newemployee.CATALOGNAME}' ESCAPE
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.newemployee.SCHEMANAME}' 
+    RELATIONNAME='employee' 
+    OUTPUTSCHEMA (
+        empid = 'empid' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE,
+        ename = 'ename' :'java.lang.String' (OPT) (sourcetypesize='20', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        salary = 'salary' :'java.lang.Double' (OPT) (sourcetyperadix='2', sourcetypesize='53', sourcetypeid='8', sourcetypename='float')  SORTABLE,
+        deptid = 'deptid' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        description = 'description' :'java.lang.String' (OPT) (sourcetypesize='2147483647', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        date = 'date' :'java.lang.String' (OPT) (sourcetypesize='2147483647', sourcetypeid='-9', sourcetypename='nvarchar')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE newemployee I18N us_pst_pdt (
+        empid:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '4'), 
+        ename:text (sourcetypesize = '20', sourcetypeid = '12'), 
+        salary:double (sourcetyperadix = '2', sourcetypesize = '53', sourcetypeid = '8'), 
+        deptid:text (sourcetypesize = '10', sourcetypeid = '12'), 
+        description:text (sourcetypesize = '2147483647', sourcetypeid = '12'), 
+        date:text (sourcetypesize = '2147483647', sourcetypeid = '-9')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE FULL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD newemployee(
+        I18N us_pst_pdt
+        CONSTRAINTS (
+             ADD empid (any) OPT ANY
+             ADD ename (any) OPT ANY
+             ADD salary (any) OPT ANY
+             ADD deptid (any) OPT ANY
+             ADD description (any) OPT ANY
+             ADD date (any) OPT ANY
+        )
+        OUTPUTLIST (date, deptid, description, empid, ename, salary
+        )
+        WRAPPER (jdbc newemployee)
+    );
+

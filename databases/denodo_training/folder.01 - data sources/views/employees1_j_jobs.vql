@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW employees1_j_jobs FOLDER = '/01 - data sources' AS SELECT employees1.employee_id AS employee_id, employees1.first_name AS first_name, employees1.last_name AS last_name, employees1.email AS email, employees1.phone_number AS phone_number, employees1.hire_date AS hire_date, employees1.salary AS salary, employees1.commission_pct AS commission_pct, employees1.manager_id AS manager_id, employees1.department_id AS department_id, bv_wo_order_item.id AS id, bv_wo_order_item.order_id AS order_id, bv_wo_order_item.product_id AS product_id FROM employees1 AS employees1 NESTED PARALLEL INNER JOIN 5 bv_wo_order_item AS bv_wo_order_item ON employees1.employee_id = bv_wo_order_item.id  CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW employees1_j_jobs
+ LAYOUT (employees1 = [20, 20, 200, 225], bv_wo_order_item = [420, 11, 200, 86]);
+

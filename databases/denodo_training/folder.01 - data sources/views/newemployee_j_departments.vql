@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW newemployee_j_departments FOLDER = '/01 - data sources' AS SELECT newemployee.empid AS empid, newemployee.ename AS ename, newemployee.salary AS salary, newemployee.deptid AS deptid, newemployee.description AS description, newemployee.date AS date, departments.department_id AS department_id, departments.department_name AS department_name, departments.manager_id AS manager_id, departments.location_id AS location_id FROM newemployee AS newemployee INNER JOIN admin.departments AS departments ON newemployee.deptid = departments.department_id  CONTEXT ('I18N' = 'us_pst_pdt');
+
+ALTER VIEW newemployee_j_departments
+ LAYOUT (newemployee = [20, 20, 200, 146], departments = [386, 41, 200, 106]);
+

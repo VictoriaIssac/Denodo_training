@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW rolesinview1 AS SELECT * FROM catalog_permissions() WHERE rolename = '@var' CONTEXT ('I18N' = 'us_pst_pdt');
+

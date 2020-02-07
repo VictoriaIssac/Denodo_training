@@ -1,0 +1,25 @@
+﻿CREATE OR REPLACE REST WEBSERVICE ds_order2
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 9000000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    RESOURCES (
+        VIEW ds_order2 FIELDS (
+            e : 'localdate' OBL, 
+            s : 'localdate' OBL, 
+            name : 'text', 
+            elements : 'ds_order1_elements', 
+            links : 'ds_order1_links'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        PROCESS_FUNCTIONS_IN_SELECT_PARAMETER = true ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/01 - data sources';
+

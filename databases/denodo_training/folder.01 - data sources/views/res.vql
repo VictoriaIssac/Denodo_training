@@ -1,0 +1,24 @@
+﻿CREATE OR REPLACE WRAPPER JDBC res
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_new
+    SQLSENTENCE='(SELECT id FROM [dbo].[department])'   
+    OUTPUTSCHEMA (
+        id = 'id' :'java.lang.Integer' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE res I18N au_cst (
+        id:int (sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD res(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id NOS ZERO ()
+        )
+        OUTPUTLIST (id
+        )
+        WRAPPER (jdbc res)
+    );
+

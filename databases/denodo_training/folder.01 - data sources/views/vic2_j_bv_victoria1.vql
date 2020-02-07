@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW vic2_j_bv_victoria1 FOLDER = '/01 - data sources' AS SELECT vic2.empid AS empid, vic2.ename AS ename, vic2.salary AS salary, vic2.deptid AS deptid, vic2.description AS description, vic2.date AS date, bv_victoria1.hijuklokjhnabc123thyrdnloks_0 AS hijuklokjhnabc123thyrdnloks_0, bv_victoria1.hi AS hi FROM vic2 AS vic2 INNER JOIN bv_victoria1 AS bv_victoria1 ON vic2.date = bv_victoria1.hi  CONTEXT ('I18N' = 'es');
+
+ALTER VIEW vic2_j_bv_victoria1
+ LAYOUT (vic2 = [20, 20, 200, 146], bv_victoria1 = [488, 68, 200, 66]);
+

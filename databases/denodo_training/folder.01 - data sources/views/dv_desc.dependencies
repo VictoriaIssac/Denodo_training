@@ -1,0 +1,5 @@
+﻿/databases/denodo_training/folder.01 - data sources/01 - data sources.vql
+/databases/denodo_training/folder.01 - data sources/datasources/df/ds_test.vql
+/databases/denodo_training/folder.01 - data sources/views/bv_describe.vql
+/databases/denodo_training/folder.01 - data sources/datasources/jdbc/ds_new.vql
+/databases/denodo_training/folder.01 - data sources/views/describe_mssql.vql

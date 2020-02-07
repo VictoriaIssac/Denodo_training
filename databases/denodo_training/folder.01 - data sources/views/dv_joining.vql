@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_joining FOLDER = '/01 - data sources' AS SELECT departoracle.description AS description, department.id AS id, department.department AS department, department.description1 AS description1, departmysql.descr AS descr FROM (departoracle AS departoracle INNER JOIN department AS department ON departoracle.id = department.id ) INNER JOIN departmysql AS departmysql ON department.id = departmysql.id  CONTEXT ('I18N' = 'es');
+
+ALTER VIEW dv_joining
+ LAYOUT (departoracle = [20, 20, 200, 66], department = [356, 63, 200, 86], departmysql = [708, 87, 200, 66]);
+

@@ -1,0 +1,29 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC dual_bv
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_support_site
+    SCHEMANAME='${databases.denodo_training.folder.02 - base views.views.jdbc.dual_bv.SCHEMANAME}' ESCAPE
+    RELATIONNAME='DUAL_BV' 
+    OUTPUTSCHEMA (
+        dept_id = 'DEPT_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        empid = 'EMPID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE dual_bv I18N au_cst (
+        dept_id:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        empid:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD dual_bv(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD dept_id (any) OPT ANY
+             ADD empid (any) OPT ANY
+        )
+        OUTPUTLIST (dept_id, empid
+        )
+        WRAPPER (jdbc dual_bv)
+    );
+

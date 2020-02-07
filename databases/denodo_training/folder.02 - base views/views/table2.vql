@@ -1,0 +1,26 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC table2
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_support_site
+    SCHEMANAME='${databases.denodo_training.folder.02 - base views.views.jdbc.table2.SCHEMANAME}' ESCAPE
+    RELATIONNAME='TABLE2' 
+    OUTPUTSCHEMA (
+        column1 = 'COLUMN1' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE table2 I18N au_cst (
+        column1:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD table2(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD column1 (any) OPT ANY
+        )
+        OUTPUTLIST (column1
+        )
+        WRAPPER (jdbc table2)
+    );
+

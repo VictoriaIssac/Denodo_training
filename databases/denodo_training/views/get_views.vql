@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW get_views AS SELECT * FROM get_views() CONTEXT ('I18N' = 'au_cst');
+

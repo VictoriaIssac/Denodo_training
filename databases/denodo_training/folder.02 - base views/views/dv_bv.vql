@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_bv FOLDER = '/02 - base views' AS SELECT bv_cc_case_definition.case_id AS case_id, bv_cc_case_definition.date_raised AS date_raised, bv_cc_case_definition.date_closed AS date_closed, bv_cc_case_definition.case_status AS case_status, bv_cc_case_definition.case_summary AS case_summary, bv_cc_case_definition.case_comments AS case_comments, bv_cc_case_definition.customer_code AS customer_code FROM bv_cc_case_definition CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW dv_bv
+ LAYOUT (bv_cc_case_definition = [20, 20, 257, 166]);
+

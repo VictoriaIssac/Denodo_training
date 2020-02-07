@@ -1,0 +1,62 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC c_bv_hr_employees701834142320339474159329609208855423649252716
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_cache_test
+    CATALOGNAME='${databases.denodo_training.folder.02 - base views.views.jdbc.c_bv_hr_employees701834142320339474159329609208855423649252716.CATALOGNAME}' 
+    RELATIONNAME='c_bv_hr_employees701834142320339474159329609208855423649252716' 
+    OUTPUTSCHEMA (
+        employee_id = 'employee_id' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='20', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        first_name = 'first_name' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-1', sourcetypename='LONGTEXT')  SORTABLE,
+        last_name = 'last_name' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-1', sourcetypename='LONGTEXT')  SORTABLE,
+        email = 'email' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-1', sourcetypename='LONGTEXT')  SORTABLE,
+        phone_number = 'phone_number' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-1', sourcetypename='LONGTEXT')  SORTABLE,
+        hire_date = 'hire_date' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-1', sourcetypename='LONGTEXT')  SORTABLE,
+        job_id = 'job_id' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-1', sourcetypename='LONGTEXT')  SORTABLE,
+        salary = 'salary' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='22', description='', sourcetypeid='8', sourcetypename='DOUBLE')  SORTABLE,
+        commission_pct = 'commission_pct' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='22', description='', sourcetypeid='8', sourcetypename='DOUBLE')  SORTABLE,
+        manager_id = 'manager_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='2', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        department_id = 'department_id' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='22', description='', sourcetypeid='8', sourcetypename='DOUBLE')  SORTABLE,
+        expirationdate = 'expirationDate' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  ESCAPE SORTABLE,
+        rowstatus = 'rowStatus' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='250', description='', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE c_bv_hr_employees701834142320339474159329609208855423649252716 I18N au_cst (
+        employee_id:decimal (sourcetypedecimals = '20', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '3'), 
+        first_name:text (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-1'), 
+        last_name:text (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-1'), 
+        email:text (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-1'), 
+        phone_number:text (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-1'), 
+        hire_date:text (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-1'), 
+        job_id:text (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-1'), 
+        salary:double (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '22', description = '', sourcetypeid = '8'), 
+        commission_pct:double (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '22', description = '', sourcetypeid = '8'), 
+        manager_id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '2', description = '', sourcetypeid = '4'), 
+        department_id:double (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '22', description = '', sourcetypeid = '8'), 
+        expirationdate:long (sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        rowstatus:text (sourcetyperadix = '10', sourcetypesize = '250', description = '', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD c_bv_hr_employees701834142320339474159329609208855423649252716(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD employee_id (any) OPT ANY
+             ADD first_name (any) OPT ANY
+             ADD last_name (any) OPT ANY
+             ADD email (any) OPT ANY
+             ADD phone_number (any) OPT ANY
+             ADD hire_date (any) OPT ANY
+             ADD job_id (any) OPT ANY
+             ADD salary (any) OPT ANY
+             ADD commission_pct (any) OPT ANY
+             ADD manager_id (any) OPT ANY
+             ADD department_id (any) OPT ANY
+             ADD expirationdate (any) OPT ANY
+             ADD rowstatus (any) OPT ANY
+        )
+        OUTPUTLIST (commission_pct, department_id, email, employee_id, expirationdate, first_name, hire_date, job_id, last_name, manager_id, phone_number, rowstatus, salary
+        )
+        WRAPPER (jdbc c_bv_hr_employees701834142320339474159329609208855423649252716)
+    );
+

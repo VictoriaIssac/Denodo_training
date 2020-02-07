@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW testingdesc FOLDER = '/01 - data sources' AS SELECT bv_employee.empid AS empid, bv_employee.ename AS ename, bv_employee.salary AS salary, bv_employee.deptid AS deptid, department.id AS id, department.department AS department, department.description1 AS description1, bv_employee.description AS description, bv_employee.date AS date FROM bv_employee AS bv_employee INNER JOIN department AS department ON bv_employee.empid = department.id  CONTEXT ('I18N' = 'es');
+
+ALTER VIEW testingdesc
+ LAYOUT (bv_employee = [20, 20, 200, 106], department = [418, 71, 200, 85]);
+

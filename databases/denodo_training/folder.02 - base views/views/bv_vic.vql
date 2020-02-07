@@ -1,0 +1,29 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_vic
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_support_site
+    SCHEMANAME='${databases.denodo_training.folder.02 - base views.views.jdbc.bv_vic.SCHEMANAME}' ESCAPE
+    RELATIONNAME='VIC' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        name = 'NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_vic I18N au_cst (
+        id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        name:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_vic(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD name (any) OPT ANY
+        )
+        OUTPUTLIST (id, name
+        )
+        WRAPPER (jdbc bv_vic)
+    );
+

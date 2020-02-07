@@ -1,0 +1,93 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_get_generationdata_by_kungfu
+    DATASOURCENAME=ds_victoria
+    SCHEMANAME='${databases.denodo_training.views.jdbc.bv_get_generationdata_by_kungfu.SCHEMANAME}' 
+    PROCEDURENAME='get_GenerationData_by_KungFu;1' ESCAPE
+    OUTPUTSCHEMA (
+        return_value = '@RETURN_VALUE' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=5,
+        parm_entity_id = '@parm_entity_id' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', DEFAULTVALUE='505', sourcetypeid='4', sourcetypename='INT')  NOT NULL NOT SORTABLE PARAMINDEX=2 PARAMTYPE=1,
+        parm_record_id = '@parm_record_id' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', DEFAULTVALUE='1', sourcetypeid='4', sourcetypename='INT')  NOT NULL NOT SORTABLE PARAMINDEX=3 PARAMTYPE=1,
+        parm_version = '@parm_version' :'java.lang.String' (sourcetypesize='32', DEFAULTVALUE='Initial', sourcetypeid='12', sourcetypename='varchar')  NOT NULL NOT SORTABLE PARAMINDEX=4 PARAMTYPE=1,
+        parm_interval = '@parm_interval' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', DEFAULTVALUE='0', sourcetypeid='4', sourcetypename='INT')  NOT NULL NOT SORTABLE PARAMINDEX=5 PARAMTYPE=1,
+        parm_uom = '@parm_uom' :'java.lang.String' (sourcetypesize='32', DEFAULTVALUE='MWH', sourcetypeid='12', sourcetypename='varchar')  NOT NULL NOT SORTABLE PARAMINDEX=6 PARAMTYPE=1,
+        parm_start_time = '@parm_start_time' :'java.time.LocalDateTime' (sourcetypedecimals='3', sourcetypesize='23', DEFAULTVALUE='''2019-01-01 00:00:00''', sourcetypeid='93', sourcetypename='datetime')  NOT NULL NOT SORTABLE PARAMINDEX=7 PARAMTYPE=1,
+        parm_end_time = '@parm_end_time' :'java.time.LocalDateTime' (sourcetypedecimals='3', sourcetypesize='23', DEFAULTVALUE='''2019-11-15 00:00:00''', sourcetypeid='93', sourcetypename='datetime')  NOT NULL NOT SORTABLE PARAMINDEX=8 PARAMTYPE=1,
+        parm_agg_data = '@parm_agg_data' :'java.lang.Boolean' (sourcetypesize='1', DEFAULTVALUE='FALSE', sourcetypeid='-7', sourcetypename='bit')  NOT NULL NOT SORTABLE PARAMINDEX=9 PARAMTYPE=1,
+        facility_id = 'facility_id' :'java.lang.Integer' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        facility_name = 'facility_name' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='255', sourcetypeid='12', sourcetypename='varchar')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        unit_id = 'unit_id' :'java.lang.Integer' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        unit_name = 'unit_name' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='255', sourcetypeid='12', sourcetypename='varchar')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        record_id = 'record_id' :'java.lang.Integer' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        time_zone = 'time_zone' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='3', sourcetypeid='12', sourcetypename='varchar')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        date_time_key = 'date_time_key' :'java.lang.Long' (sourcetypedecimals='0', sourcetypesize='19', sourcetypeid='-5', sourcetypename='bigint')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        start_time_utc = 'start_time_utc' :'java.time.LocalDateTime' (sourcetypedecimals='3', sourcetypesize='23', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        end_time_utc = 'end_time_utc' :'java.time.LocalDateTime' (sourcetypedecimals='3', sourcetypesize='23', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        local_start_time = 'local_start_time' :'java.time.LocalDateTime' (sourcetypedecimals='3', sourcetypesize='23', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        local_end_time = 'local_end_time' :'java.time.LocalDateTime' (sourcetypedecimals='3', sourcetypesize='23', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        source_name = 'source_name' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='32', sourcetypeid='12', sourcetypename='varchar')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        uom = 'uom' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='32', sourcetypeid='12', sourcetypename='varchar')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        generation_value = 'generation_value' :'java.lang.Long' (sourcetypedecimals='0', sourcetypesize='18', sourcetypeid='3', sourcetypename='decimal')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        biz_rule = 'source_name' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='32', sourcetypeid='12', sourcetypename='varchar')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1'
+    );
+
+CREATE OR REPLACE TABLE bv_get_generationdata_by_kungfu I18N us_cst (
+        return_value:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        parm_entity_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        parm_record_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        parm_version:text (sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '32'), 
+        parm_interval:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        parm_uom:text (sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '32'), 
+        parm_start_time:timestamp (extern, sourcetypeid = '93', sourcetypedecimals = '3', sourcetypesize = '23'), 
+        parm_end_time:timestamp (extern, sourcetypeid = '93', sourcetypedecimals = '3', sourcetypesize = '23'), 
+        parm_agg_data:boolean (sourcetypeid = '-7', sourcetypedecimals = '0', sourcetypesize = '1'), 
+        facility_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        facility_name:text (extern, sourcetypeid = '12', sourcetypesize = '255'), 
+        unit_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        unit_name:text (extern, sourcetypeid = '12', sourcetypesize = '255'), 
+        record_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        time_zone:text (extern, sourcetypeid = '12', sourcetypesize = '3'), 
+        date_time_key:long (sourcetypeid = '-5', sourcetypedecimals = '0', sourcetypesize = '19'), 
+        start_time_utc:timestamp (sourcetypeid = '93', sourcetypedecimals = '3', sourcetypesize = '23'), 
+        end_time_utc:timestamp (sourcetypeid = '93', sourcetypedecimals = '3', sourcetypesize = '23'), 
+        local_start_time:timestamp (sourcetypeid = '93', sourcetypedecimals = '3', sourcetypesize = '23'), 
+        local_end_time:timestamp (sourcetypeid = '93', sourcetypedecimals = '3', sourcetypesize = '23'), 
+        source_name:text (extern, sourcetypeid = '12', sourcetypesize = '32'), 
+        uom:text (extern, sourcetypeid = '12', sourcetypesize = '32'), 
+        generation_value:decimal (sourcetypeid = '3', sourcetypedecimals = '8', sourcetypesize = '18'), 
+        biz_rule:text (extern, sourcetypeid = '12', sourcetypesize = '32')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_get_generationdata_by_kungfu(
+        I18N us_cst
+        CONSTRAINTS (
+             ADD return_value NOS ZERO ()
+             ADD parm_entity_id (=,is null) OBL ONE
+             ADD parm_record_id (=,is null) OBL ONE
+             ADD parm_version (=,is null) OBL ONE
+             ADD parm_interval (=,is null) OBL ONE
+             ADD parm_uom (=,is null) OBL ONE
+             ADD parm_start_time (=,is null) OBL ONE
+             ADD parm_end_time (=,is null) OBL ONE
+             ADD parm_agg_data (=,is null) OBL ONE
+             ADD facility_id NOS ZERO ()
+             ADD facility_name NOS ZERO ()
+             ADD unit_id NOS ZERO ()
+             ADD unit_name NOS ZERO ()
+             ADD record_id NOS ZERO ()
+             ADD time_zone NOS ZERO ()
+             ADD date_time_key NOS ZERO ()
+             ADD start_time_utc NOS ZERO ()
+             ADD end_time_utc NOS ZERO ()
+             ADD local_start_time NOS ZERO ()
+             ADD local_end_time NOS ZERO ()
+             ADD source_name NOS ZERO ()
+             ADD uom NOS ZERO ()
+             ADD generation_value NOS ZERO ()
+             ADD biz_rule NOS ZERO ()
+        )
+        OUTPUTLIST (biz_rule, date_time_key, end_time_utc, facility_id, facility_name, generation_value, local_end_time, local_start_time, parm_agg_data, parm_end_time, parm_entity_id, parm_interval, parm_record_id, parm_start_time, parm_uom, parm_version, record_id, return_value, source_name, start_time_utc, time_zone, unit_id, unit_name, uom
+        )
+        WRAPPER (jdbc bv_get_generationdata_by_kungfu)
+    );
+

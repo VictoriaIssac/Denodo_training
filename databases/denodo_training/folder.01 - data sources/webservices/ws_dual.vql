@@ -1,0 +1,22 @@
+﻿CREATE OR REPLACE REST WEBSERVICE ws_dual
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    DISPLAYRESTFULREFERENCES = false
+    RESOURCES (
+        VIEW dv_dual FIELDS (
+            dept_id : 'text', 
+            employee : '_array_register_empid'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/01 - data sources';
+

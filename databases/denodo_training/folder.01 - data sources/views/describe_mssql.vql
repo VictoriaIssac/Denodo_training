@@ -1,0 +1,30 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC describe_mssql
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_new
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.describe_mssql.CATALOGNAME}' ESCAPE
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.describe_mssql.SCHEMANAME}' 
+    RELATIONNAME='describe_mssql' 
+    OUTPUTSCHEMA (
+        id = 'id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE,
+        describe = 'describe' :'java.lang.String' (OPT) (sourcetypesize='1000', sourcetypeid='12', sourcetypename='varchar')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE describe_mssql I18N es (
+        id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '4'), 
+        describe:text (sourcetypesize = '1000', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD describe_mssql(
+        I18N es
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD describe (any) OPT ANY
+        )
+        OUTPUTLIST (describe, id
+        )
+        WRAPPER (jdbc describe_mssql)
+    );
+

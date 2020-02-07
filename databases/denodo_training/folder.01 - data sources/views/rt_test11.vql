@@ -1,0 +1,79 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC rt_test11
+    DATASOURCENAME=ds_new
+    CATALOGNAME='${databases.denodo_training.views.jdbc.rt_test11.CATALOGNAME}' 
+    SCHEMANAME='${databases.denodo_training.views.jdbc.rt_test11.SCHEMANAME}' 
+    RELATIONNAME='sample1' 
+    OUTPUTSCHEMA (
+        empid = 'empid' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        ename = 'ename' :'java.lang.String' (OPT) (sourcetypesize='20', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        salary = 'salary' :'java.lang.Double' (OPT) (sourcetyperadix='2', sourcetypesize='53', sourcetypeid='8', sourcetypename='float')  SORTABLE,
+        deptid = 'deptid' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        description = 'description' :'java.lang.String' (OPT) (sourcetypesize='2147483647', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        field_0 = 'field_0' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='date')  SORTABLE,
+        globalrank = 'globalrank' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        tldrank = 'tldrank' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        field_1 = 'field_1' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        tld = 'tld' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        refsubnets = 'refsubnets' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        refips = 'refips' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        idn_domain = 'idn_domain' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        idn_tld = 'idn_tld' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        prevglobalrank = 'prevglobalrank' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        prevtldrank = 'prevtldrank' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        prevrefsubnets = 'prevrefsubnets' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        prevrefips = 'prevrefips' :'java.lang.String' (OPT) (sourcetypesize='4000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE rt_test11 I18N us_pst_pdt (
+        empid:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '-5'), 
+        ename:text (sourcetypesize = '20', sourcetypeid = '12'), 
+        salary:double (sourcetyperadix = '2', sourcetypesize = '53', sourcetypeid = '8'), 
+        deptid:text (sourcetypesize = '10', sourcetypeid = '12'), 
+        description:text (sourcetypesize = '2147483647', sourcetypeid = '12'), 
+        field_0:localdate (sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '91'), 
+        globalrank:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        tldrank:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        field_1:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        tld:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        refsubnets:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        refips:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        idn_domain:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        idn_tld:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        prevglobalrank:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        prevtldrank:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        prevrefsubnets:text (sourcetypesize = '4000', sourcetypeid = '12'), 
+        prevrefips:text (sourcetypesize = '4000', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD rt_test11(
+        I18N us_pst_pdt
+        CONSTRAINTS (
+             ADD empid (any) OPT ANY
+             ADD ename (any) OPT ANY
+             ADD salary (any) OPT ANY
+             ADD deptid (any) OPT ANY
+             ADD description (any) OPT ANY
+             ADD field_0 (any) OPT ANY
+             ADD globalrank (any) OPT ANY
+             ADD tldrank (any) OPT ANY
+             ADD field_1 (any) OPT ANY
+             ADD tld (any) OPT ANY
+             ADD refsubnets (any) OPT ANY
+             ADD refips (any) OPT ANY
+             ADD idn_domain (any) OPT ANY
+             ADD idn_tld (any) OPT ANY
+             ADD prevglobalrank (any) OPT ANY
+             ADD prevtldrank (any) OPT ANY
+             ADD prevrefsubnets (any) OPT ANY
+             ADD prevrefips (any) OPT ANY
+        )
+        OUTPUTLIST (deptid, description, empid, ename, field_0, field_1, globalrank, idn_domain, idn_tld, prevglobalrank, prevrefips, prevrefsubnets, prevtldrank, refips, refsubnets, salary, tld, tldrank
+        )
+        WRAPPER (jdbc rt_test11)
+    )
+    DATA_LOAD_QUERY = 'SELECT *
+FROM denodo_training.p_bv_employee_j_bv_million';
+

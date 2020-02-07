@@ -1,0 +1,41 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC c_dv_jira_u_bv_jira5076423271456907036352273130192672000627281
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_cache_test
+    CATALOGNAME='${databases.denodo_training.folder.02 - base views.views.jdbc.c_dv_jira_u_bv_jira5076423271456907036352273130192672000627281.CATALOGNAME}' 
+    RELATIONNAME='c_dv_jira_u_bv_jira5076423271456907036352273130192672000627281' 
+    OUTPUTSCHEMA (
+        field_0 = 'field_0' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-1', sourcetypename='LONGTEXT')  SORTABLE,
+        field_1 = 'field_1' :'java.sql.Blob' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-4', sourcetypename='LONGBLOB')  NOT SORTABLE,
+        elements = 'elements' :'java.sql.Blob' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-4', sourcetypename='LONGBLOB')  NOT SORTABLE,
+        links = 'links' :'java.sql.Blob' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', description='', sourcetypeid='-4', sourcetypename='LONGBLOB')  NOT SORTABLE,
+        "expirationDate" = 'expirationDate' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  ESCAPE SORTABLE,
+        "rowStatus" = 'rowStatus' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='250', description='', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE c_dv_jira_u_bv_jira5076423271456907036352273130192672000627281 I18N au_cst (
+        field_0:text (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-1'), 
+        field_1:blob (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-4'), 
+        elements:blob (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-4'), 
+        links:blob (sourcetyperadix = '10', sourcetypesize = '2147483647', description = '', sourcetypeid = '-4'), 
+        "expirationDate":long (sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        "rowStatus":text (sourcetyperadix = '10', sourcetypesize = '250', description = '', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD c_dv_jira_u_bv_jira5076423271456907036352273130192672000627281(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD field_0 (any) OPT ANY
+             ADD field_1 NOS ZERO ()
+             ADD elements NOS ZERO ()
+             ADD links NOS ZERO ()
+             ADD "expirationDate" (any) OPT ANY
+             ADD "rowStatus" (any) OPT ANY
+        )
+        OUTPUTLIST (elements, "expirationDate", field_0, field_1, links, "rowStatus"
+        )
+        WRAPPER (jdbc c_dv_jira_u_bv_jira5076423271456907036352273130192672000627281)
+    );
+

@@ -1,0 +1,56 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC employees2
+    DATASOURCENAME=ds_oracle
+    SCHEMANAME='${databases.denodo_training.views.jdbc.employees2.SCHEMANAME}' 
+    RELATIONNAME='EMPLOYEES2' 
+    OUTPUTSCHEMA (
+        employee_id = 'EMPLOYEE_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='6', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        first_name = 'FIRST_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        last_name = 'LAST_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='25', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        email = 'EMAIL' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='25', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        phone_number = 'PHONE_NUMBER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        hire_date = 'HIRE_DATE' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='10', sourcetypesize='11', sourcetypeid='1111', sourcetypename='TIMESTAMP(9)')  SORTABLE,
+        job_id = 'JOB_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        salary = 'SALARY' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='8', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        commission_pct = 'COMMISSION_PCT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='2', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        manager_id = 'MANAGER_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='6', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        department_id = 'DEPARTMENT_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='4', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE employees2 I18N us_pst_pdt (
+        employee_id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '6', sourcetypeid = '4'), 
+        first_name:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        last_name:text (sourcetyperadix = '10', sourcetypesize = '25', sourcetypeid = '12'), 
+        email:text (sourcetyperadix = '10', sourcetypesize = '25', sourcetypeid = '12'), 
+        phone_number:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        hire_date:timestamp (sourcetypedecimals = '9', sourcetyperadix = '10', sourcetypesize = '11', sourcetypeid = '93'), 
+        job_id:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '12'), 
+        salary:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '8', sourcetypeid = '3'), 
+        commission_pct:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '2', sourcetypeid = '3'), 
+        manager_id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '6', sourcetypeid = '4'), 
+        department_id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '4', sourcetypeid = '4')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD employees2(
+        I18N us_pst_pdt
+        CONSTRAINTS (
+             ADD employee_id (any) OPT ANY
+             ADD first_name (any) OPT ANY
+             ADD last_name (any) OPT ANY
+             ADD email (any) OPT ANY
+             ADD phone_number (any) OPT ANY
+             ADD hire_date (any) OPT ANY
+             ADD job_id (any) OPT ANY
+             ADD salary (any) OPT ANY
+             ADD commission_pct (any) OPT ANY
+             ADD manager_id (any) OPT ANY
+             ADD department_id (any) OPT ANY
+        )
+        OUTPUTLIST (commission_pct, department_id, email, employee_id, first_name, hire_date, job_id, last_name, manager_id, phone_number, salary
+        )
+        WRAPPER (jdbc employees2)
+    )
+    DATA_LOAD_QUERY = 'SELECT employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id
+FROM denodo_training.employees1';
+

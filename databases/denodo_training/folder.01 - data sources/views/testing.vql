@@ -1,0 +1,27 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC testing_2678
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_new
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.testing_2678.CATALOGNAME}' ESCAPE
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.testing_2678.SCHEMANAME}' 
+    RELATIONNAME='testing' 
+    OUTPUTSCHEMA (
+        tester = 'tester' :'java.lang.String' (OPT) (sourcetypesize='1000', sourcetypeid='12', sourcetypename='varchar')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE testing I18N es (
+        tester:text (sourcetypesize = '1000', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD testing(
+        I18N es
+        CONSTRAINTS (
+             ADD tester (any) OPT ANY
+        )
+        OUTPUTLIST (tester
+        )
+        WRAPPER (jdbc testing_2678)
+    );
+

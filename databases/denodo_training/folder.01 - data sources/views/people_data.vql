@@ -1,0 +1,32 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC people_data
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_support_site
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.people_data.SCHEMANAME}' 
+    RELATIONNAME='PEOPLE_DATA' 
+    OUTPUTSCHEMA (
+        effective_date = 'EFFECTIVE_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE,
+        in_from_effective_date = 'IN_FROM_EFFECTIVE_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE,
+        in_to_effective_date = 'IN_TO_EFFECTIVE_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE people_data I18N us_pst (
+        effective_date:timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93'), 
+        in_from_effective_date:timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93'), 
+        in_to_effective_date:timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD people_data(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD effective_date (any) OPT ANY
+             ADD in_from_effective_date (any) OPT ANY
+             ADD in_to_effective_date (any) OPT ANY
+        )
+        OUTPUTLIST (effective_date, in_from_effective_date, in_to_effective_date
+        )
+        WRAPPER (jdbc people_data)
+    );
+

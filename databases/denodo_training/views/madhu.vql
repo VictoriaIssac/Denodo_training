@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW madhu AS SELECT count(*) AS count FROM bv_cc_problem CONTEXT ('I18N' = 'au_cst');
+

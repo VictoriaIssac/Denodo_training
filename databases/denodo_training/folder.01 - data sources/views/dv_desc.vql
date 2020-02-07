@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_desc FOLDER = '/01 - data sources' AS SELECT bv_describe.id AS id, bv_describe.description1 AS description1, describe_mssql.describe AS describe FROM bv_describe AS bv_describe INNER JOIN describe_mssql AS describe_mssql ON bv_describe.id = describe_mssql.id  CONTEXT ('I18N' = 'es');
+
+ALTER VIEW dv_desc
+ LAYOUT (bv_describe = [20, 20, 200, 66], describe_mssql = [411, 28, 200, 66]);
+

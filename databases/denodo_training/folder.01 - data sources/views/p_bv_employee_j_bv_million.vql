@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_bv_employee_j_bv_million FOLDER = '/01 - data sources' AS SELECT bv_employee_j_bv_million.empid AS empid, bv_employee_j_bv_million.ename AS ename, bv_employee_j_bv_million.salary AS salary, bv_employee_j_bv_million.deptid AS deptid, bv_employee_j_bv_million.description AS description, bv_employee_j_bv_million.date AS date, bv_employee_j_bv_million.globalrank AS globalrank, bv_employee_j_bv_million.tldrank AS tldrank, bv_employee_j_bv_million.domain AS domain, bv_employee_j_bv_million.tld AS tld, bv_employee_j_bv_million.refsubnets AS refsubnets, bv_employee_j_bv_million.refips AS refips, bv_employee_j_bv_million.idn_domain AS idn_domain, bv_employee_j_bv_million.idn_tld AS idn_tld, bv_employee_j_bv_million.prevglobalrank AS prevglobalrank, bv_employee_j_bv_million.prevtldrank AS prevtldrank, bv_employee_j_bv_million.prevrefsubnets AS prevrefsubnets, bv_employee_j_bv_million.prevrefips AS prevrefips FROM bv_employee_j_bv_million CONTEXT ('I18N' = 'us_pst_pdt');
+
+ALTER VIEW p_bv_employee_j_bv_million
+ LAYOUT (bv_employee_j_bv_million = [20, 20, 214, 105]);
+

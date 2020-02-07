@@ -1,0 +1,41 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC employee19c
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_test19c
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.employee19c.SCHEMANAME}' ESCAPE
+    RELATIONNAME='EMPLOYEE' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='2', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        name = 'NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        department = 'DEPARTMENT' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        department_id = 'DEPARTMENT_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        dat = 'DAT' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', sourcetypeid='-9', sourcetypename='NVARCHAR2')  SORTABLE
+    )
+    CONSTRAINT 'PK' PRIMARY KEY ( 'ID' )
+    INDEX 'PK' CLUSTER UNIQUE PRIMARY ( 'ID' );
+
+CREATE OR REPLACE TABLE employee19c I18N us_pst_pdt (
+        id:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '-5'), 
+        name:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        department:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        department_id:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        dat:text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '-9')
+    )
+    FOLDER = '/01 - data sources'
+    CONSTRAINT 'PK' PRIMARY KEY ( 'id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD employee19c(
+        I18N us_pst_pdt
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD department (any) OPT ANY
+             ADD department_id (any) OPT ANY
+             ADD dat (any) OPT ANY
+        )
+        OUTPUTLIST (dat, department, department_id, id, name
+        )
+        WRAPPER (jdbc employee19c)
+    );
+

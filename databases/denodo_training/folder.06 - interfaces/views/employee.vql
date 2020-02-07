@@ -1,0 +1,19 @@
+﻿CREATE OR REPLACE INTERFACE VIEW employee (
+        employee_id:int,
+        first_name:text,
+        last_name:text,
+        email:text,
+        phone_number:text,
+        hire_date:date,
+        job_id:text,
+        salary:decimal,
+        commission_pct:decimal,
+        manager_id:int,
+        department_id:int
+    )
+    SET IMPLEMENTATION employees1
+    FOLDER = '/06 - interfaces';
+
+ALTER VIEW employee
+ LAYOUT (employees1 = [549, 83, 243, 223]);
+

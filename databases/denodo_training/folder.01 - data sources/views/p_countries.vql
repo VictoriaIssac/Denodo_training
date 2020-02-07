@@ -1,0 +1,19 @@
+﻿CREATE OR REPLACE VIEW p_countries FOLDER = '/01 - data sources' AS SELECT countries.country_id AS country_id /**
+Author: J. Olvera Create Date: 04/25/2019
+User Story: Project Code: ITHD000010
+**Description: canonical attributes for lease amendment option subject area.
+pending:
+
+                    * Type 2 (?)
+                    * Additional filter criteria
+** Change History
+
+** # Date Author Description
+
+** 1 <initials>
+
+**/, countries.country_name AS country_name, countries.region_id AS region_id FROM countries CONTEXT ('I18N' = 'au_cst', 'formatted' = 'yes');
+
+ALTER VIEW p_countries
+ LAYOUT (countries = [20, 20, 214, 86]);
+

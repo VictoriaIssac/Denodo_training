@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_sales_flatten FOLDER = '/03 - derived views' AS SELECT productid, saleid, salesdata_sales_productid, employeeid, customerid, saledate, bundleamount, productsaleprice, totalprice FROM FLATTEN bv_sales AS v ( v.salesdata.sales) CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW dv_sales_flatten
+ LAYOUT (bv_sales = [20, 20, 438, 246]);
+

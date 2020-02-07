@@ -1,0 +1,36 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_incremental
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_oracle
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.bv_incremental.SCHEMANAME}' 
+    RELATIONNAME='INCREMENTAL' 
+    OUTPUTSCHEMA (
+        id = 'ID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        name = 'NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='12', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        datemod = 'DATEMOD' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='6', sourcetyperadix='10', sourcetypesize='11', sourcetypeid='93', sourcetypename='TIMESTAMP(6)')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008244' PRIMARY KEY ( 'ID' )
+    INDEX 'SYS_C008244' CLUSTER UNIQUE PRIMARY ( 'ID' );
+
+CREATE OR REPLACE TABLE bv_incremental I18N au_cst (
+        id:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        name:text (sourcetyperadix = '10', sourcetypesize = '12', sourcetypeid = '12'), 
+        datemod:timestamp (sourcetypedecimals = '6', sourcetyperadix = '10', sourcetypesize = '11', sourcetypeid = '93')
+    )
+    FOLDER = '/01 - data sources'
+    PRIMARY KEY ( 'id' )
+    CACHE FULL INCREMENTAL 'datemod >= cast(''@LASTCACHEREFRESH'' AS TIMESTAMP)' NO_DELEGATE_CONDITIONS_TO_SOURCE 
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE NOEXPIRE
+    ADD SEARCHMETHOD bv_incremental(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD datemod (any) OPT ANY
+        )
+        OUTPUTLIST (datemod, id, name
+        )
+        WRAPPER (jdbc bv_incremental)
+    );
+

@@ -1,0 +1,46 @@
+﻿CREATE OR REPLACE WRAPPER JDBC bv_hr_departments
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='DEPARTMENTS' 
+    OUTPUTSCHEMA (
+        department_id = 'DEPARTMENT_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='4', description='Primary key column of departments table.', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        department_name = 'DEPARTMENT_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='30', description='A not null column that shows name of a department. Administration,
+Marketing, Purchasing, Human Resources, Shipping, IT, Executive, Public
+Relations, Sales, Finance, and Accounting. ', sourcetypeid='12', sourcetypename='VARCHAR2')  NOT NULL SORTABLE,
+        manager_id = 'MANAGER_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='6', description='Manager_id of a department. Foreign key to employee_id column of employees table. The manager_id column of the employee table references this column.', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        location_id = 'LOCATION_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='4', description='Location id where a department is located. Foreign key to location_id column of locations table.', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'DEPT_ID_PK' PRIMARY KEY ( 'DEPARTMENT_ID' )
+    CONSTRAINT 'DEPT_MGR_FK' FOREIGN KEY ( 'MANAGER_ID' ) 
+    REFERENCES 'HR'.'EMPLOYEES'( 'EMPLOYEE_ID' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'DEPT_LOC_FK' FOREIGN KEY ( 'LOCATION_ID' ) 
+    REFERENCES 'HR'.'LOCATIONS'( 'LOCATION_ID' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'DEPT_ID_PK' CLUSTER UNIQUE PRIMARY ( 'DEPARTMENT_ID' )
+    INDEX 'DEPT_LOCATION_IX' CLUSTER ( 'LOCATION_ID' );
+
+CREATE OR REPLACE TABLE bv_hr_departments I18N us_pst (
+        department_id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '4', description = 'Primary key column of departments table.', sourcetypeid = '4'), 
+        department_name:text (sourcetyperadix = '10', sourcetypesize = '30', description = 'A not null column that shows name of a department. Administration,
+Marketing, Purchasing, Human Resources, Shipping, IT, Executive, Public
+Relations, Sales, Finance, and Accounting. ', sourcetypeid = '12'), 
+        manager_id:double (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', description = 'error', sourcetypeid = '6'), 
+        location_id:double (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', description = 'error', sourcetypeid = '6')
+    )
+    FOLDER = '/02 - base views'
+    PRIMARY KEY ( 'department_id' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_hr_departments(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD department_id (any) OPT ANY
+             ADD department_name (any) OPT ANY
+             ADD manager_id (any) OPT ANY
+             ADD location_id (any) OPT ANY
+        )
+        OUTPUTLIST (department_id, department_name, location_id, manager_id
+        )
+        WRAPPER (jdbc bv_hr_departments)
+    );
+

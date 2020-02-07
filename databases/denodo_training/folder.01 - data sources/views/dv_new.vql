@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_new FOLDER = '/01 - data sources' AS SELECT bv_new.id_new AS id_new, bv_new_inc.id AS id, bv_new.name AS name, bv_new_inc.last_modified_date AS last_modified_date FROM bv_new AS bv_new FULL OUTER JOIN bv_new_inc AS bv_new_inc ON bv_new.id_new = bv_new_inc.id  CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW dv_new
+ LAYOUT (bv_new = [20, 20, 200, 86], bv_new_inc = [387, 64, 200, 86]);
+

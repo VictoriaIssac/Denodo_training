@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW view1 FOLDER = '/03 - derived views' AS SELECT e.employee_id, formatdate('dd-MM-yy', addmonth(e.hire_date, 6)) AS "Evaluated", e.last_name FROM employees1 AS e INNER JOIN job_history AS j ON e.employee_id = j.employee_id  CONTEXT ('I18N' = 'au_cst');
+

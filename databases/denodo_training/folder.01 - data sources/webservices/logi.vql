@@ -1,0 +1,24 @@
+﻿CREATE OR REPLACE REST WEBSERVICE logi
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 9000000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = JSON
+    SUPPORTEDREPRESENTATIONS (HTML, JSON)
+    RESOURCES (
+        VIEW logi FIELDS (
+            id : 'decimal', 
+            name : 'text', 
+            startdate : 'timestamp', 
+            enddate : 'timestamp'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        PROCESS_FUNCTIONS_IN_SELECT_PARAMETER = true ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/01 - data sources';
+

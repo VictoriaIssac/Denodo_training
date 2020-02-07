@@ -1,0 +1,47 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC c_bv_cc_service_location39378056247790822325142048051235966936
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_cache_test
+    CATALOGNAME='${databases.denodo_training.folder.02 - base views.views.jdbc.c_bv_cc_service_location39378056247790822325142048051235966936.CATALOGNAME}' 
+    RELATIONNAME='c_bv_cc_service_location39378056247790822325142048051235966936' 
+    OUTPUTSCHEMA (
+        id = 'id' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        location_id = 'location_id' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='18', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        customer_id = 'customer_id' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='18', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        business_name = 'business_name' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        service_location = 'service_location' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        other_details = 'other_details' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='250', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        expirationdate = 'expirationDate' :'java.lang.Long' (OPT) (sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  ESCAPE SORTABLE,
+        rowstatus = 'rowStatus' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='250', description='', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE c_bv_cc_service_location39378056247790822325142048051235966936 I18N au_cst (
+        id:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '-5'), 
+        location_id:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '18', description = '', sourcetypeid = '-5'), 
+        customer_id:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '18', description = '', sourcetypeid = '-5'), 
+        business_name:text (sourcetyperadix = '10', sourcetypesize = '50', description = '', sourcetypeid = '12'), 
+        service_location:text (sourcetyperadix = '10', sourcetypesize = '50', description = '', sourcetypeid = '12'), 
+        other_details:text (sourcetyperadix = '10', sourcetypesize = '250', description = '', sourcetypeid = '12'), 
+        expirationdate:long (sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        rowstatus:text (sourcetyperadix = '10', sourcetypesize = '250', description = '', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD c_bv_cc_service_location39378056247790822325142048051235966936(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD location_id (any) OPT ANY
+             ADD customer_id (any) OPT ANY
+             ADD business_name (any) OPT ANY
+             ADD service_location (any) OPT ANY
+             ADD other_details (any) OPT ANY
+             ADD expirationdate (any) OPT ANY
+             ADD rowstatus (any) OPT ANY
+        )
+        OUTPUTLIST (business_name, customer_id, expirationdate, id, location_id, other_details, rowstatus, service_location
+        )
+        WRAPPER (jdbc c_bv_cc_service_location39378056247790822325142048051235966936)
+    );
+

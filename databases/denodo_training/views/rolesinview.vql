@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW rolesinview AS SELECT * FROM catalog_permissions() CONTEXT ('I18N' = 'us_pst_pdt');
+

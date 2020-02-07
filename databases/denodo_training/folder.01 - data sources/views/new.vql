@@ -1,0 +1,26 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC new_1124
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_cache_test
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.new_1124.CATALOGNAME}' 
+    RELATIONNAME='new' ESCAPE
+    OUTPUTSCHEMA (
+        order_id = 'order_id' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE new I18N us_cst (
+        order_id:text (sourcetyperadix = '10', sourcetypesize = '20', description = '', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD new(
+        I18N us_cst
+        CONSTRAINTS (
+             ADD order_id (any) OPT ANY
+        )
+        OUTPUTLIST (order_id
+        )
+        WRAPPER (jdbc new_1124)
+    );
+

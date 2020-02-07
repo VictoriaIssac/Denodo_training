@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_dual FOLDER = '/02 - base views' AS SELECT dept_id AS dept_id, nest(empid) AS employee FROM bv_dual GROUP BY dept_id CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW dv_dual
+ LAYOUT (bv_dual = [20, 20, 200, 66]);
+

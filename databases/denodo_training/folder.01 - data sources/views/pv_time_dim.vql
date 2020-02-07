@@ -1,0 +1,38 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC pv_time_dim
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_support_site
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.pv_time_dim.SCHEMANAME}' 
+    RELATIONNAME='PV_TIME_DIM' 
+    OUTPUTSCHEMA (
+        calendar_yr = 'CALENDAR_YR' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        calendar_qtr = 'CALENDAR_QTR' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        last_qtr_dt = 'LAST_QTR_DT' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        in_to_effective_date = 'IN_TO_EFFECTIVE_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE,
+        in_from_effective_date = 'IN_FROM_EFFECTIVE_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE pv_time_dim I18N us_pst (
+        calendar_yr:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        calendar_qtr:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        last_qtr_dt:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        in_to_effective_date:timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93'), 
+        in_from_effective_date:timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD pv_time_dim(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD calendar_yr (any) OPT ANY
+             ADD calendar_qtr (any) OPT ANY
+             ADD last_qtr_dt (any) OPT ANY
+             ADD in_to_effective_date (any) OPT ANY
+             ADD in_from_effective_date (any) OPT ANY
+        )
+        OUTPUTLIST (calendar_qtr, calendar_yr, in_from_effective_date, in_to_effective_date, last_qtr_dt
+        )
+        WRAPPER (jdbc pv_time_dim)
+    );
+

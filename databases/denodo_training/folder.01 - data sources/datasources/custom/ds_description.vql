@@ -1,0 +1,32 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE CUSTOM ds_description
+    FOLDER = '/01 - data sources'
+    CLASSNAME='com.denodo.vdb.contrib.wrapper.xls.ExcelWrapper';
+
+CREATE OR REPLACE WRAPPER CUSTOM ds_description
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_description
+    PARAMETERS (
+      'Type of file' = 'Excel 2007 or later (*.xlsx)',
+      'File location' = ROUTE LOCAL 'LocalConnection' '${databases.denodo_training.folder.02 - base views.views.custom.ds_description.File location.ROUTE.LOCAL.PATH}',
+      'Extract data from all sheets' = true,
+      'Extract sheet name as a new column' = false,
+      'Has headers' = true,
+      'Stream tuples' = true
+    )
+    OUTPUTSCHEMA (
+        input_database_name = 'input_database_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        input_view_name = 'input_view_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        database_name = 'database_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        view_name = 'view_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        view_type = 'view_type' : 'java.lang.Integer' (OPT) (sourcetypeid='4')  SORTABLE,
+        column_name = 'column_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        column_type_name = 'column_type_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        column_type = 'column_type' : 'java.lang.Integer' (OPT) (sourcetypeid='4')  SORTABLE,
+        column_type_precision = 'column_type_precision' : 'java.lang.Integer' (OPT) (sourcetypeid='4')  SORTABLE,
+        column_type_length = 'column_type_length' : 'java.lang.Integer' (OPT) (sourcetypeid='4')  SORTABLE,
+        column_type_scale = 'column_type_scale' : 'java.lang.Integer' (OPT) (sourcetypeid='4')  SORTABLE,
+        column_vdp_type_name = 'column_vdp_type_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        column_description = 'column_description' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE
+    );
+

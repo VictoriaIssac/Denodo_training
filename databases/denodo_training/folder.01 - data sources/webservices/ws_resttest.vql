@@ -1,0 +1,24 @@
+﻿CREATE OR REPLACE REST WEBSERVICE ws_resttest
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = JSON
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    RESOURCES (
+        VIEW resttest FIELDS (
+            ename : 'text', 
+            reg : '_array_register_empid_ename_6079', 
+            array : '_register_empid_ename_6079' UNESCAPED, 
+            "nested" : '_array_register_empid_nest_5839' UNESCAPED
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        PROCESS_FUNCTIONS_IN_SELECT_PARAMETER = true ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/01 - data sources';
+

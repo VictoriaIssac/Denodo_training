@@ -1,0 +1,29 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC departmysql
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_cache_test
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.departmysql.CATALOGNAME}' 
+    RELATIONNAME='departmysql' 
+    OUTPUTSCHEMA (
+        id = 'id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  SORTABLE,
+        descr = 'descr' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='1000', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE departmysql I18N es (
+        id:int (sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '4'), 
+        descr:text (sourcetyperadix = '10', sourcetypesize = '1000', description = '', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD departmysql(
+        I18N es
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD descr (any) OPT ANY
+        )
+        OUTPUTLIST (descr, id
+        )
+        WRAPPER (jdbc departmysql)
+    );
+

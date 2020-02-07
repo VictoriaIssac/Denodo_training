@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_bv_incremental FOLDER = '/01 - data sources' AS SELECT datemod AS datemod, getday(datemod) AS day, getmonth(datemod) AS month, id AS id FROM bv_incremental GROUP BY datemod, id CONTEXT ('I18N' = 'es');
+
+ALTER VIEW p_bv_incremental
+ LAYOUT (bv_incremental = [20, 20, 200, 86]);
+

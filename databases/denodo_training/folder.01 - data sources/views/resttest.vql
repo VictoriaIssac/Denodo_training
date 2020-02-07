@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW resttest FOLDER = '/01 - data sources' AS SELECT ename AS ename, nest(empid, ename) AS reg, register(empid, ename) AS array, nest(empid, nest(ename, empid)) AS "nested" FROM bv_employee GROUP BY ename, empid CONTEXT ('I18N' = 'es');
+
+ALTER VIEW resttest
+ LAYOUT (bv_employee = [20, 20, 200, 146]);
+

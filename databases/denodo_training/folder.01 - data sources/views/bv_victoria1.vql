@@ -1,0 +1,30 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_victoria1
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_new
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.bv_victoria1.CATALOGNAME}' ESCAPE
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.bv_victoria1.SCHEMANAME}' 
+    RELATIONNAME='victoria1' 
+    OUTPUTSCHEMA (
+        hijuklokjhnabc123thyrdnloks_0 = 'hijuklokjh\nabc-123thyrd\nloks]' :'java.lang.String' (OPT) (sourcetypesize='1000', sourcetypeid='12', sourcetypename='varchar')  ESCAPE SORTABLE,
+        hi = 'hi' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_victoria1 I18N es (
+        hijuklokjhnabc123thyrdnloks_0:text (sourcetypesize = '1000', sourcetypeid = '12'), 
+        hi:text (sourcetypesize = '10', sourcetypeid = '-15')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_victoria1(
+        I18N es
+        CONSTRAINTS (
+             ADD hijuklokjhnabc123thyrdnloks_0 (any) OPT ANY
+             ADD hi (any) OPT ANY
+        )
+        OUTPUTLIST (hi, hijuklokjhnabc123thyrdnloks_0
+        )
+        WRAPPER (jdbc bv_victoria1)
+    );
+

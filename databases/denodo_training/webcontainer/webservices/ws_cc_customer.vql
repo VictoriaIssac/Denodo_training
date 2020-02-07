@@ -1,0 +1,4 @@
+﻿UNDEPLOY IF EXISTS WEBSERVICE ws_cc_customer;
+
+DEPLOY WEBSERVICE ws_cc_customer;
+

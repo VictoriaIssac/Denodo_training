@@ -1,0 +1,39 @@
+﻿CREATE OR REPLACE WRAPPER CUSTOM ds_ssh
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_ssh
+    PARAMETERS (
+      'Host' = '192.168.164.128',
+      'Port' = 22,
+      'User' = 'denodo',
+      'Password' = 'wIitfJZSAgP8QVl6uGvHjCjy9PG6U094qfHr23S0yYMav9g0S1pZzoG88LSqGO26dYl1VcAelD0FonGZCogEFj11IUY1yPS13HcMXcXFep3H9Dkr/lIEyfznH54SxRZr' ENCRYPTED,
+      'Command' = 'telnet @h @p'
+    )
+    OUTPUTSCHEMA (
+        exitcode_0 = 'Exit code' : 'java.lang.String' (sourcetypeid='12')  NOT SORTABLE NOT UPDATEABLE,
+        executionresult_0 = 'Execution result' : 'java.lang.String' (sourcetypeid='12')  NOT SORTABLE NOT UPDATEABLE,
+        p = 'P' : 'java.lang.String' (OBL) (DEFAULTVALUE='22')  EXTERN NOT SORTABLE NOT UPDATEABLE,
+        h = 'H' : 'java.lang.String' (OBL) (DEFAULTVALUE='192.168.164.128')  EXTERN NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE ds_ssh I18N au_cst (
+        exitcode_0:text (sourcetypeid = '12'), 
+        executionresult_0:text (sourcetypeid = '12'), 
+        p:text, 
+        h:text
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_ssh(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD exitcode_0 NOS ZERO ()
+             ADD executionresult_0 NOS ZERO ()
+             ADD p (=) OBL ONE
+             ADD h (=) OBL ONE
+        )
+        OUTPUTLIST (executionresult_0, exitcode_0
+        )
+        WRAPPER (custom ds_ssh)
+    );
+

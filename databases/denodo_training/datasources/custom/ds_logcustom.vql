@@ -1,0 +1,4 @@
+﻿CREATE OR REPLACE DATASOURCE CUSTOM ds_logcustom
+    CLASSNAME='com.denodo.connect.log.LogCustomWrapper'
+    JARS 'denodo-log-customwrapper-7.0';
+
