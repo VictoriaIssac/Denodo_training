@@ -1,0 +1,12 @@
+﻿CREATE OR REPLACE VIEW campaign_evolution_per_country FOLDER = '/virtual model' DESCRIPTION = 'This data represents the evolution of one of our marketings campaigns over the months of the year, broken down by country. 
+It helps visualize the impact of our marketing efforts in each country and relate it to the different months and seasons.'  (
+    country (description = 'Country where the customer was born'),
+    promo_name (description = 'Internal name of our Marketing promotions'),
+    month (description = 'Month of the year, from 1 to 12'),
+    total (description = 'Total sales for a country and month. For this analysis, we are using the "net paid" amount, that does not include taxes. This value comes from our EDW')
+)
+ AS SELECT oracle_customer.c_birth_country AS country, marketing_service.p_promo_name AS promo_name, impala_date_dim.d_moy AS month, sum(impala_store_sales.ss_net_paid) AS total FROM ((impala_store_sales AS impala_store_sales INNER JOIN impala_date_dim AS impala_date_dim ON impala_store_sales.ss_sold_date_sk = impala_date_dim.d_date_sk ) INNER JOIN marketing_service AS marketing_service ON impala_store_sales.ss_promo_sk = marketing_service.p_promo_sk ) INNER JOIN oracle_customer AS oracle_customer ON impala_store_sales.ss_customer_sk = oracle_customer.c_customer_sk  WHERE (marketing_service.p_promo_sk = 1 AND impala_date_dim.d_year = 2017) GROUP BY oracle_customer.c_birth_country, marketing_service.p_promo_name, impala_date_dim.d_moy ORDER BY country DESC CONTEXT ('formatted' = 'yes');
+
+ALTER VIEW campaign_evolution_per_country
+ LAYOUT (impala_store_sales = [380, 120, 200, 225], impala_date_dim = [720, 10, 200, 225], marketing_service = [860, 300, 200, 225], oracle_customer_cached = [50, 170, 200, 225]);
+

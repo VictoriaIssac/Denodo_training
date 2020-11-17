@@ -1,0 +1,44 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "INTERNET_INC_ORACLE"
+    FOLDER = '/sources/relational - mpp/netezza'
+    DATASOURCENAME=netezza
+    CATALOGNAME='${databases.big_data.folder.sources.folder.relational - mpp.folder.netezza.views.jdbc.internet_inc_oracle.CATALOGNAME}' 
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - mpp.folder.netezza.views.jdbc.internet_inc_oracle.SCHEMANAME}' 
+    RELATIONNAME='INTERNET_INC' 
+    OUTPUTSCHEMA (
+        "IINC_ID" = 'IINC_ID' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='18', sourcetypeid='2', sourcetypename='NUMERIC')  NOT NULL SORTABLE,
+        "SUMMARY" = 'SUMMARY' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "TTIME" = 'TTIME' :'java.sql.Timestamp' (OPT) (sourcetypedecimals='6', sourcetyperadix='0', sourcetypesize='26', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        "TAXID" = 'TAXID' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='15', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "SPECIFIC_FIELD1" = 'SPECIFIC_FIELD1' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "SPECIFIC_FIELD2" = 'SPECIFIC_FIELD2' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE
+    )
+    CONSTRAINT 'PK_INTERNET_INC' PRIMARY KEY ( 'IINC_ID' );
+
+CREATE OR REPLACE TABLE "INTERNET_INC_NZ" I18N us_pst (
+        "IINC_ID":long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '18', sourcetypeid = '2'), 
+        "SUMMARY":text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', sourcetypeid = '12'), 
+        "TTIME":date (sourcetypedecimals = '6', sourcetyperadix = '0', sourcetypesize = '26', sourcetypeid = '93'), 
+        "TAXID":text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '15', sourcetypeid = '12'), 
+        "SPECIFIC_FIELD1":text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', sourcetypeid = '12'), 
+        "SPECIFIC_FIELD2":text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', sourcetypeid = '12')
+    )
+    FOLDER = '/sources/relational - mpp/netezza'
+    CONSTRAINT 'PK_INTERNET_INC' PRIMARY KEY ( 'IINC_ID' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "INTERNET_INC_ORACLE"(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD "IINC_ID" (any) OPT ANY
+             ADD "SUMMARY" (any) OPT ANY
+             ADD "TTIME" (any) OPT ANY
+             ADD "TAXID" (any) OPT ANY
+             ADD "SPECIFIC_FIELD1" (any) OPT ANY
+             ADD "SPECIFIC_FIELD2" (any) OPT ANY
+        )
+        OUTPUTLIST ("IINC_ID", "SPECIFIC_FIELD1", "SPECIFIC_FIELD2", "SUMMARY", "TAXID", "TTIME"
+        )
+        WRAPPER (jdbc "INTERNET_INC_ORACLE")
+    );
+

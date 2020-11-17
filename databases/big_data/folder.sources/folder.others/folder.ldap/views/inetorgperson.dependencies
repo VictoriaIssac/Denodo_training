@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.others/others.vql
+/databases/big_data/folder.sources/folder.others/folder.ldap/ldap.vql
+/databases/big_data/folder.sources/folder.others/folder.ldap/datasources/ldap/ad.vql

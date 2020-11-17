@@ -1,0 +1,78 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC sqls_customer
+    FOLDER = '/sources/relational - traditional/sql server'
+    DATASOURCENAME=sqlserver
+    CATALOGNAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.sql server.views.jdbc.sqls_customer.CATALOGNAME}' 
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.sql server.views.jdbc.sqls_customer.SCHEMANAME}' 
+    RELATIONNAME='customer' 
+    OUTPUTSCHEMA (
+        c_customer_sk = 'c_customer_sk' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        c_customer_id = 'c_customer_id' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='16', sourcetypeid='1', sourcetypename='char')  SORTABLE,
+        c_zip_code = 'c_zip_code' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        c_current_hdemo_sk = 'c_current_hdemo_sk' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        c_current_addr_sk = 'c_current_addr_sk' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        c_first_shipto_date_sk = 'c_first_shipto_date_sk' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        c_first_sales_date_sk = 'c_first_sales_date_sk' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        c_salutation = 'c_salutation' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='10', sourcetypeid='1', sourcetypename='char')  SORTABLE,
+        c_first_name = 'c_first_name' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='20', sourcetypeid='1', sourcetypename='char')  SORTABLE,
+        c_last_name = 'c_last_name' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='30', sourcetypeid='1', sourcetypename='char')  SORTABLE,
+        c_preferred_cust_flag = 'c_preferred_cust_flag' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='1', sourcetypeid='1', sourcetypename='char')  SORTABLE,
+        c_birth_day = 'c_birth_day' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        c_birth_month = 'c_birth_month' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        c_birth_year = 'c_birth_year' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        c_birth_country = 'c_birth_country' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='20', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        c_login = 'c_login' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='13', sourcetypeid='1', sourcetypename='char')  SORTABLE,
+        c_email_address = 'c_email_address' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='50', sourcetypeid='1', sourcetypename='char')  SORTABLE,
+        c_last_review_date_sk = 'c_last_review_date_sk' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='numeric')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE sqls_customer I18N us_pst (
+        c_customer_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2'), 
+        c_customer_id:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '16', sourcetypeid = '1'), 
+        c_zip_code:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2'), 
+        c_current_hdemo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2'), 
+        c_current_addr_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2'), 
+        c_first_shipto_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2'), 
+        c_first_sales_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2'), 
+        c_salutation:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '10', sourcetypeid = '1'), 
+        c_first_name:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '20', sourcetypeid = '1'), 
+        c_last_name:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '30', sourcetypeid = '1'), 
+        c_preferred_cust_flag:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '1', sourcetypeid = '1'), 
+        c_birth_day:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2'), 
+        c_birth_month:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2'), 
+        c_birth_year:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2'), 
+        c_birth_country:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '20', sourcetypeid = '12'), 
+        c_login:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '13', sourcetypeid = '1'), 
+        c_email_address:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '50', sourcetypeid = '1'), 
+        c_last_review_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '2')
+    )
+    FOLDER = '/sources/relational - traditional/sql server'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD sqls_customer(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD c_customer_sk (any) OPT ANY
+             ADD c_customer_id (any) OPT ANY
+             ADD c_zip_code (any) OPT ANY
+             ADD c_current_hdemo_sk (any) OPT ANY
+             ADD c_current_addr_sk (any) OPT ANY
+             ADD c_first_shipto_date_sk (any) OPT ANY
+             ADD c_first_sales_date_sk (any) OPT ANY
+             ADD c_salutation (any) OPT ANY
+             ADD c_first_name (any) OPT ANY
+             ADD c_last_name (any) OPT ANY
+             ADD c_preferred_cust_flag (any) OPT ANY
+             ADD c_birth_day (any) OPT ANY
+             ADD c_birth_month (any) OPT ANY
+             ADD c_birth_year (any) OPT ANY
+             ADD c_birth_country (any) OPT ANY
+             ADD c_login (any) OPT ANY
+             ADD c_email_address (any) OPT ANY
+             ADD c_last_review_date_sk (any) OPT ANY
+        )
+        OUTPUTLIST (c_birth_country, c_birth_day, c_birth_month, c_birth_year, c_current_addr_sk, c_current_hdemo_sk, c_customer_id, c_customer_sk, c_email_address, c_first_name, c_first_sales_date_sk, c_first_shipto_date_sk, c_last_name, c_last_review_date_sk, c_login, c_preferred_cust_flag, c_salutation, c_zip_code
+        )
+        WRAPPER (jdbc sqls_customer)
+    );
+

@@ -1,0 +1,18 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE SAPBWBAPI demo_sap_bwbapi_sap_bi_bapi_7x_ds2
+    FOLDER = '/sources/sap/sap bw'
+    DATABASENAME = 'sap_bi_bapi'
+    DATABASEVERSION = '7x'
+    SYSTEMNAME = '${databases.big_data.folder.sources.folder.sap.folder.sap bw.datasources.sapbwbapi.demo_sap_bwbapi_sap_bi_bapi_7x_ds2.SYSTEMNAME}'
+    HOSTNAME = '${databases.big_data.folder.sources.folder.sap.folder.sap bw.datasources.sapbwbapi.demo_sap_bwbapi_sap_bi_bapi_7x_ds2.HOSTNAME}'
+    CLIENTID = '${databases.big_data.folder.sources.folder.sap.folder.sap bw.datasources.sapbwbapi.demo_sap_bwbapi_sap_bi_bapi_7x_ds2.CLIENTID}'
+    SYSTEMNUMBER = '${databases.big_data.folder.sources.folder.sap.folder.sap bw.datasources.sapbwbapi.demo_sap_bwbapi_sap_bi_bapi_7x_ds2.SYSTEMNUMBER}'
+    USERNAME = '${databases.big_data.folder.sources.folder.sap.folder.sap bw.datasources.sapbwbapi.demo_sap_bwbapi_sap_bi_bapi_7x_ds2.USERNAME}'
+    USERPASSWORD = '${databases.big_data.folder.sources.folder.sap.folder.sap bw.datasources.sapbwbapi.demo_sap_bwbapi_sap_bi_bapi_7x_ds2.USERPASSWORD}' ${databases.big_data.folder.sources.folder.sap.folder.sap bw.datasources.sapbwbapi.demo_sap_bwbapi_sap_bi_bapi_7x_ds2.USERPASSWORD.ENCRYPTED}
+    READBLOCKSIZE = 20000
+    MAXACTIVE = 20
+    MAXIDLE = 4
+    MAXWAIT = 60000
+    MINEVICTABLEIDLETIME = 100000
+    TIMEBETWEENEVICTION = 150000;
+

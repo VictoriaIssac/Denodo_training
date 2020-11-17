@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_warehouse_oracle_catalog_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_catalog_sales oracle_warehouse PRINCIPAL (0,1)
+    ENDPOINT oracle_warehouse oracle_catalog_sales (0,*)
+    ADD MAPPING w_warehouse_sk=cs_warehouse_sk;
+

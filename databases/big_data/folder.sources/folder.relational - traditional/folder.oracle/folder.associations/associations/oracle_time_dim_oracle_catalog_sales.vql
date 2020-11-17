@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_time_dim_oracle_catalog_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_catalog_sales oracle_time_dim PRINCIPAL (0,1)
+    ENDPOINT oracle_time_dim oracle_catalog_sales (0,*)
+    ADD MAPPING t_time_sk=cs_sold_time_sk;
+

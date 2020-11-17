@@ -1,0 +1,42 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC impala
+    FOLDER = '/sources/hadoop/impala'
+    DRIVERCLASSNAME = 'com.cloudera.impala.jdbc41.Driver'
+    DATABASEURI = '${databases.big_data.folder.sources.folder.hadoop.folder.impala.datasources.jdbc.impala.DATABASEURI}'
+    USERNAME = '${databases.big_data.folder.sources.folder.hadoop.folder.impala.datasources.jdbc.impala.USERNAME}'
+    USERPASSWORD = '${databases.big_data.folder.sources.folder.hadoop.folder.impala.datasources.jdbc.impala.USERPASSWORD}' ${databases.big_data.folder.sources.folder.hadoop.folder.impala.datasources.jdbc.impala.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'C:\Denodo_new_7.0\lib-external\jdbc-drivers\impala-2.3\ImpalaJDBC41.jar'
+    DATABASENAME = 'impala'
+    DATABASEVERSION = '2_3'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        USE_FOR_QUERY_OPTIMIZATION = PARALLEL_PROCESSING
+        BATCHINSERTSIZE = 5000000
+        BULK_LOAD_CONFIGURATION (
+            HADOOP_EXECUTABLE_LOCATION = 'C:\Denodo_new_7.0\lib-external\HadoopClient\hadoop-2.7.1\bin\hadoop.cmd'
+            HDFS_URI = 'hdfs://quickstart/user/hive/warehouse'
+        )
+        TARGET_SCHEMA = 'denodo_cache' ESCAPE
+        USEEXTERNALTABLES ( 
+            ONMOVEREAD = false,
+            ONMOVEWRITE = true
+        )
+    )
+    PROCESSING_UNITS = 50
+    CPUS_PER_PROCESSING_UNIT = 8;
+

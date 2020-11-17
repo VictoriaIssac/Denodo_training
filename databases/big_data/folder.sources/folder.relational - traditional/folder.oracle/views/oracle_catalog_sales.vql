@@ -1,0 +1,162 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_catalog_sales
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_catalog_sales.SCHEMANAME}' 
+    RELATIONNAME='CATALOG_SALES' 
+    OUTPUTSCHEMA (
+        cs_sold_date_sk = 'CS_SOLD_DATE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_sold_time_sk = 'CS_SOLD_TIME_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ship_date_sk = 'CS_SHIP_DATE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_bill_customer_sk = 'CS_BILL_CUSTOMER_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_bill_cdemo_sk = 'CS_BILL_CDEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_bill_hdemo_sk = 'CS_BILL_HDEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_bill_addr_sk = 'CS_BILL_ADDR_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ship_customer_sk = 'CS_SHIP_CUSTOMER_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ship_cdemo_sk = 'CS_SHIP_CDEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ship_hdemo_sk = 'CS_SHIP_HDEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ship_addr_sk = 'CS_SHIP_ADDR_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_call_center_sk = 'CS_CALL_CENTER_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_catalog_page_sk = 'CS_CATALOG_PAGE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ship_mode_sk = 'CS_SHIP_MODE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_warehouse_sk = 'CS_WAREHOUSE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_item_sk = 'CS_ITEM_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        cs_promo_sk = 'CS_PROMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_order_number = 'CS_ORDER_NUMBER' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        cs_quantity = 'CS_QUANTITY' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_wholesale_cost = 'CS_WHOLESALE_COST' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_list_price = 'CS_LIST_PRICE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_sales_price = 'CS_SALES_PRICE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ext_discount_amt = 'CS_EXT_DISCOUNT_AMT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ext_sales_price = 'CS_EXT_SALES_PRICE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ext_wholesale_cost = 'CS_EXT_WHOLESALE_COST' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ext_list_price = 'CS_EXT_LIST_PRICE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ext_tax = 'CS_EXT_TAX' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_coupon_amt = 'CS_COUPON_AMT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_ext_ship_cost = 'CS_EXT_SHIP_COST' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_net_paid = 'CS_NET_PAID' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_net_paid_inc_tax = 'CS_NET_PAID_INC_TAX' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_net_paid_inc_ship = 'CS_NET_PAID_INC_SHIP' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_net_paid_inc_ship_tax = 'CS_NET_PAID_INC_SHIP_TAX' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cs_net_profit = 'CS_NET_PROFIT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008687' PRIMARY KEY ( 'CS_ITEM_SK' , 'CS_ORDER_NUMBER' )
+    CONSTRAINT 'CS_CC' FOREIGN KEY ( 'CS_CALL_CENTER_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CALL_CENTER'( 'CC_CALL_CENTER_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_CP' FOREIGN KEY ( 'CS_CATALOG_PAGE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CATALOG_PAGE'( 'CP_CATALOG_PAGE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_B_C' FOREIGN KEY ( 'CS_BILL_CUSTOMER_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER'( 'C_CUSTOMER_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_S_C' FOREIGN KEY ( 'CS_SHIP_CUSTOMER_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER'( 'C_CUSTOMER_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_B_A' FOREIGN KEY ( 'CS_BILL_ADDR_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER_ADDRESS'( 'CA_ADDRESS_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_S_A' FOREIGN KEY ( 'CS_SHIP_ADDR_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER_ADDRESS'( 'CA_ADDRESS_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_B_CD' FOREIGN KEY ( 'CS_BILL_CDEMO_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER_DEMOGRAPHICS'( 'CD_DEMO_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_S_CD' FOREIGN KEY ( 'CS_SHIP_CDEMO_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER_DEMOGRAPHICS'( 'CD_DEMO_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_D2' FOREIGN KEY ( 'CS_SOLD_DATE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'DATE_DIM'( 'D_DATE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_D1' FOREIGN KEY ( 'CS_SHIP_DATE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'DATE_DIM'( 'D_DATE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_B_HD' FOREIGN KEY ( 'CS_BILL_HDEMO_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'HOUSEHOLD_DEMOGRAPHICS'( 'HD_DEMO_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_S_HD' FOREIGN KEY ( 'CS_SHIP_HDEMO_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'HOUSEHOLD_DEMOGRAPHICS'( 'HD_DEMO_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_I' FOREIGN KEY ( 'CS_ITEM_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'ITEM'( 'I_ITEM_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_P' FOREIGN KEY ( 'CS_PROMO_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'PROMOTION'( 'P_PROMO_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_SM' FOREIGN KEY ( 'CS_SHIP_MODE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'SHIP_MODE'( 'SM_SHIP_MODE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_T' FOREIGN KEY ( 'CS_SOLD_TIME_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'TIME_DIM'( 'T_TIME_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CS_W' FOREIGN KEY ( 'CS_WAREHOUSE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'WAREHOUSE'( 'W_WAREHOUSE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'SYS_C008687' CLUSTER UNIQUE PRIMARY ( 'CS_ITEM_SK' , 'CS_ORDER_NUMBER' );
+
+CREATE OR REPLACE TABLE oracle_catalog_sales I18N us_pst (
+        cs_sold_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_sold_time_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_ship_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_bill_customer_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_bill_cdemo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_bill_hdemo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_bill_addr_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_ship_customer_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_ship_cdemo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_ship_hdemo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_ship_addr_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_call_center_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_catalog_page_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_ship_mode_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_warehouse_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_item_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_promo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_order_number:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_quantity:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cs_wholesale_cost:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_list_price:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_sales_price:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_ext_discount_amt:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_ext_sales_price:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_ext_wholesale_cost:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_ext_list_price:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_ext_tax:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_coupon_amt:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_ext_ship_cost:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_net_paid:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_net_paid_inc_tax:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_net_paid_inc_ship:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_net_paid_inc_ship_tax:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        cs_net_profit:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008687' PRIMARY KEY ( 'cs_item_sk' , 'cs_order_number' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_catalog_sales(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD cs_sold_date_sk (any) OPT ANY
+             ADD cs_sold_time_sk (any) OPT ANY
+             ADD cs_ship_date_sk (any) OPT ANY
+             ADD cs_bill_customer_sk (any) OPT ANY
+             ADD cs_bill_cdemo_sk (any) OPT ANY
+             ADD cs_bill_hdemo_sk (any) OPT ANY
+             ADD cs_bill_addr_sk (any) OPT ANY
+             ADD cs_ship_customer_sk (any) OPT ANY
+             ADD cs_ship_cdemo_sk (any) OPT ANY
+             ADD cs_ship_hdemo_sk (any) OPT ANY
+             ADD cs_ship_addr_sk (any) OPT ANY
+             ADD cs_call_center_sk (any) OPT ANY
+             ADD cs_catalog_page_sk (any) OPT ANY
+             ADD cs_ship_mode_sk (any) OPT ANY
+             ADD cs_warehouse_sk (any) OPT ANY
+             ADD cs_item_sk (any) OPT ANY
+             ADD cs_promo_sk (any) OPT ANY
+             ADD cs_order_number (any) OPT ANY
+             ADD cs_quantity (any) OPT ANY
+             ADD cs_wholesale_cost (any) OPT ANY
+             ADD cs_list_price (any) OPT ANY
+             ADD cs_sales_price (any) OPT ANY
+             ADD cs_ext_discount_amt (any) OPT ANY
+             ADD cs_ext_sales_price (any) OPT ANY
+             ADD cs_ext_wholesale_cost (any) OPT ANY
+             ADD cs_ext_list_price (any) OPT ANY
+             ADD cs_ext_tax (any) OPT ANY
+             ADD cs_coupon_amt (any) OPT ANY
+             ADD cs_ext_ship_cost (any) OPT ANY
+             ADD cs_net_paid (any) OPT ANY
+             ADD cs_net_paid_inc_tax (any) OPT ANY
+             ADD cs_net_paid_inc_ship (any) OPT ANY
+             ADD cs_net_paid_inc_ship_tax (any) OPT ANY
+             ADD cs_net_profit (any) OPT ANY
+        )
+        OUTPUTLIST (cs_bill_addr_sk, cs_bill_cdemo_sk, cs_bill_customer_sk, cs_bill_hdemo_sk, cs_call_center_sk, cs_catalog_page_sk, cs_coupon_amt, cs_ext_discount_amt, cs_ext_list_price, cs_ext_sales_price, cs_ext_ship_cost, cs_ext_tax, cs_ext_wholesale_cost, cs_item_sk, cs_list_price, cs_net_paid, cs_net_paid_inc_ship, cs_net_paid_inc_ship_tax, cs_net_paid_inc_tax, cs_net_profit, cs_order_number, cs_promo_sk, cs_quantity, cs_sales_price, cs_ship_addr_sk, cs_ship_cdemo_sk, cs_ship_customer_sk, cs_ship_date_sk, cs_ship_hdemo_sk, cs_ship_mode_sk, cs_sold_date_sk, cs_sold_time_sk, cs_warehouse_sk, cs_wholesale_cost
+        )
+        WRAPPER (jdbc oracle_catalog_sales)
+    );
+

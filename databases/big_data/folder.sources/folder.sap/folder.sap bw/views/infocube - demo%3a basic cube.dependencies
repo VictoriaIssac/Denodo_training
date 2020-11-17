@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.sap/sap.vql
+/databases/big_data/folder.sources/folder.sap/folder.sap bw/sap bw.vql
+/databases/big_data/folder.sources/folder.sap/folder.sap bw/datasources/sapbwbapi/demo_sap_bwbapi_sap_bi_bapi_7x_ds2.vql

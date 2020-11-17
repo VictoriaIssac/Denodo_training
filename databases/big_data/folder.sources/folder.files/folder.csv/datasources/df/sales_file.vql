@@ -1,0 +1,8 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE DF sales_file
+    FOLDER = '/sources/files/csv'
+    ROUTE LOCAL 'LocalConnection' '${databases.big_data.folder.sources.folder.files.folder.csv.datasources.df.sales_file.ROUTE.LOCAL.PATH}'
+    COLUMNDELIMITER = ','
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = TRUE;
+

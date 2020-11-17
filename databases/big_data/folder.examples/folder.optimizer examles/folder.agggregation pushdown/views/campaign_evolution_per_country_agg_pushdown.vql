@@ -1,0 +1,11 @@
+﻿CREATE OR REPLACE VIEW campaign_evolution_per_country_agg_pushdown FOLDER = '/examples/optimizer examles/agggregation pushdown' DESCRIPTION = 'Example of partial aggregation pushdown. Final view is aggregated by country, promo_name and month
+However, those fields cannot be directly pushed down to the sources, as this is a federated query and the aggregation fields come from the dimensions. 
+Denodo will automatically split the aggregation into two parts:
+- First in Impala, where the fact table and the time dimension reside, aggregating by the foreign keys: s1.d_moy, s1.ss_customer_sk and s1.ss_promo_sk
+- After the join, a second aggregation using the final fields
+
+This strategy dramatically reduces the data volumes transferred through the network, while pushes down to Impala most of the "heavy lifting"'  AS SELECT oracle_customer.c_birth_country AS country, marketing_service.p_promo_name AS promo_name, impala_date_dim.d_moy AS month, sum(impala_store_sales.ss_net_paid) AS total FROM ((impala_store_sales AS impala_store_sales INNER JOIN impala_date_dim AS impala_date_dim ON impala_store_sales.ss_sold_date_sk = impala_date_dim.d_date_sk ) INNER JOIN marketing_service AS marketing_service ON impala_store_sales.ss_promo_sk = marketing_service.p_promo_sk ) INNER JOIN oracle_customer AS oracle_customer ON impala_store_sales.ss_customer_sk = oracle_customer.c_customer_sk  WHERE (marketing_service.p_promo_sk = 1 AND impala_date_dim.d_year = 2017) GROUP BY oracle_customer.c_birth_country, marketing_service.p_promo_name, impala_date_dim.d_moy ORDER BY country DESC CONTEXT ('formatted' = 'yes');
+
+ALTER VIEW campaign_evolution_per_country_agg_pushdown
+ LAYOUT (impala_store_sales = [380, 120, 200, 225], impala_date_dim = [720, 10, 200, 225], marketing_service = [860, 300, 200, 225], oracle_customer_cached = [50, 170, 200, 225]);
+

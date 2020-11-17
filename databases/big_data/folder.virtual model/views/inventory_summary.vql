@@ -1,0 +1,11 @@
+﻿CREATE OR REPLACE VIEW inventory_summary FOLDER = '/virtual model' DESCRIPTION = 'This data represents the status of the stock at the warehouse over the years for each product'  (
+    item_desc (description = 'Description of the item'),
+    item_brand (description = 'Brand of the item'),
+    total_quantity_delivered_to_warehouse (description = 'Sum of the amount in the warehouse during the entire year'),
+    year (description = 'Year we are referring to')
+)
+ AS SELECT oracle_item.i_item_desc AS item_desc, oracle_item.i_brand AS item_brand, sum(impala_inventory.inv_quantity_on_hand) AS total_quantity_delivered_to_warehouse, oracle_date_dim.d_year AS year FROM (impala_inventory AS impala_inventory INNER JOIN oracle_item AS oracle_item ON impala_inventory.inv_item_sk = oracle_item.i_item_sk ) INNER JOIN oracle_date_dim AS oracle_date_dim ON impala_inventory.inv_date_sk = oracle_date_dim.d_date_sk  GROUP BY oracle_item.i_item_desc, oracle_item.i_brand, oracle_date_dim.d_year CONTEXT (DATAMOVEMENTPLAN = impala_inventory : OFF oracle_date_dim : OFF oracle_item : OFF);
+
+ALTER VIEW inventory_summary
+ LAYOUT (impala_inventory = [50, 100, 200, 106], oracle_item = [640, 50, 200, 225], oracle_date_dim = [390, 260, 200, 225]);
+

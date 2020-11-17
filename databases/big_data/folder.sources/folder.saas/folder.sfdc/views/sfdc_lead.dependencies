@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.saas/saas.vql
+/databases/big_data/folder.sources/folder.saas/folder.sfdc/sfdc.vql
+/databases/big_data/folder.sources/folder.saas/folder.sfdc/datasources/salesforce/sfdc.vql

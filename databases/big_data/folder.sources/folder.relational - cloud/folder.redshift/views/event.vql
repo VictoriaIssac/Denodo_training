@@ -1,0 +1,42 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC event
+    FOLDER = '/sources/relational - cloud/redshift'
+    DATASOURCENAME=aws_redshift_pga
+    CATALOGNAME='${databases.big_data.folder.sources.folder.relational - cloud.folder.redshift.views.jdbc.event.CATALOGNAME}' 
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - cloud.folder.redshift.views.jdbc.event.SCHEMANAME}' ESCAPE
+    RELATIONNAME='event' 
+    OUTPUTSCHEMA (
+        eventid = 'eventid' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='int4', sourcetypeid='4', sourcetypedecimals='0', sourcetypesize='10')  NOT NULL SORTABLE,
+        venueid = 'venueid' :'java.lang.Short' (OPT) (sourcetyperadix='10', sourcetypename='int2', sourcetypeid='5', sourcetypedecimals='0', sourcetypesize='5')  NOT NULL SORTABLE,
+        catid = 'catid' :'java.lang.Short' (OPT) (sourcetyperadix='10', sourcetypename='int2', sourcetypeid='5', sourcetypedecimals='0', sourcetypesize='5')  NOT NULL SORTABLE,
+        dateid = 'dateid' :'java.lang.Short' (OPT) (sourcetyperadix='10', sourcetypename='int2', sourcetypeid='5', sourcetypedecimals='0', sourcetypesize='5')  NOT NULL SORTABLE,
+        eventname = 'eventname' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='varchar', sourcetypeid='12', sourcetypesize='200')  SORTABLE,
+        starttime = 'starttime' :'java.sql.Timestamp' (OPT) (sourcetyperadix='10', sourcetypename='timestamp', sourcetypeid='93', sourcetypedecimals='6', sourcetypesize='29')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE event I18N us_pst (
+        eventid:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4'), 
+        venueid:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '5', sourcetypeid = '5'), 
+        catid:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '5', sourcetypeid = '5'), 
+        dateid:int (sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '5', sourcetypeid = '5'), 
+        eventname:text (sourcetyperadix = '10', sourcetypesize = '200', sourcetypeid = '12'), 
+        starttime:date (sourcetyperadix = '10', sourcetypedecimals = '6', sourcetypesize = '29', sourcetypeid = '93')
+    )
+    FOLDER = '/sources/relational - cloud/redshift'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD event(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD eventid (any) OPT ANY
+             ADD venueid (any) OPT ANY
+             ADD catid (any) OPT ANY
+             ADD dateid (any) OPT ANY
+             ADD eventname (any) OPT ANY
+             ADD starttime (any) OPT ANY
+        )
+        OUTPUTLIST (catid, dateid, eventid, eventname, starttime, venueid
+        )
+        WRAPPER (jdbc event)
+    );
+

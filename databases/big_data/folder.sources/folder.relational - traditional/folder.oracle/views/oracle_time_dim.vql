@@ -1,0 +1,57 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_time_dim
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_time_dim.SCHEMANAME}' 
+    RELATIONNAME='TIME_DIM' 
+    OUTPUTSCHEMA (
+        t_time_sk = 'T_TIME_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        t_time_id = 'T_TIME_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='16', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL SORTABLE,
+        t_time = 'T_TIME' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        t_hour = 'T_HOUR' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        t_minute = 'T_MINUTE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        t_second = 'T_SECOND' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        t_am_pm = 'T_AM_PM' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        t_shift = 'T_SHIFT' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        t_sub_shift = 'T_SUB_SHIFT' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        t_meal_time = 'T_MEAL_TIME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008670' PRIMARY KEY ( 'T_TIME_SK' )
+    INDEX 'SYS_C008670' CLUSTER UNIQUE PRIMARY ( 'T_TIME_SK' );
+
+CREATE OR REPLACE TABLE oracle_time_dim I18N us_pst (
+        t_time_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        t_time_id:text (sourcetyperadix = '10', sourcetypesize = '16', sourcetypeid = '1'), 
+        t_time:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        t_hour:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        t_minute:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        t_second:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        t_am_pm:text (sourcetyperadix = '10', sourcetypesize = '2', sourcetypeid = '1'), 
+        t_shift:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '1'), 
+        t_sub_shift:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '1'), 
+        t_meal_time:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '1')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008670' PRIMARY KEY ( 't_time_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE NOEXPIRE
+    ADD SEARCHMETHOD oracle_time_dim(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD t_time_sk (any) OPT ANY
+             ADD t_time_id (any) OPT ANY
+             ADD t_time (any) OPT ANY
+             ADD t_hour (any) OPT ANY
+             ADD t_minute (any) OPT ANY
+             ADD t_second (any) OPT ANY
+             ADD t_am_pm (any) OPT ANY
+             ADD t_shift (any) OPT ANY
+             ADD t_sub_shift (any) OPT ANY
+             ADD t_meal_time (any) OPT ANY
+        )
+        OUTPUTLIST (t_am_pm, t_hour, t_meal_time, t_minute, t_second, t_shift, t_sub_shift, t_time, t_time_id, t_time_sk
+        )
+        WRAPPER (jdbc oracle_time_dim)
+    )
+    SMART_ONLY;
+

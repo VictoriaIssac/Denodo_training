@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_household_demographics_oracle_store_returns REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_store_returns oracle_household_demographics PRINCIPAL (0,1)
+    ENDPOINT oracle_household_demographics oracle_store_returns (0,*)
+    ADD MAPPING hd_demo_sk=sr_hdemo_sk;
+

@@ -1,0 +1,5 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.saas/saas.vql
+/databases/big_data/folder.sources/folder.saas/folder.google/google.vql
+/databases/big_data/folder.sources/folder.saas/folder.google/folder.google analytics/google analytics.vql
+/databases/big_data/folder.sources/folder.saas/folder.google/folder.google analytics/datasources/json/google_analytics.vql

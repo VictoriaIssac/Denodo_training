@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION "oracle_customer_address_oracle_web_sales_WS_SHIP_ADDR_SK" REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT "oracle_web_sales_WS_SHIP_ADDR_SK" oracle_customer_address PRINCIPAL (0,1)
+    ENDPOINT "oracle_customer_address_WS_SHIP_ADDR_SK" oracle_web_sales (0,*)
+    ADD MAPPING ca_address_sk=ws_ship_addr_sk;
+

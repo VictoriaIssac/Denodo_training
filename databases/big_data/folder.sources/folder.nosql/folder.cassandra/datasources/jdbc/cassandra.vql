@@ -1,0 +1,30 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC cassandra
+    FOLDER = '/sources/nosql/cassandra'
+    DRIVERCLASSNAME = 'com.dbschema.CassandraJdbcDriver'
+    DATABASEURI = '${databases.big_data.folder.sources.folder.nosql.folder.cassandra.datasources.jdbc.cassandra.DATABASEURI}'
+    USERNAME = '${databases.big_data.folder.sources.folder.nosql.folder.cassandra.datasources.jdbc.cassandra.USERNAME}'
+    USERPASSWORD = ''
+    CLASSPATH = 'cassandra'
+    DATABASENAME = 'Generic'
+    DATABASEVERSION = ''
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = ''
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 200
+    );
+

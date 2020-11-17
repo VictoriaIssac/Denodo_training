@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_promotion_oracle_catalog_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_catalog_sales oracle_promotion PRINCIPAL (0,1)
+    ENDPOINT oracle_promotion oracle_catalog_sales (0,*)
+    ADD MAPPING p_promo_sk=cs_promo_sk;
+

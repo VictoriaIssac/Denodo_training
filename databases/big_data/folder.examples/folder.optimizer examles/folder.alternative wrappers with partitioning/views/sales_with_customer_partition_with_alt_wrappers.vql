@@ -1,0 +1,11 @@
+﻿CREATE OR REPLACE VIEW sales_with_customer_partition_with_alt_wrappers FOLDER = '/examples/optimizer examles/alternative wrappers with partitioning' DESCRIPTION = 'This query shows how a partitioned view (based on a UNION) with alternative wrappers work.
+
+Alternative wrappers allow Denodo to get data for a base view from more than one data source. The optimizer will use the adequate data source for each query. In this case,  each branch of the union will use a different alternative of the wrapper.
+
+In addition, this view also shows two other optimization techniques:
+- Partial aggregation push-down. In this case, it''s triggered by the UNION, not by a JOIN. Each branch of the UNION need to be re-aggregated at the end
+- Union-Join Push-down. Each branch of the UNION is joined with the corresponding version of the alternative wrapper, which allows for a complete pushdown of both the JOIN and the partial aggregation'  AS SELECT customer_alt.c_birth_country AS c_birth_country, sum(all_sales.ss_net_paid_inc_tax) AS total FROM all_sales AS all_sales INNER JOIN customer_alt AS customer_alt ON all_sales.ss_customer_sk = customer_alt.c_customer_sk  GROUP BY customer_alt.c_birth_country;
+
+ALTER VIEW sales_with_customer_partition_with_alt_wrappers
+ LAYOUT (all_sales = [20, 20, 200, 225], customer_alt = [400, 60, 200, 225]);
+

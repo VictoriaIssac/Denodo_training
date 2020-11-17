@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_ship_mode_oracle_web_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_web_sales oracle_ship_mode PRINCIPAL (0,1)
+    ENDPOINT oracle_ship_mode oracle_web_sales (0,*)
+    ADD MAPPING sm_ship_mode_sk=ws_ship_mode_sk;
+

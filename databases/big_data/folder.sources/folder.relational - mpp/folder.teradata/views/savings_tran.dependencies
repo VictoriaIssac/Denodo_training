@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.relational - mpp/relational - mpp.vql
+/databases/big_data/folder.sources/folder.relational - mpp/folder.teradata/teradata.vql
+/databases/big_data/folder.sources/folder.relational - mpp/folder.teradata/datasources/jdbc/teradata_vdev.vql

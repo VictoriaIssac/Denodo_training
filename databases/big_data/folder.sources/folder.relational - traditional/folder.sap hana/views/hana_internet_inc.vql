@@ -1,0 +1,43 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "hana_INTERNET_INC"
+    FOLDER = '/sources/relational - traditional/sap hana'
+    DATASOURCENAME=hana_mclaren
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.sap hana.views.jdbc.hana_internet_inc.SCHEMANAME}' 
+    RELATIONNAME='INTERNET_INC' 
+    OUTPUTSCHEMA (
+        "IINC_ID" = 'IINC_ID' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='16', sourcetypeid='3', sourcetypename='DECIMAL')  NOT NULL SORTABLE,
+        "SUMMARY" = 'SUMMARY' :'java.lang.String' (OPT) (sourcetypesize='500', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "TTIME" = 'TTIME' :'java.sql.Timestamp' (OPT) (sourcetypedecimals='7', sourcetypesize='27', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        "TAXID" = 'TAXID' :'java.lang.String' (OPT) (sourcetypesize='15', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "SPECIFIC_FIELD1" = 'SPECIFIC_FIELD1' :'java.lang.String' (OPT) (sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "SPECIFIC_FIELD2" = 'SPECIFIC_FIELD2' :'java.lang.String' (OPT) (sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE
+    )
+    CONSTRAINT '_SYS_TREE_RS_#154411_#0_#P0' PRIMARY KEY ( 'IINC_ID' );
+
+CREATE OR REPLACE TABLE "hana_INTERNET_INC" I18N us_pst (
+        "IINC_ID":long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '16', sourcetypeid = '3'), 
+        "SUMMARY":text (sourcetypesize = '500', sourcetypeid = '12'), 
+        "TTIME":date (sourcetypedecimals = '7', sourcetypesize = '27', sourcetypeid = '93'), 
+        "TAXID":text (sourcetypesize = '15', sourcetypeid = '12'), 
+        "SPECIFIC_FIELD1":text (sourcetypesize = '100', sourcetypeid = '12'), 
+        "SPECIFIC_FIELD2":text (sourcetypesize = '100', sourcetypeid = '12')
+    )
+    FOLDER = '/sources/relational - traditional/sap hana'
+    CONSTRAINT '_SYS_TREE_RS_#154411_#0_#P0' PRIMARY KEY ( 'IINC_ID' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "hana_INTERNET_INC"(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD "IINC_ID" (any) OPT ANY
+             ADD "SUMMARY" (any) OPT ANY
+             ADD "TTIME" (any) OPT ANY
+             ADD "TAXID" (any) OPT ANY
+             ADD "SPECIFIC_FIELD1" (any) OPT ANY
+             ADD "SPECIFIC_FIELD2" (any) OPT ANY
+        )
+        OUTPUTLIST ("IINC_ID", "SPECIFIC_FIELD1", "SPECIFIC_FIELD2", "SUMMARY", "TAXID", "TTIME"
+        )
+        WRAPPER (jdbc "hana_INTERNET_INC")
+    );
+

@@ -1,0 +1,321 @@
+﻿CREATE OR REPLACE WRAPPER WS "Get_Override_Balances"
+    FOLDER = '/sources/saas/workday'
+    DATASOURCENAME=workday_abscense
+    SERVICENAME='Absence_ManagementService'
+    PORTNAME='Absence_Management'
+    OPERATIONNAME='Get_Override_Balances'
+    INPUTMESSAGE='Get_Override_BalancesInput'
+    OUTPUTMESSAGE='Get_Override_BalancesOutput'
+    TUPLEROOT='/Envelope/Body/Get_Override_Balances_Response/Response_Data/Override_Balance'
+    OUTPUTSCHEMA (
+    body = '$$0': REGISTER OF (
+        "request_References" = 'request_References': ARRAY OF (
+            "Time_Off_Plan_BalanceObjectIDType" = 'Time_Off_Plan_BalanceObjectIDType': REGISTER OF (
+                "Time_Off_Plan_BalanceObjectIDType" = 'Time_Off_Plan_BalanceObjectIDType': ARRAY OF (
+                    "Time_Off_Plan_BalanceObjectIDType" = 'Time_Off_Plan_BalanceObjectIDType': REGISTER OF (
+                        _value='_value' (OBL),
+                        type='type' (OBL)
+                    )
+                )
+            )
+        ),
+        "request_Criteria" = 'request_Criteria': REGISTER OF (
+            "employee_Reference" = 'employee_Reference': ARRAY OF (
+                "WorkerObjectIDType" = 'WorkerObjectIDType': REGISTER OF (
+                    _value='_value' (OBL),
+                    type='type' (OBL)
+                )
+            ),
+            "batch_Reference" = 'batch_Reference': ARRAY OF (
+                "Application_BatchObjectIDType" = 'Application_BatchObjectIDType': REGISTER OF (
+                    _value='_value' (OBL),
+                    type='type' (OBL)
+                )
+            )
+        ),
+        "response_Filter" = 'response_Filter': REGISTER OF (
+            "as_Of_Effective_Date"='as_Of_Effective_Date' (OBL),
+            "as_Of_Entry_DateTime"='as_Of_Entry_DateTime' (OBL),
+            page='page' (OBL),
+            count='count' (OBL)
+        ),
+        "response_Group" = 'response_Group': REGISTER OF (
+            "include_Reference"='include_Reference' (OBL),
+            "include_Override_Balance_Data"='include_Override_Balance_Data' (OBL)
+        ),
+        version='version' (OBL)
+    ),
+    "request_References" = 'Envelope.Body.Get_Override_Balances_Response.Request_References': REGISTER OF (
+        "override_Balance_Reference" = 'override_Balance_Reference': ARRAY OF (
+            "Time_Off_Plan_BalanceObjectType" = 'Override_Balance_Reference': REGISTER OF (
+                "ID" = 'ID': ARRAY OF (
+                    "Time_Off_Plan_BalanceObjectIDType" = 'ID': REGISTER OF (
+                        _value='_value',
+                        type='type'
+                    )
+                ),
+                descriptor='descriptor'
+            )
+        )
+    ),
+    "request_Criteria" = 'Envelope.Body.Get_Override_Balances_Response.Request_Criteria': REGISTER OF (
+        "employee_Reference" = 'Employee_Reference': REGISTER OF (
+            "ID" = 'ID': ARRAY OF (
+                "WorkerObjectIDType" = 'ID': REGISTER OF (
+                    _value='_value',
+                    type='type'
+                )
+            ),
+            descriptor='descriptor'
+        ),
+        "batch_Reference" = 'Batch_Reference': REGISTER OF (
+            "ID" = 'ID': ARRAY OF (
+                "Application_BatchObjectIDType" = 'ID': REGISTER OF (
+                    _value='_value',
+                    type='type'
+                )
+            ),
+            descriptor='descriptor'
+        )
+    ),
+    "response_Filter" = 'Envelope.Body.Get_Override_Balances_Response.Response_Filter': REGISTER OF (
+        "as_Of_Effective_Date"='As_Of_Effective_Date',
+        "as_Of_Entry_DateTime"='As_Of_Entry_DateTime',
+        page='Page',
+        count='Count'
+    ),
+    "response_Groups" = 'Envelope.Body.Get_Override_Balances_Response.Response_Groups': REGISTER OF (
+        "include_Reference"='Include_Reference',
+        "include_Override_Balance_Data"='Include_Override_Balance_Data'
+    ),
+    "response_Results" = 'Envelope.Body.Get_Override_Balances_Response.Response_Results': REGISTER OF (
+        "total_Results"='Total_Results',
+        "total_Pages"='Total_Pages',
+        "page_Results"='Page_Results',
+        page='Page'
+    ),
+    "override_Balance_Reference" = 'Envelope.Body.Get_Override_Balances_Response.Response_Data.Override_Balance.Override_Balance_Reference': REGISTER OF (
+        "ID" = 'ID': ARRAY OF (
+            "Time_Off_Plan_BalanceObjectIDType" = 'ID': REGISTER OF (
+                _value='_value',
+                type='type'
+            )
+        ),
+        descriptor='descriptor'
+    ),
+    "override_Balance_Data" = 'Envelope.Body.Get_Override_Balances_Response.Response_Data.Override_Balance.Override_Balance_Data': REGISTER OF (
+        "ID"='ID',
+        "batch_ID"='Batch_ID',
+        "worker_Reference" = 'Worker_Reference': REGISTER OF (
+            "ID" = 'ID': ARRAY OF (
+                "WorkerObjectIDType" = 'ID': REGISTER OF (
+                    _value='_value',
+                    type='type'
+                )
+            ),
+            descriptor='descriptor'
+        ),
+        "position_Reference" = 'Position_Reference': REGISTER OF (
+            "ID" = 'ID': ARRAY OF (
+                "Position_ElementObjectIDType" = 'ID': REGISTER OF (
+                    _value='_value',
+                    type='type'
+                )
+            ),
+            descriptor='descriptor'
+        ),
+        "time_Off_Plan_Reference" = 'Time_Off_Plan_Reference': REGISTER OF (
+            "time_Off_Plan_Name"='Time_Off_Plan_Name'
+        ),
+        "override_Balance_Date"='Override_Balance_Date',
+        "override_Balance_Units"='Override_Balance_Units',
+        "override_Balance_Units_Data" = 'override_Balance_Units_Data': ARRAY OF (
+            "Carryover_Override_Balance_Units_DataType" = 'Override_Balance_Units_Data': REGISTER OF (
+                "carryover_Expiration_Date"='Carryover_Expiration_Date',
+                "carryover_Override_Balance_Units"='Carryover_Override_Balance_Units'
+            )
+        ),
+        comments='Comments'
+    )
+    );
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_request_References_Time_Off_Plan_BalanceObjectIDType_Time_Off_Plan_Bala_1" AS REGISTER OF (_value:text, type:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_request_References_Time_Off_Plan_BalanceObjectIDType_Time_Off_Plan_Bala_0" AS ARRAY OF "Get_Override_Balances_body_request_References_Time_Off_Plan_BalanceObjectIDType_Time_Off_Plan_Bala_1";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_request_References_Time_Off_Plan_BalanceObjectIDType" AS REGISTER OF ("Time_Off_Plan_BalanceObjectIDType":"Get_Override_Balances_body_request_References_Time_Off_Plan_BalanceObjectIDType_Time_Off_Plan_Bala_0");
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_request_References" AS ARRAY OF "Get_Override_Balances_body_request_References_Time_Off_Plan_BalanceObjectIDType";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_request_Criteria_employee_Reference_WorkerObjectIDType" AS REGISTER OF (_value:text, type:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_request_Criteria_employee_Reference" AS ARRAY OF "Get_Override_Balances_body_request_Criteria_employee_Reference_WorkerObjectIDType";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_request_Criteria_batch_Reference_Application_BatchObjectIDType" AS REGISTER OF (_value:text, type:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_request_Criteria_batch_Reference" AS ARRAY OF "Get_Override_Balances_body_request_Criteria_batch_Reference_Application_BatchObjectIDType";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_request_Criteria" AS REGISTER OF ("employee_Reference":"Get_Override_Balances_body_request_Criteria_employee_Reference", "batch_Reference":"Get_Override_Balances_body_request_Criteria_batch_Reference");
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_response_Filter" AS REGISTER OF ("as_Of_Effective_Date":date, "as_Of_Entry_DateTime":date, page:decimal, count:decimal);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body_response_Group" AS REGISTER OF ("include_Reference":boolean, "include_Override_Balance_Data":boolean);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_body" AS REGISTER OF ("request_References":"Get_Override_Balances_body_request_References", "request_Criteria":"Get_Override_Balances_body_request_Criteria", "response_Filter":"Get_Override_Balances_body_response_Filter", "response_Group":"Get_Override_Balances_body_response_Group", version:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_References_override_Balance_Reference_Time_Off_Plan_BalanceObjectTyp_1" AS REGISTER OF (_value:text, type:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_References_override_Balance_Reference_Time_Off_Plan_BalanceObjectTyp_0" AS ARRAY OF "Get_Override_Balances_request_References_override_Balance_Reference_Time_Off_Plan_BalanceObjectTyp_1";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_References_override_Balance_Reference_Time_Off_Plan_BalanceObjectType" AS REGISTER OF ("ID":"Get_Override_Balances_request_References_override_Balance_Reference_Time_Off_Plan_BalanceObjectTyp_0", descriptor:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_References_override_Balance_Reference" AS ARRAY OF "Get_Override_Balances_request_References_override_Balance_Reference_Time_Off_Plan_BalanceObjectType";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_References" AS REGISTER OF ("override_Balance_Reference":"Get_Override_Balances_request_References_override_Balance_Reference");
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_Criteria_employee_Reference_ID_WorkerObjectIDType" AS REGISTER OF (_value:text, type:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_Criteria_employee_Reference_ID" AS ARRAY OF "Get_Override_Balances_request_Criteria_employee_Reference_ID_WorkerObjectIDType";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_Criteria_employee_Reference" AS REGISTER OF ("ID":"Get_Override_Balances_request_Criteria_employee_Reference_ID", descriptor:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_Criteria_batch_Reference_ID_Application_BatchObjectIDType" AS REGISTER OF (_value:text, type:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_Criteria_batch_Reference_ID" AS ARRAY OF "Get_Override_Balances_request_Criteria_batch_Reference_ID_Application_BatchObjectIDType";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_Criteria_batch_Reference" AS REGISTER OF ("ID":"Get_Override_Balances_request_Criteria_batch_Reference_ID", descriptor:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_request_Criteria" AS REGISTER OF ("employee_Reference":"Get_Override_Balances_request_Criteria_employee_Reference", "batch_Reference":"Get_Override_Balances_request_Criteria_batch_Reference");
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_response_Filter" AS REGISTER OF ("as_Of_Effective_Date":date, "as_Of_Entry_DateTime":date, page:decimal, count:decimal);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_response_Groups" AS REGISTER OF ("include_Reference":boolean, "include_Override_Balance_Data":boolean);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_response_Results" AS REGISTER OF ("total_Results":decimal, "total_Pages":decimal, "page_Results":decimal, page:decimal);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Reference_ID_Time_Off_Plan_BalanceObjectIDType" AS REGISTER OF (_value:text, type:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Reference_ID" AS ARRAY OF "Get_Override_Balances_override_Balance_Reference_ID_Time_Off_Plan_BalanceObjectIDType";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Reference" AS REGISTER OF ("ID":"Get_Override_Balances_override_Balance_Reference_ID", descriptor:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data_worker_Reference_ID_WorkerObjectIDType" AS REGISTER OF (_value:text, type:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data_worker_Reference_ID" AS ARRAY OF "Get_Override_Balances_override_Balance_Data_worker_Reference_ID_WorkerObjectIDType";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data_worker_Reference" AS REGISTER OF ("ID":"Get_Override_Balances_override_Balance_Data_worker_Reference_ID", descriptor:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data_position_Reference_ID_Position_ElementObjectIDType" AS REGISTER OF (_value:text, type:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data_position_Reference_ID" AS ARRAY OF "Get_Override_Balances_override_Balance_Data_position_Reference_ID_Position_ElementObjectIDType";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data_position_Reference" AS REGISTER OF ("ID":"Get_Override_Balances_override_Balance_Data_position_Reference_ID", descriptor:text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data_time_Off_Plan_Reference" AS REGISTER OF ("time_Off_Plan_Name":text);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data_override_Balance_Units_Data_Carryover_Override_Balance_0" AS REGISTER OF ("carryover_Expiration_Date":date, "carryover_Override_Balance_Units":decimal);
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data_override_Balance_Units_Data" AS ARRAY OF "Get_Override_Balances_override_Balance_Data_override_Balance_Units_Data_Carryover_Override_Balance_0";
+
+CREATE OR REPLACE TYPE "Get_Override_Balances_override_Balance_Data" AS REGISTER OF ("ID":text, "batch_ID":text, "worker_Reference":"Get_Override_Balances_override_Balance_Data_worker_Reference", "position_Reference":"Get_Override_Balances_override_Balance_Data_position_Reference", "time_Off_Plan_Reference":"Get_Override_Balances_override_Balance_Data_time_Off_Plan_Reference", "override_Balance_Date":date, "override_Balance_Units":decimal, "override_Balance_Units_Data":"Get_Override_Balances_override_Balance_Data_override_Balance_Units_Data", comments:text);
+
+CREATE OR REPLACE TABLE "Get_Override_Balances" I18N us_pst (
+        body:"Get_Override_Balances_body", 
+        "request_References":"Get_Override_Balances_request_References", 
+        "request_Criteria":"Get_Override_Balances_request_Criteria", 
+        "response_Filter":"Get_Override_Balances_response_Filter", 
+        "response_Groups":"Get_Override_Balances_response_Groups", 
+        "response_Results":"Get_Override_Balances_response_Results", 
+        "override_Balance_Reference":"Get_Override_Balances_override_Balance_Reference", 
+        "override_Balance_Data":"Get_Override_Balances_override_Balance_Data"
+    )
+    FOLDER = '/sources/saas/workday'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "Get_Override_Balances"(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD body (=,is null) OPT ONE
+             ADD body."request_References" (=,is null) OBL ONE
+             ADD body."request_Criteria" (=,is null) OPT ONE
+             ADD body."request_Criteria"."employee_Reference" (=,is null) OBL ONE
+             ADD body."request_Criteria"."batch_Reference" (=,is null) OBL ONE
+             ADD body."response_Filter" (=,is null) OPT ONE
+             ADD body."response_Filter"."as_Of_Effective_Date" (=) OBL ONE
+             ADD body."response_Filter"."as_Of_Entry_DateTime" (=) OBL ONE
+             ADD body."response_Filter".page (=) OBL ONE
+             ADD body."response_Filter".count (=) OBL ONE
+             ADD body."response_Group" (=,is null) OPT ONE
+             ADD body."response_Group"."include_Reference" (=) OBL ONE
+             ADD body."response_Group"."include_Override_Balance_Data" (=) OBL ONE
+             ADD body.version (=) OBL ONE
+             ADD "request_References" NOS ZERO ()
+             ADD "request_References"."override_Balance_Reference" NOS ZERO ()
+             ADD "request_References"."override_Balance_Reference" NOS ZERO ()
+             ADD "request_References"."override_Balance_Reference"."ID" NOS ZERO ()
+             ADD "request_References"."override_Balance_Reference"."ID" NOS ZERO ()
+             ADD "request_References"."override_Balance_Reference"."ID"._value NOS ZERO ()
+             ADD "request_References"."override_Balance_Reference"."ID".type NOS ZERO ()
+             ADD "request_References"."override_Balance_Reference".descriptor NOS ZERO ()
+             ADD "request_Criteria" NOS ZERO ()
+             ADD "request_Criteria"."employee_Reference" NOS ZERO ()
+             ADD "request_Criteria"."employee_Reference"."ID" NOS ZERO ()
+             ADD "request_Criteria"."employee_Reference"."ID" NOS ZERO ()
+             ADD "request_Criteria"."employee_Reference"."ID"._value NOS ZERO ()
+             ADD "request_Criteria"."employee_Reference"."ID".type NOS ZERO ()
+             ADD "request_Criteria"."employee_Reference".descriptor NOS ZERO ()
+             ADD "request_Criteria"."batch_Reference" NOS ZERO ()
+             ADD "request_Criteria"."batch_Reference"."ID" NOS ZERO ()
+             ADD "request_Criteria"."batch_Reference"."ID" NOS ZERO ()
+             ADD "request_Criteria"."batch_Reference"."ID"._value NOS ZERO ()
+             ADD "request_Criteria"."batch_Reference"."ID".type NOS ZERO ()
+             ADD "request_Criteria"."batch_Reference".descriptor NOS ZERO ()
+             ADD "response_Filter" NOS ZERO ()
+             ADD "response_Filter"."as_Of_Effective_Date" NOS ZERO ()
+             ADD "response_Filter"."as_Of_Entry_DateTime" NOS ZERO ()
+             ADD "response_Filter".page NOS ZERO ()
+             ADD "response_Filter".count NOS ZERO ()
+             ADD "response_Groups" NOS ZERO ()
+             ADD "response_Groups"."include_Reference" NOS ZERO ()
+             ADD "response_Groups"."include_Override_Balance_Data" NOS ZERO ()
+             ADD "response_Results" NOS ZERO ()
+             ADD "response_Results"."total_Results" NOS ZERO ()
+             ADD "response_Results"."total_Pages" NOS ZERO ()
+             ADD "response_Results"."page_Results" NOS ZERO ()
+             ADD "response_Results".page NOS ZERO ()
+             ADD "override_Balance_Reference" NOS ZERO ()
+             ADD "override_Balance_Reference"."ID" NOS ZERO ()
+             ADD "override_Balance_Reference"."ID" NOS ZERO ()
+             ADD "override_Balance_Reference"."ID"._value NOS ZERO ()
+             ADD "override_Balance_Reference"."ID".type NOS ZERO ()
+             ADD "override_Balance_Reference".descriptor NOS ZERO ()
+             ADD "override_Balance_Data" NOS ZERO ()
+             ADD "override_Balance_Data"."ID" NOS ZERO ()
+             ADD "override_Balance_Data"."batch_ID" NOS ZERO ()
+             ADD "override_Balance_Data"."worker_Reference" NOS ZERO ()
+             ADD "override_Balance_Data"."worker_Reference"."ID" NOS ZERO ()
+             ADD "override_Balance_Data"."worker_Reference"."ID" NOS ZERO ()
+             ADD "override_Balance_Data"."worker_Reference"."ID"._value NOS ZERO ()
+             ADD "override_Balance_Data"."worker_Reference"."ID".type NOS ZERO ()
+             ADD "override_Balance_Data"."worker_Reference".descriptor NOS ZERO ()
+             ADD "override_Balance_Data"."position_Reference" NOS ZERO ()
+             ADD "override_Balance_Data"."position_Reference"."ID" NOS ZERO ()
+             ADD "override_Balance_Data"."position_Reference"."ID" NOS ZERO ()
+             ADD "override_Balance_Data"."position_Reference"."ID"._value NOS ZERO ()
+             ADD "override_Balance_Data"."position_Reference"."ID".type NOS ZERO ()
+             ADD "override_Balance_Data"."position_Reference".descriptor NOS ZERO ()
+             ADD "override_Balance_Data"."time_Off_Plan_Reference" NOS ZERO ()
+             ADD "override_Balance_Data"."time_Off_Plan_Reference"."time_Off_Plan_Name" NOS ZERO ()
+             ADD "override_Balance_Data"."override_Balance_Date" NOS ZERO ()
+             ADD "override_Balance_Data"."override_Balance_Units" NOS ZERO ()
+             ADD "override_Balance_Data"."override_Balance_Units_Data" NOS ZERO ()
+             ADD "override_Balance_Data"."override_Balance_Units_Data" NOS ZERO ()
+             ADD "override_Balance_Data"."override_Balance_Units_Data"."carryover_Expiration_Date" NOS ZERO ()
+             ADD "override_Balance_Data"."override_Balance_Units_Data"."carryover_Override_Balance_Units" NOS ZERO ()
+             ADD "override_Balance_Data".comments NOS ZERO ()
+        )
+        OUTPUTLIST (body, "override_Balance_Data", "override_Balance_Reference", "request_Criteria", "request_References", "response_Filter", "response_Groups", "response_Results"
+        )
+        WRAPPER (ws "Get_Override_Balances")
+    );
+

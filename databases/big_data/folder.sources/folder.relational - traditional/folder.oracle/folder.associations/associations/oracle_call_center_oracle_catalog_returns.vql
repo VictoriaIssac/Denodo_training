@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_call_center_oracle_catalog_returns REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_catalog_returns oracle_call_center PRINCIPAL (0,1)
+    ENDPOINT oracle_call_center oracle_catalog_returns (0,*)
+    ADD MAPPING cc_call_center_sk=cr_call_center_sk;
+

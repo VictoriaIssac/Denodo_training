@@ -1,0 +1,122 @@
+﻿CREATE OR REPLACE WRAPPER DF sales_file
+    FOLDER = '/sources/files/csv'
+    DATASOURCENAME=sales_file
+    OUTPUTSCHEMA (
+        ws_bill_addr_sk = 'ws_bill_addr_sk' (OPT),
+        ws_bill_cdemo_sk = 'ws_bill_cdemo_sk' (OPT),
+        ws_bill_customer_sk = 'ws_bill_customer_sk' (OPT),
+        ws_bill_hdemo_sk = 'ws_bill_hdemo_sk' (OPT),
+        ws_coupon_amt = 'ws_coupon_amt' (OPT),
+        ws_ext_discount_amt = 'ws_ext_discount_amt' (OPT),
+        ws_ext_list_price = 'ws_ext_list_price' (OPT),
+        ws_ext_sales_price = 'ws_ext_sales_price' (OPT),
+        ws_ext_ship_cost = 'ws_ext_ship_cost' (OPT),
+        ws_ext_tax = 'ws_ext_tax' (OPT),
+        ws_ext_wholesale_cost = 'ws_ext_wholesale_cost' (OPT),
+        ws_item_sk = 'ws_item_sk' (OPT),
+        ws_list_price = 'ws_list_price' (OPT),
+        ws_net_paid = 'ws_net_paid' (OPT),
+        ws_net_paid_inc_ship = 'ws_net_paid_inc_ship' (OPT),
+        ws_net_paid_inc_ship_tax = 'ws_net_paid_inc_ship_tax' (OPT),
+        ws_net_paid_inc_tax = 'ws_net_paid_inc_tax' (OPT),
+        ws_net_profit = 'ws_net_profit' (OPT),
+        ws_order_number = 'ws_order_number' (OPT),
+        ws_promo_sk = 'ws_promo_sk' (OPT),
+        ws_quantity = 'ws_quantity' (OPT),
+        ws_sales_price = 'ws_sales_price' (OPT),
+        ws_ship_addr_sk = 'ws_ship_addr_sk' (OPT),
+        ws_ship_cdemo_sk = 'ws_ship_cdemo_sk' (OPT),
+        ws_ship_customer_sk = 'ws_ship_customer_sk' (OPT),
+        ws_ship_date_sk = 'ws_ship_date_sk' (OPT),
+        ws_ship_hdemo_sk = 'ws_ship_hdemo_sk' (OPT),
+        ws_ship_mode_sk = 'ws_ship_mode_sk' (OPT),
+        ws_sold_date_sk = 'ws_sold_date_sk' (OPT),
+        ws_sold_time_sk = 'ws_sold_time_sk' (OPT),
+        ws_warehouse_sk = 'ws_warehouse_sk' (OPT),
+        ws_web_page_sk = 'ws_web_page_sk' (OPT),
+        ws_web_site_sk = 'ws_web_site_sk' (OPT),
+        ws_wholesale_cost = 'ws_wholesale_cost' (OPT)
+    );
+
+CREATE OR REPLACE TABLE sales_file I18N us_pst (
+        ws_bill_addr_sk:text, 
+        ws_bill_cdemo_sk:text, 
+        ws_bill_customer_sk:text, 
+        ws_bill_hdemo_sk:text, 
+        ws_coupon_amt:text, 
+        ws_ext_discount_amt:text, 
+        ws_ext_list_price:text, 
+        ws_ext_sales_price:text, 
+        ws_ext_ship_cost:text, 
+        ws_ext_tax:text, 
+        ws_ext_wholesale_cost:text, 
+        ws_item_sk:text, 
+        ws_list_price:text, 
+        ws_net_paid:text, 
+        ws_net_paid_inc_ship:text, 
+        ws_net_paid_inc_ship_tax:text, 
+        ws_net_paid_inc_tax:text, 
+        ws_net_profit:text, 
+        ws_order_number:text, 
+        ws_promo_sk:text, 
+        ws_quantity:text, 
+        ws_sales_price:text, 
+        ws_ship_addr_sk:text, 
+        ws_ship_cdemo_sk:text, 
+        ws_ship_customer_sk:text, 
+        ws_ship_date_sk:text, 
+        ws_ship_hdemo_sk:text, 
+        ws_ship_mode_sk:text, 
+        ws_sold_date_sk:text, 
+        ws_sold_time_sk:text, 
+        ws_warehouse_sk:text, 
+        ws_web_page_sk:text, 
+        ws_web_site_sk:text, 
+        ws_wholesale_cost:decimal
+    )
+    FOLDER = '/sources/files/csv'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD sales_file(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD ws_bill_addr_sk (=,in) OPT ANY
+             ADD ws_bill_cdemo_sk (=,in) OPT ANY
+             ADD ws_bill_customer_sk (=,in) OPT ANY
+             ADD ws_bill_hdemo_sk (=,in) OPT ANY
+             ADD ws_coupon_amt (=,in) OPT ANY
+             ADD ws_ext_discount_amt (=,in) OPT ANY
+             ADD ws_ext_list_price (=,in) OPT ANY
+             ADD ws_ext_sales_price (=,in) OPT ANY
+             ADD ws_ext_ship_cost (=,in) OPT ANY
+             ADD ws_ext_tax (=,in) OPT ANY
+             ADD ws_ext_wholesale_cost (=,in) OPT ANY
+             ADD ws_item_sk (=,in) OPT ANY
+             ADD ws_list_price (=,in) OPT ANY
+             ADD ws_net_paid (=,in) OPT ANY
+             ADD ws_net_paid_inc_ship (=,in) OPT ANY
+             ADD ws_net_paid_inc_ship_tax (=,in) OPT ANY
+             ADD ws_net_paid_inc_tax (=,in) OPT ANY
+             ADD ws_net_profit (=,in) OPT ANY
+             ADD ws_order_number (=,in) OPT ANY
+             ADD ws_promo_sk (=,in) OPT ANY
+             ADD ws_quantity (=,in) OPT ANY
+             ADD ws_sales_price (=,in) OPT ANY
+             ADD ws_ship_addr_sk (=,in) OPT ANY
+             ADD ws_ship_cdemo_sk (=,in) OPT ANY
+             ADD ws_ship_customer_sk (=,in) OPT ANY
+             ADD ws_ship_date_sk (=,in) OPT ANY
+             ADD ws_ship_hdemo_sk (=,in) OPT ANY
+             ADD ws_ship_mode_sk (=,in) OPT ANY
+             ADD ws_sold_date_sk (=,in) OPT ANY
+             ADD ws_sold_time_sk (=,in) OPT ANY
+             ADD ws_warehouse_sk (=,in) OPT ANY
+             ADD ws_web_page_sk (=,in) OPT ANY
+             ADD ws_web_site_sk (=,in) OPT ANY
+             ADD ws_wholesale_cost (=,in) OPT ANY
+        )
+        OUTPUTLIST (ws_bill_addr_sk, ws_bill_cdemo_sk, ws_bill_customer_sk, ws_bill_hdemo_sk, ws_coupon_amt, ws_ext_discount_amt, ws_ext_list_price, ws_ext_sales_price, ws_ext_ship_cost, ws_ext_tax, ws_ext_wholesale_cost, ws_item_sk, ws_list_price, ws_net_paid, ws_net_paid_inc_ship, ws_net_paid_inc_ship_tax, ws_net_paid_inc_tax, ws_net_profit, ws_order_number, ws_promo_sk, ws_quantity, ws_sales_price, ws_ship_addr_sk, ws_ship_cdemo_sk, ws_ship_customer_sk, ws_ship_date_sk, ws_ship_hdemo_sk, ws_ship_mode_sk, ws_sold_date_sk, ws_sold_time_sk, ws_warehouse_sk, ws_web_page_sk, ws_web_site_sk, ws_wholesale_cost
+        )
+        WRAPPER (df sales_file)
+    );
+

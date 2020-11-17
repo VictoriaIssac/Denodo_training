@@ -1,0 +1,10 @@
+﻿/databases/big_data/folder.virtual model/virtual model.vql
+/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.relational - traditional/relational - traditional.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/oracle.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/datasources/jdbc/oracle_tpcds.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/views/oracle_customer.vql
+/databases/big_data/folder.sources/folder.hadoop/hadoop.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/impala.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/datasources/jdbc/impala.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/views/impala_store_sales.vql

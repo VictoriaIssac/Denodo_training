@@ -1,0 +1,13 @@
+﻿/databases/big_data/folder.examples/examples.vql
+/databases/big_data/folder.examples/folder.optimizer examles/optimizer examles.vql
+/databases/big_data/folder.examples/folder.optimizer examles/folder.mpp integration/mpp integration.vql
+/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.hadoop/hadoop.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/impala.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/datasources/jdbc/impala.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/views/impala_inventory.vql
+/databases/big_data/folder.sources/folder.relational - traditional/relational - traditional.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/oracle.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/datasources/jdbc/oracle_tpcds.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/views/oracle_item.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/views/oracle_date_dim.vql

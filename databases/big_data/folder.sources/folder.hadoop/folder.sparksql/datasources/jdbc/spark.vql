@@ -1,0 +1,32 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC spark
+    FOLDER = '/sources/hadoop/sparksql'
+    DRIVERCLASSNAME = 'org.apache.hive.jdbc.HiveDriver'
+    DATABASEURI = '${databases.big_data.folder.sources.folder.hadoop.folder.sparksql.datasources.jdbc.spark.DATABASEURI}'
+    USERNAME = '${databases.big_data.folder.sources.folder.hadoop.folder.sparksql.datasources.jdbc.spark.USERNAME}'
+    USERPASSWORD = ''
+    CLASSPATH = 'spark-1.6'
+    DATABASENAME = 'spark'
+    DATABASEVERSION = '16'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = ''
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 200
+    )
+    PROCESSING_UNITS = 8
+    CPUS_PER_PROCESSING_UNIT = 8;
+

@@ -1,0 +1,254 @@
+﻿CREATE OR REPLACE WRAPPER LDAP "inetOrgPerson"
+    FOLDER = '/sources/others/ldap'
+    DATASOURCENAME=ad
+    OBJECTCLASSES='inetOrgPerson'
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        audio = 'audio' : ARRAY OF (
+            audio = 'AUDIO' : REGISTER OF (
+                audio = 'audio' : 'java.lang.String' (OPT)
+            )
+        ),
+        "businessCategory" = 'businessCategory' : ARRAY OF (
+            "businessCategory" = 'BUSINESSCATEGORY' : REGISTER OF (
+                "businessCategory" = 'businessCategory' : 'java.lang.String' (OPT)
+            )
+        ),
+        "carLicense" = 'carLicense' : ARRAY OF (
+            "carLicense" = 'CARLICENSE' : REGISTER OF (
+                "carLicense" = 'carLicense' : 'java.lang.String' (OPT)
+            )
+        ),
+        "departmentNumber" = 'departmentNumber' : ARRAY OF (
+            "departmentNumber" = 'DEPARTMENTNUMBER' : REGISTER OF (
+                "departmentNumber" = 'departmentNumber' : 'java.lang.String' (OPT)
+            )
+        ),
+        "displayName" = 'displayName' : 'java.lang.String' (OPT),
+        "employeeNumber" = 'employeeNumber' : 'java.lang.String' (OPT),
+        "employeeType" = 'employeeType' : 'java.lang.String' (OPT),
+        "givenName" = 'givenName' : 'java.lang.String' (OPT),
+        "homePhone" = 'homePhone' : 'java.lang.String' (OPT),
+        "homePostalAddress" = 'homePostalAddress' : 'java.lang.String' (OPT),
+        initials = 'initials' : 'java.lang.String' (OPT),
+        "jpegPhoto" = 'jpegPhoto' : ARRAY OF (
+            "jpegPhoto" = 'JPEGPHOTO' : REGISTER OF (
+                "jpegPhoto" = 'jpegPhoto' : 'java.lang.String' (OPT)
+            )
+        ),
+        "labeledURI" = 'labeledURI' : ARRAY OF (
+            "labeledURI" = 'LABELEDURI' : REGISTER OF (
+                "labeledURI" = 'labeledURI' : 'java.lang.String' (OPT)
+            )
+        ),
+        mail = 'mail' : 'java.lang.String' (OPT),
+        manager = 'manager' : 'java.lang.String' (OPT),
+        mobile = 'mobile' : 'java.lang.String' (OPT),
+        o = 'o' : ARRAY OF (
+            o = 'O' : REGISTER OF (
+                o = 'o' : 'java.lang.String' (OPT)
+            )
+        ),
+        pager = 'pager' : 'java.lang.String' (OPT),
+        photo = 'photo' : ARRAY OF (
+            photo = 'PHOTO' : REGISTER OF (
+                photo = 'photo' : 'java.lang.String' (OPT)
+            )
+        ),
+        "preferredLanguage" = 'preferredLanguage' : 'java.lang.String' (OPT),
+        "roomNumber" = 'roomNumber' : ARRAY OF (
+            "roomNumber" = 'ROOMNUMBER' : REGISTER OF (
+                "roomNumber" = 'roomNumber' : 'java.lang.String' (OPT)
+            )
+        ),
+        secretary = 'secretary' : ARRAY OF (
+            secretary = 'SECRETARY' : REGISTER OF (
+                secretary = 'secretary' : 'java.lang.String' (OPT)
+            )
+        ),
+        uid = 'uid' : ARRAY OF (
+            uid = 'UID' : REGISTER OF (
+                uid = 'uid' : 'java.lang.String' (OPT)
+            )
+        ),
+        "userCertificate" = 'userCertificate' : ARRAY OF (
+            "userCertificate" = 'USERCERTIFICATE' : REGISTER OF (
+                "userCertificate" = 'userCertificate' : 'java.lang.String' (OPT)
+            )
+        ),
+        "userPKCS12" = 'userPKCS12' : ARRAY OF (
+            "userPKCS12" = 'USERPKCS12' : REGISTER OF (
+                "userPKCS12" = 'userPKCS12' : 'java.lang.String' (OPT)
+            )
+        ),
+        "userSMIMECertificate" = 'userSMIMECertificate' : ARRAY OF (
+            "userSMIMECertificate" = 'USERSMIMECERTIFICATE' : REGISTER OF (
+                "userSMIMECertificate" = 'userSMIMECertificate' : 'java.lang.String' (OPT)
+            )
+        ),
+        "x500uniqueIdentifier" = 'x500uniqueIdentifier' : ARRAY OF (
+            "x500uniqueIdentifier" = 'X500UNIQUEIDENTIFIER' : REGISTER OF (
+                "x500uniqueIdentifier" = 'x500uniqueIdentifier' : 'java.lang.String' (OPT)
+            )
+        )
+    );
+
+CREATE OR REPLACE TYPE "inetOrgPerson_audio_audio" AS REGISTER OF (audio:text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_audio" AS ARRAY OF "inetOrgPerson_audio_audio";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_businessCategory_businessCategory" AS REGISTER OF ("businessCategory":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_businessCategory" AS ARRAY OF "inetOrgPerson_businessCategory_businessCategory";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_carLicense_carLicense" AS REGISTER OF ("carLicense":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_carLicense" AS ARRAY OF "inetOrgPerson_carLicense_carLicense";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_departmentNumber_departmentNumber" AS REGISTER OF ("departmentNumber":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_departmentNumber" AS ARRAY OF "inetOrgPerson_departmentNumber_departmentNumber";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_jpegPhoto_jpegPhoto" AS REGISTER OF ("jpegPhoto":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_jpegPhoto" AS ARRAY OF "inetOrgPerson_jpegPhoto_jpegPhoto";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_labeledURI_labeledURI" AS REGISTER OF ("labeledURI":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_labeledURI" AS ARRAY OF "inetOrgPerson_labeledURI_labeledURI";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_o_o" AS REGISTER OF (o:text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_o" AS ARRAY OF "inetOrgPerson_o_o";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_photo_photo" AS REGISTER OF (photo:text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_photo" AS ARRAY OF "inetOrgPerson_photo_photo";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_roomNumber_roomNumber" AS REGISTER OF ("roomNumber":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_roomNumber" AS ARRAY OF "inetOrgPerson_roomNumber_roomNumber";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_secretary_secretary" AS REGISTER OF (secretary:text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_secretary" AS ARRAY OF "inetOrgPerson_secretary_secretary";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_uid_uid" AS REGISTER OF (uid:text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_uid" AS ARRAY OF "inetOrgPerson_uid_uid";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_userCertificate_userCertificate" AS REGISTER OF ("userCertificate":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_userCertificate" AS ARRAY OF "inetOrgPerson_userCertificate_userCertificate";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_userPKCS12_userPKCS12" AS REGISTER OF ("userPKCS12":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_userPKCS12" AS ARRAY OF "inetOrgPerson_userPKCS12_userPKCS12";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_userSMIMECertificate_userSMIMECertificate" AS REGISTER OF ("userSMIMECertificate":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_userSMIMECertificate" AS ARRAY OF "inetOrgPerson_userSMIMECertificate_userSMIMECertificate";
+
+CREATE OR REPLACE TYPE "inetOrgPerson_x500uniqueIdentifier_x500uniqueIdentifier" AS REGISTER OF ("x500uniqueIdentifier":text);
+
+CREATE OR REPLACE TYPE "inetOrgPerson_x500uniqueIdentifier" AS ARRAY OF "inetOrgPerson_x500uniqueIdentifier_x500uniqueIdentifier";
+
+CREATE OR REPLACE TABLE "inetOrgPerson" I18N es_euro (
+        audio:"inetOrgPerson_audio", 
+        "businessCategory":"inetOrgPerson_businessCategory", 
+        "carLicense":"inetOrgPerson_carLicense", 
+        "departmentNumber":"inetOrgPerson_departmentNumber", 
+        "displayName":text, 
+        "employeeNumber":text, 
+        "employeeType":text, 
+        "givenName":text, 
+        "homePhone":text, 
+        "homePostalAddress":text, 
+        initials:text, 
+        "jpegPhoto":"inetOrgPerson_jpegPhoto", 
+        "labeledURI":"inetOrgPerson_labeledURI", 
+        mail:text, 
+        manager:text, 
+        mobile:text, 
+        o:"inetOrgPerson_o", 
+        pager:text, 
+        photo:"inetOrgPerson_photo", 
+        "preferredLanguage":text, 
+        "roomNumber":"inetOrgPerson_roomNumber", 
+        secretary:"inetOrgPerson_secretary", 
+        uid:"inetOrgPerson_uid", 
+        "userCertificate":"inetOrgPerson_userCertificate", 
+        "userPKCS12":"inetOrgPerson_userPKCS12", 
+        "userSMIMECertificate":"inetOrgPerson_userSMIMECertificate", 
+        "x500uniqueIdentifier":"inetOrgPerson_x500uniqueIdentifier"
+    )
+    FOLDER = '/sources/others/ldap'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "inetOrgPerson"(
+        I18N es_euro
+        CONSTRAINTS (
+             ADD audio NOS ZERO ()
+             ADD audio NOS ZERO ()
+             ADD audio.audio (any) OPT ANY
+             ADD "businessCategory" NOS ZERO ()
+             ADD "businessCategory" NOS ZERO ()
+             ADD "businessCategory"."businessCategory" (any) OPT ANY
+             ADD "carLicense" NOS ZERO ()
+             ADD "carLicense" NOS ZERO ()
+             ADD "carLicense"."carLicense" (any) OPT ANY
+             ADD "departmentNumber" NOS ZERO ()
+             ADD "departmentNumber" NOS ZERO ()
+             ADD "departmentNumber"."departmentNumber" (any) OPT ANY
+             ADD "displayName" (any) OPT ANY
+             ADD "employeeNumber" (any) OPT ANY
+             ADD "employeeType" (any) OPT ANY
+             ADD "givenName" (any) OPT ANY
+             ADD "homePhone" (any) OPT ANY
+             ADD "homePostalAddress" (any) OPT ANY
+             ADD initials (any) OPT ANY
+             ADD "jpegPhoto" NOS ZERO ()
+             ADD "jpegPhoto" NOS ZERO ()
+             ADD "jpegPhoto"."jpegPhoto" (any) OPT ANY
+             ADD "labeledURI" NOS ZERO ()
+             ADD "labeledURI" NOS ZERO ()
+             ADD "labeledURI"."labeledURI" (any) OPT ANY
+             ADD mail (any) OPT ANY
+             ADD manager (any) OPT ANY
+             ADD mobile (any) OPT ANY
+             ADD o NOS ZERO ()
+             ADD o NOS ZERO ()
+             ADD o.o (any) OPT ANY
+             ADD pager (any) OPT ANY
+             ADD photo NOS ZERO ()
+             ADD photo NOS ZERO ()
+             ADD photo.photo (any) OPT ANY
+             ADD "preferredLanguage" (any) OPT ANY
+             ADD "roomNumber" NOS ZERO ()
+             ADD "roomNumber" NOS ZERO ()
+             ADD "roomNumber"."roomNumber" (any) OPT ANY
+             ADD secretary NOS ZERO ()
+             ADD secretary NOS ZERO ()
+             ADD secretary.secretary (any) OPT ANY
+             ADD uid NOS ZERO ()
+             ADD uid NOS ZERO ()
+             ADD uid.uid (any) OPT ANY
+             ADD "userCertificate" NOS ZERO ()
+             ADD "userCertificate" NOS ZERO ()
+             ADD "userCertificate"."userCertificate" (any) OPT ANY
+             ADD "userPKCS12" NOS ZERO ()
+             ADD "userPKCS12" NOS ZERO ()
+             ADD "userPKCS12"."userPKCS12" (any) OPT ANY
+             ADD "userSMIMECertificate" NOS ZERO ()
+             ADD "userSMIMECertificate" NOS ZERO ()
+             ADD "userSMIMECertificate"."userSMIMECertificate" (any) OPT ANY
+             ADD "x500uniqueIdentifier" NOS ZERO ()
+             ADD "x500uniqueIdentifier" NOS ZERO ()
+             ADD "x500uniqueIdentifier"."x500uniqueIdentifier" (any) OPT ANY
+        )
+        OUTPUTLIST (audio, "businessCategory", "carLicense", "departmentNumber", "displayName", "employeeNumber", "employeeType", "givenName", "homePhone", "homePostalAddress", initials, "jpegPhoto", "labeledURI", mail, manager, mobile, o, pager, photo, "preferredLanguage", "roomNumber", secretary, uid, "userCertificate", "userPKCS12", "userSMIMECertificate", "x500uniqueIdentifier"
+        )
+        WRAPPER (ldap "inetOrgPerson")
+    );
+

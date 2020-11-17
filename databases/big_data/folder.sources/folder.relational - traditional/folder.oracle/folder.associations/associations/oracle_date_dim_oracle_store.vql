@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_date_dim_oracle_store REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_store oracle_date_dim PRINCIPAL (0,1)
+    ENDPOINT oracle_date_dim oracle_store (0,*)
+    ADD MAPPING d_date_sk=s_closed_date_sk;
+

@@ -1,0 +1,65 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_customer_address
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_customer_address.SCHEMANAME}' 
+    RELATIONNAME='CUSTOMER_ADDRESS' 
+    OUTPUTSCHEMA (
+        ca_address_sk = 'CA_ADDRESS_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        ca_address_id = 'CA_ADDRESS_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='16', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL SORTABLE,
+        ca_street_number = 'CA_STREET_NUMBER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        ca_street_name = 'CA_STREET_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='60', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        ca_street_type = 'CA_STREET_TYPE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='15', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        ca_suite_number = 'CA_SUITE_NUMBER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        ca_city = 'CA_CITY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='60', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        ca_county = 'CA_COUNTY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='30', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        ca_state = 'CA_STATE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        ca_zip = 'CA_ZIP' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        ca_country = 'CA_COUNTRY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        ca_gmt_offset = 'CA_GMT_OFFSET' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='5', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        ca_location_type = 'CA_LOCATION_TYPE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008665' PRIMARY KEY ( 'CA_ADDRESS_SK' )
+    INDEX 'SYS_C008665' CLUSTER UNIQUE PRIMARY ( 'CA_ADDRESS_SK' );
+
+CREATE OR REPLACE TABLE oracle_customer_address I18N us_pst (
+        ca_address_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        ca_address_id:text (sourcetyperadix = '10', sourcetypesize = '16', sourcetypeid = '1'), 
+        ca_street_number:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        ca_street_name:text (sourcetyperadix = '10', sourcetypesize = '60', sourcetypeid = '12'), 
+        ca_street_type:text (sourcetyperadix = '10', sourcetypesize = '15', sourcetypeid = '1'), 
+        ca_suite_number:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        ca_city:text (sourcetyperadix = '10', sourcetypesize = '60', sourcetypeid = '12'), 
+        ca_county:text (sourcetyperadix = '10', sourcetypesize = '30', sourcetypeid = '12'), 
+        ca_state:text (sourcetyperadix = '10', sourcetypesize = '2', sourcetypeid = '1'), 
+        ca_zip:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        ca_country:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        ca_gmt_offset:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '5', sourcetypeid = '3'), 
+        ca_location_type:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '1')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008665' PRIMARY KEY ( 'ca_address_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_customer_address(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD ca_address_sk (any) OPT ANY
+             ADD ca_address_id (any) OPT ANY
+             ADD ca_street_number (any) OPT ANY
+             ADD ca_street_name (any) OPT ANY
+             ADD ca_street_type (any) OPT ANY
+             ADD ca_suite_number (any) OPT ANY
+             ADD ca_city (any) OPT ANY
+             ADD ca_county (any) OPT ANY
+             ADD ca_state (any) OPT ANY
+             ADD ca_zip (any) OPT ANY
+             ADD ca_country (any) OPT ANY
+             ADD ca_gmt_offset (any) OPT ANY
+             ADD ca_location_type (any) OPT ANY
+        )
+        OUTPUTLIST (ca_address_id, ca_address_sk, ca_city, ca_country, ca_county, ca_gmt_offset, ca_location_type, ca_state, ca_street_name, ca_street_number, ca_street_type, ca_suite_number, ca_zip
+        )
+        WRAPPER (jdbc oracle_customer_address)
+    );
+

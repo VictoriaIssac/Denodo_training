@@ -1,0 +1,34 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC netezza
+    FOLDER = '/sources/relational - mpp/netezza'
+    DRIVERCLASSNAME = 'org.netezza.Driver'
+    DATABASEURI = '${databases.big_data.folder.sources.folder.relational - mpp.folder.netezza.datasources.jdbc.netezza.DATABASEURI}'
+    USERNAME = '${databases.big_data.folder.sources.folder.relational - mpp.folder.netezza.datasources.jdbc.netezza.USERNAME}'
+    USERPASSWORD = '${databases.big_data.folder.sources.folder.relational - mpp.folder.netezza.datasources.jdbc.netezza.USERPASSWORD}' ${databases.big_data.folder.sources.folder.relational - mpp.folder.netezza.datasources.jdbc.netezza.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'netezza'
+    DATABASENAME = 'netezza'
+    DATABASEVERSION = '6_0'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'Select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 10000
+        USEEXTERNALTABLES ( 
+            ONMOVEREAD = true,
+            ONMOVEWRITE = true
+        )
+    );
+

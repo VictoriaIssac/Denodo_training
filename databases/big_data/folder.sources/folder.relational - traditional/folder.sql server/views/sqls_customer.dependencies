@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.relational - traditional/relational - traditional.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.sql server/sql server.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.sql server/datasources/jdbc/sqlserver.vql

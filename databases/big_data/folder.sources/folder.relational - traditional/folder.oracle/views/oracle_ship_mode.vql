@@ -1,0 +1,44 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_ship_mode
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_ship_mode.SCHEMANAME}' 
+    RELATIONNAME='SHIP_MODE' 
+    OUTPUTSCHEMA (
+        sm_ship_mode_sk = 'SM_SHIP_MODE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        sm_ship_mode_id = 'SM_SHIP_MODE_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='16', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL SORTABLE,
+        sm_type = 'SM_TYPE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='30', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        sm_code = 'SM_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        sm_carrier = 'SM_CARRIER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        sm_contract = 'SM_CONTRACT' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008669' PRIMARY KEY ( 'SM_SHIP_MODE_SK' )
+    INDEX 'SYS_C008669' CLUSTER UNIQUE PRIMARY ( 'SM_SHIP_MODE_SK' );
+
+CREATE OR REPLACE TABLE oracle_ship_mode I18N us_pst (
+        sm_ship_mode_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        sm_ship_mode_id:text (sourcetyperadix = '10', sourcetypesize = '16', sourcetypeid = '1'), 
+        sm_type:text (sourcetyperadix = '10', sourcetypesize = '30', sourcetypeid = '1'), 
+        sm_code:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        sm_carrier:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '1'), 
+        sm_contract:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '1')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008669' PRIMARY KEY ( 'sm_ship_mode_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_ship_mode(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD sm_ship_mode_sk (any) OPT ANY
+             ADD sm_ship_mode_id (any) OPT ANY
+             ADD sm_type (any) OPT ANY
+             ADD sm_code (any) OPT ANY
+             ADD sm_carrier (any) OPT ANY
+             ADD sm_contract (any) OPT ANY
+        )
+        OUTPUTLIST (sm_carrier, sm_code, sm_contract, sm_ship_mode_id, sm_ship_mode_sk, sm_type
+        )
+        WRAPPER (jdbc oracle_ship_mode)
+    );
+

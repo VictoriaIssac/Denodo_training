@@ -1,0 +1,19 @@
+﻿/databases/big_data/folder.examples/examples.vql
+/databases/big_data/folder.examples/folder.optimizer examles/optimizer examles.vql
+/databases/big_data/folder.examples/folder.optimizer examles/folder.alternative wrappers with partitioning/alternative wrappers with partitioning.vql
+/databases/big_data/folder.examples/folder.optimizer examles/folder.partitioning by date/partitioning by date.vql
+/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.relational - traditional/relational - traditional.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/oracle.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/datasources/jdbc/oracle_tpcds.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/views/oracle_store_sales.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/views/oracle_date_dim.vql
+/databases/big_data/folder.examples/folder.optimizer examles/folder.partitioning by date/views/current_sales.vql
+/databases/big_data/folder.sources/folder.hadoop/hadoop.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/impala.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/datasources/jdbc/impala.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/views/impala_store_sales.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.impala/views/impala_date_dim.vql
+/databases/big_data/folder.examples/folder.optimizer examles/folder.partitioning by date/views/historical_sales.vql
+/databases/big_data/folder.examples/folder.optimizer examles/folder.partitioning by date/views/all_sales.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/views/customer_alt.vql

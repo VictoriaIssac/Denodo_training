@@ -1,0 +1,119 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC cache_notification
+    FOLDER = '/sources/hadoop/impala'
+    DATASOURCENAME=impala
+    SCHEMANAME='${databases.big_data.folder.sources.folder.hadoop.folder.impala.views.jdbc.cache_notification.SCHEMANAME}' ESCAPE
+    RELATIONNAME='cache_notification' 
+    OUTPUTSCHEMA (
+        servername = 'servername' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        host = 'host' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        port = 'port' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='10', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        sessionid = 'sessionid' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        notificationtype = 'notificationtype' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='30', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        notificatinotimestamp = 'notificatinotimestamp' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='0', sourcetypesize='29', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        id = 'id' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        querypatternid = 'querypatternid' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        databasename = 'databasename' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        viewname = 'viewname' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        viewid = 'viewid' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        sqlviewname = 'sqlviewname' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        projectedfields = 'projectedfields' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='4000', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        numconditions = 'numconditions' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  SORTABLE,
+        vdpconditionlist = 'vdpconditionlist' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='4000', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        cachestatus = 'cachestatus' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='30', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        ttlstatusincache = 'ttlstatusincache' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='30', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        ttlincache = 'ttlincache' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        querypatternstate = 'querypatternstate' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='30', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        exception = 'exception' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='4000', description='', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        numofinsertedrows = 'numofinsertedrows' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        numofreceivedrows = 'numofreceivedrows' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  SORTABLE,
+        startquerypatternstoragetime = 'startquerypatternstoragetime' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='0', sourcetypesize='29', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        endquerypatternstoragetime = 'endquerypatternstoragetime' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='0', sourcetypesize='29', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        querypatternstoragetime = 'querypatternstoragetime' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        startcachedresultmdstoragetime = 'startcachedresultmdstoragetime' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='0', sourcetypesize='29', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        endcachedresultmdstoragetime = 'endcachedresultmdstoragetime' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='0', sourcetypesize='29', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        cachedresultmdstoragetime = 'cachedresultmdstoragetime' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        startdatastoragetime = 'startdatastoragetime' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='0', sourcetypesize='29', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        enddatastoragetime = 'enddatastoragetime' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='0', sourcetypesize='29', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        datastoragetime = 'datastoragetime' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        truncateddata = 'truncateddata' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE cache_notification I18N au_cst (
+        servername:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        host:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        port:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '10', description = '', sourcetypeid = '12'), 
+        sessionid:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        notificationtype:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '30', description = '', sourcetypeid = '12'), 
+        notificatinotimestamp:timestamp (sourcetypedecimals = '9', sourcetyperadix = '0', sourcetypesize = '29', description = '', sourcetypeid = '93'), 
+        id:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        querypatternid:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        databasename:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        viewname:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        viewid:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        sqlviewname:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        projectedfields:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '4000', description = '', sourcetypeid = '12'), 
+        numconditions:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '4'), 
+        vdpconditionlist:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '4000', description = '', sourcetypeid = '12'), 
+        cachestatus:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '30', description = '', sourcetypeid = '12'), 
+        ttlstatusincache:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '30', description = '', sourcetypeid = '12'), 
+        ttlincache:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        querypatternstate:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '30', description = '', sourcetypeid = '12'), 
+        exception:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '4000', description = '', sourcetypeid = '12'), 
+        numofinsertedrows:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        numofreceivedrows:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '4'), 
+        startquerypatternstoragetime:timestamp (sourcetypedecimals = '9', sourcetyperadix = '0', sourcetypesize = '29', description = '', sourcetypeid = '93'), 
+        endquerypatternstoragetime:timestamp (sourcetypedecimals = '9', sourcetyperadix = '0', sourcetypesize = '29', description = '', sourcetypeid = '93'), 
+        querypatternstoragetime:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        startcachedresultmdstoragetime:timestamp (sourcetypedecimals = '9', sourcetyperadix = '0', sourcetypesize = '29', description = '', sourcetypeid = '93'), 
+        endcachedresultmdstoragetime:timestamp (sourcetypedecimals = '9', sourcetyperadix = '0', sourcetypesize = '29', description = '', sourcetypeid = '93'), 
+        cachedresultmdstoragetime:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        startdatastoragetime:timestamp (sourcetypedecimals = '9', sourcetyperadix = '0', sourcetypesize = '29', description = '', sourcetypeid = '93'), 
+        enddatastoragetime:timestamp (sourcetypedecimals = '9', sourcetyperadix = '0', sourcetypesize = '29', description = '', sourcetypeid = '93'), 
+        datastoragetime:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        truncateddata:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '4')
+    )
+    FOLDER = '/sources/hadoop/impala'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD cache_notification(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD servername (any) OPT ANY
+             ADD host (any) OPT ANY
+             ADD port (any) OPT ANY
+             ADD sessionid (any) OPT ANY
+             ADD notificationtype (any) OPT ANY
+             ADD notificatinotimestamp (any) OPT ANY
+             ADD id (any) OPT ANY
+             ADD querypatternid (any) OPT ANY
+             ADD databasename (any) OPT ANY
+             ADD viewname (any) OPT ANY
+             ADD viewid (any) OPT ANY
+             ADD sqlviewname (any) OPT ANY
+             ADD projectedfields (any) OPT ANY
+             ADD numconditions (any) OPT ANY
+             ADD vdpconditionlist (any) OPT ANY
+             ADD cachestatus (any) OPT ANY
+             ADD ttlstatusincache (any) OPT ANY
+             ADD ttlincache (any) OPT ANY
+             ADD querypatternstate (any) OPT ANY
+             ADD exception (any) OPT ANY
+             ADD numofinsertedrows (any) OPT ANY
+             ADD numofreceivedrows (any) OPT ANY
+             ADD startquerypatternstoragetime (any) OPT ANY
+             ADD endquerypatternstoragetime (any) OPT ANY
+             ADD querypatternstoragetime (any) OPT ANY
+             ADD startcachedresultmdstoragetime (any) OPT ANY
+             ADD endcachedresultmdstoragetime (any) OPT ANY
+             ADD cachedresultmdstoragetime (any) OPT ANY
+             ADD startdatastoragetime (any) OPT ANY
+             ADD enddatastoragetime (any) OPT ANY
+             ADD datastoragetime (any) OPT ANY
+             ADD truncateddata (any) OPT ANY
+        )
+        OUTPUTLIST (cachedresultmdstoragetime, cachestatus, databasename, datastoragetime, endcachedresultmdstoragetime, enddatastoragetime, endquerypatternstoragetime, exception, host, id, notificatinotimestamp, notificationtype, numconditions, numofinsertedrows, numofreceivedrows, port, projectedfields, querypatternid, querypatternstate, querypatternstoragetime, servername, sessionid, sqlviewname, startcachedresultmdstoragetime, startdatastoragetime, startquerypatternstoragetime, truncateddata, ttlincache, ttlstatusincache, vdpconditionlist, viewid, viewname
+        )
+        WRAPPER (jdbc cache_notification)
+    );
+

@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_web_site_oracle_web_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_web_sales oracle_web_site PRINCIPAL (0,1)
+    ENDPOINT oracle_web_site oracle_web_sales (0,*)
+    ADD MAPPING web_site_sk=ws_web_site_sk;
+

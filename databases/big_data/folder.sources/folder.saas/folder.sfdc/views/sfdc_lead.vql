@@ -1,0 +1,183 @@
+﻿CREATE OR REPLACE WRAPPER SALESFORCE sfdc_lead
+    FOLDER = '/sources/saas/sfdc'
+    DATASOURCENAME=sfdc
+    OBJECTNAME="Lead"
+    OUTPUTSCHEMA (
+        id = 'Id' : 'java.lang.String' (OPT) (sourcetypename='id')  SORTABLE NOT UPDATEABLE,
+        isdeleted = 'IsDeleted' : 'java.lang.Boolean' (OPT) (DEFAULTVALUE='false', sourcetypename='boolean')  SORTABLE NOT UPDATEABLE,
+        masterrecordid = 'MasterRecordId' : 'java.lang.String' (OPT) (sourcetypename='reference')  SORTABLE NOT UPDATEABLE,
+        lastname = 'LastName' : 'java.lang.String' (OPT) (sourcetypename='string')  NOT NULL SORTABLE,
+        firstname = 'FirstName' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE,
+        salutation = 'Salutation' : 'java.lang.String' (OPT) (sourcetypename='picklist')  SORTABLE,
+        name = 'Name' : 'java.lang.String' (OPT) (sourcetypename='string')  NOT NULL SORTABLE NOT UPDATEABLE,
+        title = 'Title' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE,
+        company = 'Company' : 'java.lang.String' (OPT) (sourcetypename='string')  NOT NULL SORTABLE,
+        street = 'Street' : 'java.lang.String' (OPT) (sourcetypename='textarea')  SORTABLE,
+        city = 'City' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE,
+        state = 'State' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE,
+        postalcode = 'PostalCode' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE,
+        country = 'Country' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE,
+        latitude = 'Latitude' : 'java.lang.Double' (OPT) (sourcetypename='double')  SORTABLE,
+        longitude = 'Longitude' : 'java.lang.Double' (OPT) (sourcetypename='double')  SORTABLE,
+        geocodeaccuracy = 'GeocodeAccuracy' : 'java.lang.String' (OPT) (sourcetypename='picklist')  SORTABLE,
+        phone = 'Phone' : 'java.lang.String' (OPT) (sourcetypename='phone')  SORTABLE,
+        mobilephone = 'MobilePhone' : 'java.lang.String' (OPT) (sourcetypename='phone')  SORTABLE,
+        fax = 'Fax' : 'java.lang.String' (OPT) (sourcetypename='phone')  SORTABLE,
+        email = 'Email' : 'java.lang.String' (OPT) (sourcetypename='email')  SORTABLE,
+        website = 'Website' : 'java.lang.String' (OPT) (sourcetypename='url')  SORTABLE,
+        photourl = 'PhotoUrl' : 'java.lang.String' (OPT) (sourcetypename='url')  SORTABLE NOT UPDATEABLE,
+        description = 'Description' : 'java.lang.String' (sourcetypename='textarea')  NOT SORTABLE,
+        leadsource = 'LeadSource' : 'java.lang.String' (OPT) (sourcetypename='picklist')  SORTABLE,
+        status = 'Status' : 'java.lang.String' (OPT) (DEFAULTVALUE='Open - Not Contacted', sourcetypename='picklist')  SORTABLE,
+        industry = 'Industry' : 'java.lang.String' (OPT) (sourcetypename='picklist')  SORTABLE,
+        rating = 'Rating' : 'java.lang.String' (OPT) (sourcetypename='picklist')  SORTABLE,
+        annualrevenue = 'AnnualRevenue' : 'java.lang.Double' (OPT) (sourcetypename='currency')  SORTABLE,
+        numberofemployees = 'NumberOfEmployees' : 'java.lang.Integer' (OPT) (sourcetypename='int')  SORTABLE,
+        ownerid = 'OwnerId' : 'java.lang.String' (OPT) (sourcetypename='reference')  SORTABLE,
+        isconverted = 'IsConverted' : 'java.lang.Boolean' (OPT) (DEFAULTVALUE='false', sourcetypename='boolean')  SORTABLE,
+        converteddate = 'ConvertedDate' : 'java.time.LocalDate' (OPT) (sourcetypename='date')  SORTABLE NOT UPDATEABLE,
+        convertedaccountid = 'ConvertedAccountId' : 'java.lang.String' (OPT) (sourcetypename='reference')  SORTABLE NOT UPDATEABLE,
+        convertedcontactid = 'ConvertedContactId' : 'java.lang.String' (OPT) (sourcetypename='reference')  SORTABLE NOT UPDATEABLE,
+        convertedopportunityid = 'ConvertedOpportunityId' : 'java.lang.String' (OPT) (sourcetypename='reference')  SORTABLE NOT UPDATEABLE,
+        isunreadbyowner = 'IsUnreadByOwner' : 'java.lang.Boolean' (OPT) (DEFAULTVALUE='false', sourcetypename='boolean')  SORTABLE,
+        createddate = 'CreatedDate' : 'java.time.OffsetDateTime' (OPT) (sourcetypename='datetime')  SORTABLE NOT UPDATEABLE,
+        createdbyid = 'CreatedById' : 'java.lang.String' (OPT) (sourcetypename='reference')  SORTABLE NOT UPDATEABLE,
+        lastmodifieddate = 'LastModifiedDate' : 'java.time.OffsetDateTime' (OPT) (sourcetypename='datetime')  SORTABLE NOT UPDATEABLE,
+        lastmodifiedbyid = 'LastModifiedById' : 'java.lang.String' (OPT) (sourcetypename='reference')  SORTABLE NOT UPDATEABLE,
+        systemmodstamp = 'SystemModstamp' : 'java.time.OffsetDateTime' (OPT) (sourcetypename='datetime')  SORTABLE NOT UPDATEABLE,
+        lastactivitydate = 'LastActivityDate' : 'java.time.LocalDate' (OPT) (sourcetypename='date')  SORTABLE NOT UPDATEABLE,
+        lastvieweddate = 'LastViewedDate' : 'java.time.OffsetDateTime' (OPT) (sourcetypename='datetime')  SORTABLE NOT UPDATEABLE,
+        lastreferenceddate = 'LastReferencedDate' : 'java.time.OffsetDateTime' (OPT) (sourcetypename='datetime')  SORTABLE NOT UPDATEABLE,
+        jigsaw = 'Jigsaw' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE,
+        jigsawcontactid = 'JigsawContactId' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE NOT UPDATEABLE,
+        emailbouncedreason = 'EmailBouncedReason' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE,
+        emailbounceddate = 'EmailBouncedDate' : 'java.time.OffsetDateTime' (OPT) (sourcetypename='datetime')  SORTABLE,
+        siccode__c = 'SICCode__c' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE,
+        primary__c = 'Primary__c' : 'java.lang.String' (OPT) (sourcetypename='picklist')  SORTABLE,
+        numberoflocations__c = 'NumberofLocations__c' : 'java.lang.Double' (OPT) (sourcetypename='double')  SORTABLE,
+        productinterest__c = 'ProductInterest__c' : 'java.lang.String' (OPT) (sourcetypename='picklist')  SORTABLE,
+        currentgenerators__c = 'CurrentGenerators__c' : 'java.lang.String' (OPT) (sourcetypename='string')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE sfdc_lead I18N us_pst (
+        id:text (sourcetypeid = '12'), 
+        isdeleted:boolean (defaultvalue = 'false', sourcetypeid = '16'), 
+        masterrecordid:text (sourcetypeid = '12'), 
+        lastname:text (sourcetypeid = '12'), 
+        firstname:text (sourcetypeid = '12'), 
+        salutation:text (sourcetypeid = '12'), 
+        name:text (sourcetypeid = '12'), 
+        title:text (sourcetypeid = '12'), 
+        company:text (sourcetypeid = '12'), 
+        street:text (sourcetypeid = '12'), 
+        city:text (sourcetypeid = '12'), 
+        state:text (sourcetypeid = '12'), 
+        postalcode:text (sourcetypeid = '12'), 
+        country:text (sourcetypeid = '12'), 
+        latitude:double (sourcetypeid = '8'), 
+        longitude:double (sourcetypeid = '8'), 
+        geocodeaccuracy:text (sourcetypeid = '12'), 
+        phone:text (sourcetypeid = '12'), 
+        mobilephone:text (sourcetypeid = '12'), 
+        fax:text (sourcetypeid = '12'), 
+        email:text (sourcetypeid = '12'), 
+        website:text (sourcetypeid = '12'), 
+        photourl:text (sourcetypeid = '12'), 
+        description:text (sourcetypeid = '12'), 
+        leadsource:text (sourcetypeid = '12'), 
+        status:text (defaultvalue = 'Open - Not Contacted', sourcetypeid = '12'), 
+        industry:text (sourcetypeid = '12'), 
+        rating:text (sourcetypeid = '12'), 
+        annualrevenue:double (sourcetypeid = '8'), 
+        numberofemployees:int (sourcetypeid = '4'), 
+        ownerid:text (sourcetypeid = '12'), 
+        isconverted:boolean (defaultvalue = 'false', sourcetypeid = '16'), 
+        converteddate:localdate (sourcetypeid = '91'), 
+        convertedaccountid:text (sourcetypeid = '12'), 
+        convertedcontactid:text (sourcetypeid = '12'), 
+        convertedopportunityid:text (sourcetypeid = '12'), 
+        isunreadbyowner:boolean (defaultvalue = 'false', sourcetypeid = '16'), 
+        createddate:timestamptz (sourcetypeid = '2014'), 
+        createdbyid:text (sourcetypeid = '12'), 
+        lastmodifieddate:timestamptz (sourcetypeid = '2014'), 
+        lastmodifiedbyid:text (sourcetypeid = '12'), 
+        systemmodstamp:timestamptz (sourcetypeid = '2014'), 
+        lastactivitydate:localdate (sourcetypeid = '91'), 
+        lastvieweddate:timestamptz (sourcetypeid = '2014'), 
+        lastreferenceddate:timestamptz (sourcetypeid = '2014'), 
+        jigsaw:text (sourcetypeid = '12'), 
+        jigsawcontactid:text (sourcetypeid = '12'), 
+        emailbouncedreason:text (sourcetypeid = '12'), 
+        emailbounceddate:timestamptz (sourcetypeid = '2014'), 
+        siccode__c:text (sourcetypeid = '12'), 
+        primary__c:text (sourcetypeid = '12'), 
+        numberoflocations__c:double (sourcetypeid = '8'), 
+        productinterest__c:text (sourcetypeid = '12'), 
+        currentgenerators__c:text (sourcetypeid = '12')
+    )
+    FOLDER = '/sources/saas/sfdc'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD sfdc_lead(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD isdeleted (any) OPT ANY
+             ADD masterrecordid (any) OPT ANY
+             ADD lastname (any) OPT ANY
+             ADD firstname (any) OPT ANY
+             ADD salutation (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD title (any) OPT ANY
+             ADD company (any) OPT ANY
+             ADD street (any) OPT ANY
+             ADD city (any) OPT ANY
+             ADD state (any) OPT ANY
+             ADD postalcode (any) OPT ANY
+             ADD country (any) OPT ANY
+             ADD latitude (any) OPT ANY
+             ADD longitude (any) OPT ANY
+             ADD geocodeaccuracy (any) OPT ANY
+             ADD phone (any) OPT ANY
+             ADD mobilephone (any) OPT ANY
+             ADD fax (any) OPT ANY
+             ADD email (any) OPT ANY
+             ADD website (any) OPT ANY
+             ADD photourl (any) OPT ANY
+             ADD description NOS ZERO ()
+             ADD leadsource (any) OPT ANY
+             ADD status (any) OPT ANY
+             ADD industry (any) OPT ANY
+             ADD rating (any) OPT ANY
+             ADD annualrevenue (any) OPT ANY
+             ADD numberofemployees (any) OPT ANY
+             ADD ownerid (any) OPT ANY
+             ADD isconverted (any) OPT ANY
+             ADD converteddate (any) OPT ANY
+             ADD convertedaccountid (any) OPT ANY
+             ADD convertedcontactid (any) OPT ANY
+             ADD convertedopportunityid (any) OPT ANY
+             ADD isunreadbyowner (any) OPT ANY
+             ADD createddate (any) OPT ANY
+             ADD createdbyid (any) OPT ANY
+             ADD lastmodifieddate (any) OPT ANY
+             ADD lastmodifiedbyid (any) OPT ANY
+             ADD systemmodstamp (any) OPT ANY
+             ADD lastactivitydate (any) OPT ANY
+             ADD lastvieweddate (any) OPT ANY
+             ADD lastreferenceddate (any) OPT ANY
+             ADD jigsaw (any) OPT ANY
+             ADD jigsawcontactid (any) OPT ANY
+             ADD emailbouncedreason (any) OPT ANY
+             ADD emailbounceddate (any) OPT ANY
+             ADD siccode__c (any) OPT ANY
+             ADD primary__c (any) OPT ANY
+             ADD numberoflocations__c (any) OPT ANY
+             ADD productinterest__c (any) OPT ANY
+             ADD currentgenerators__c (any) OPT ANY
+        )
+        OUTPUTLIST (annualrevenue, city, company, convertedaccountid, convertedcontactid, converteddate, convertedopportunityid, country, createdbyid, createddate, currentgenerators__c, description, email, emailbounceddate, emailbouncedreason, fax, firstname, geocodeaccuracy, id, industry, isconverted, isdeleted, isunreadbyowner, jigsaw, jigsawcontactid, lastactivitydate, lastmodifiedbyid, lastmodifieddate, lastname, lastreferenceddate, lastvieweddate, latitude, leadsource, longitude, masterrecordid, mobilephone, name, numberofemployees, numberoflocations__c, ownerid, phone, photourl, postalcode, primary__c, productinterest__c, rating, salutation, siccode__c, state, status, street, systemmodstamp, title, website
+        )
+        WRAPPER (salesforce sfdc_lead)
+    );
+

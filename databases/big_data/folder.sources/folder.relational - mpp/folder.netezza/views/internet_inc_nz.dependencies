@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.relational - mpp/relational - mpp.vql
+/databases/big_data/folder.sources/folder.relational - mpp/folder.netezza/netezza.vql
+/databases/big_data/folder.sources/folder.relational - mpp/folder.netezza/datasources/jdbc/netezza.vql

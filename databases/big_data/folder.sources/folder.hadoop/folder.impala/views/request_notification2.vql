@@ -1,0 +1,29 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC request_notification2
+    FOLDER = '/sources/hadoop/impala'
+    DATASOURCENAME=impala
+    SCHEMANAME='${databases.big_data.folder.sources.folder.hadoop.folder.impala.views.jdbc.request_notification2.SCHEMANAME}' ESCAPE
+    RELATIONNAME='request_notification2' 
+    OUTPUTSCHEMA (
+        id = 'id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  SORTABLE,
+        name = 'name' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='32767', description='', sourcetypeid='12', sourcetypename='STRING')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE request_notification2 I18N au_cst (
+        id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '4'), 
+        name:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '32767', description = '', sourcetypeid = '12')
+    )
+    FOLDER = '/sources/hadoop/impala'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD request_notification2(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD name (any) OPT ANY
+        )
+        OUTPUTLIST (id, name
+        )
+        WRAPPER (jdbc request_notification2)
+    );
+

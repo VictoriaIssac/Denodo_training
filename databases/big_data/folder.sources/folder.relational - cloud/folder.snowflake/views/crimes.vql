@@ -1,0 +1,90 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "CRIMES"
+    FOLDER = '/sources/relational - cloud/snowflake'
+    DATASOURCENAME=snowflake
+    CATALOGNAME='${databases.big_data.folder.sources.folder.relational - cloud.folder.snowflake.views.jdbc.crimes.CATALOGNAME}' 
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - cloud.folder.snowflake.views.jdbc.crimes.SCHEMANAME}' ESCAPE
+    RELATIONNAME='CRIMES' 
+    OUTPUTSCHEMA (
+        "ID" = 'ID' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetypesize='0', sourcetypeid='8', sourcetypename='DOUBLE')  NOT NULL SORTABLE,
+        "CASE_NUMBER" = 'CASE_NUMBER' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "CRIME_DATE" = 'CRIME_DATE' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "BLOCK" = 'BLOCK' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "IUCR" = 'IUCR' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "PRIMARY_TYPE" = 'PRIMARY_TYPE' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "CRIME_DESC" = 'CRIME_DESC' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "LOCATION_DESC" = 'LOCATION_DESC' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "ARREST" = 'ARREST' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "DOMESTIC" = 'DOMESTIC' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "BEAT" = 'BEAT' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "DISTRICT" = 'DISTRICT' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "WARD" = 'WARD' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "COMMUNITY_AREA" = 'COMMUNITY_AREA' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "FBI_CODE" = 'FBI_CODE' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "X_COORD" = 'X_COORD' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetypesize='0', sourcetypeid='8', sourcetypename='DOUBLE')  SORTABLE,
+        "Y_COORD" = 'Y_COORD' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetypesize='0', sourcetypeid='8', sourcetypename='DOUBLE')  SORTABLE,
+        "YEAR" = 'YEAR' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  ESCAPE NOT SORTABLE,
+        "UPDATED_ON" = 'UPDATED_ON' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        "LATITUDE" = 'LATITUDE' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetypesize='0', sourcetypeid='8', sourcetypename='DOUBLE')  SORTABLE,
+        "LONGITUDE" = 'LONGITUDE' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetypesize='0', sourcetypeid='8', sourcetypename='DOUBLE')  SORTABLE,
+        "LOCATION" = 'LOCATION' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "CRIMES" I18N us_pst (
+        "ID":double (sourcetypedecimals = '0', sourcetypesize = '0', sourcetypeid = '8'), 
+        "CASE_NUMBER":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "CRIME_DATE":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "BLOCK":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "IUCR":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "PRIMARY_TYPE":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "CRIME_DESC":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "LOCATION_DESC":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "ARREST":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "DOMESTIC":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "BEAT":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "DISTRICT":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "WARD":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "COMMUNITY_AREA":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "FBI_CODE":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "X_COORD":double (sourcetypedecimals = '0', sourcetypesize = '0', sourcetypeid = '8'), 
+        "Y_COORD":double (sourcetypedecimals = '0', sourcetypesize = '0', sourcetypeid = '8'), 
+        "YEAR":decimal (sourcetypedecimals = '0', sourcetypesize = '38', sourcetypeid = '3'), 
+        "UPDATED_ON":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "LATITUDE":double (sourcetypedecimals = '0', sourcetypesize = '0', sourcetypeid = '8'), 
+        "LONGITUDE":double (sourcetypedecimals = '0', sourcetypesize = '0', sourcetypeid = '8'), 
+        "LOCATION":text (sourcetypedecimals = '0', sourcetypesize = '16777216', sourcetypeid = '12')
+    )
+    FOLDER = '/sources/relational - cloud/snowflake'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "CRIMES"(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD "ID" (any) OPT ANY
+             ADD "CASE_NUMBER" (any) OPT ANY
+             ADD "CRIME_DATE" (any) OPT ANY
+             ADD "BLOCK" (any) OPT ANY
+             ADD "IUCR" (any) OPT ANY
+             ADD "PRIMARY_TYPE" (any) OPT ANY
+             ADD "CRIME_DESC" (any) OPT ANY
+             ADD "LOCATION_DESC" (any) OPT ANY
+             ADD "ARREST" (any) OPT ANY
+             ADD "DOMESTIC" (any) OPT ANY
+             ADD "BEAT" (any) OPT ANY
+             ADD "DISTRICT" (any) OPT ANY
+             ADD "WARD" (any) OPT ANY
+             ADD "COMMUNITY_AREA" (any) OPT ANY
+             ADD "FBI_CODE" (any) OPT ANY
+             ADD "X_COORD" (any) OPT ANY
+             ADD "Y_COORD" (any) OPT ANY
+             ADD "YEAR" (any) OPT ANY
+             ADD "UPDATED_ON" (any) OPT ANY
+             ADD "LATITUDE" (any) OPT ANY
+             ADD "LONGITUDE" (any) OPT ANY
+             ADD "LOCATION" (any) OPT ANY
+        )
+        OUTPUTLIST ("ARREST", "BEAT", "BLOCK", "CASE_NUMBER", "COMMUNITY_AREA", "CRIME_DATE", "CRIME_DESC", "DISTRICT", "DOMESTIC", "FBI_CODE", "ID", "IUCR", "LATITUDE", "LOCATION", "LOCATION_DESC", "LONGITUDE", "PRIMARY_TYPE", "UPDATED_ON", "WARD", "X_COORD", "YEAR", "Y_COORD"
+        )
+        WRAPPER (jdbc "CRIMES")
+    );
+

@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION "oracle_customer_oracle_web_returns_WR_REFUNDED_CUSTOMER_SK" REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT "oracle_web_returns_WR_REFUNDED_CUSTOMER_SK" oracle_customer_cached PRINCIPAL (0,1)
+    ENDPOINT "oracle_customer_WR_REFUNDED_CUSTOMER_SK" oracle_web_returns (0,*)
+    ADD MAPPING c_customer_sk=wr_refunded_customer_sk;
+

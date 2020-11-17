@@ -1,0 +1,64 @@
+﻿CREATE OR REPLACE WRAPPER SAPBWBAPI "InfoCube - demo: Basic Cube"
+    FOLDER = '/sources/sap/sap bw'
+    DATASOURCENAME = demo_sap_bwbapi_sap_bi_bapi_7x_ds2
+    SCHEMANAME = ''
+    CUBENAME = '$$IC_DEMOBC'
+    DIMENSIONKEYFIELDS = TRUE
+    LEAFLEVELMEMBERSONLY = FALSE
+    INCLUDEEMPTYROWS = FALSE
+    OUTPUTSCHEMA (
+        "Customer ID Level 00" = '[IO_CUST].[LEVEL00]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_CUST]' DIMENSIONNAME = '[IO_CUST]' LEVELPOSITION=0,
+        "Customer ID Level 01" = '[IO_CUST].[LEVEL01]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_CUST]' DIMENSIONNAME = '[IO_CUST]' LEVELPOSITION=1,
+        "Customer ID_key" = '[IO_CUST]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_CUST]' DIMENSIONNAME = '[IO_CUST]' DIMENSIONKEYFIELD ,
+        "Material number Level 00" = '[IO_MAT].[LEVEL00]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_MAT]' DIMENSIONNAME = '[IO_MAT]' LEVELPOSITION=0,
+        "Material number Level 01" = '[IO_MAT].[LEVEL01]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_MAT]' DIMENSIONNAME = '[IO_MAT]' LEVELPOSITION=1,
+        "Material number_key" = '[IO_MAT]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_MAT]' DIMENSIONNAME = '[IO_MAT]' DIMENSIONKEYFIELD ,
+        "Level 01" = '[IO_SREP                       IO_SREP_HIER].[LEVEL00]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_SREP                       IO_SREP_HIER]' DIMENSIONNAME = '[IO_SREP]' LEVELPOSITION=0,
+        "Level 02" = '[IO_SREP                       IO_SREP_HIER].[LEVEL01]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_SREP                       IO_SREP_HIER]' DIMENSIONNAME = '[IO_SREP]' LEVELPOSITION=1,
+        "Level 03" = '[IO_SREP                       IO_SREP_HIER].[LEVEL02]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_SREP                       IO_SREP_HIER]' DIMENSIONNAME = '[IO_SREP]' LEVELPOSITION=2,
+        "Sales representative_key" = '[IO_SREP]' : 'java.lang.String' (OPT) HIERARCHYNAME = '[IO_SREP                       IO_SREP_HIER]' DIMENSIONNAME = '[IO_SREP]' DIMENSIONKEYFIELD ,
+        "Price of material" = '[Measures].[IO_PRC]' : 'java.lang.Double' (OPT) MEASURE,
+        "Sales quantity" = '[Measures].[IO_QUAN]' : 'java.lang.Double' (OPT) MEASURE,
+        "Sales revenue" = '[Measures].[IO_REV]' : 'java.lang.Double' (OPT) MEASURE
+    );
+
+CREATE OR REPLACE TABLE "InfoCube - demo: Basic Cube" I18N us_pst (
+        "Customer ID Level 00":text, 
+        "Customer ID Level 01":text, 
+        "Customer ID_key":text, 
+        "Material number Level 00":text, 
+        "Material number Level 01":text, 
+        "Material number_key":text, 
+        "Level 01":text, 
+        "Level 02":text, 
+        "Level 03":text, 
+        "Sales representative_key":text, 
+        "Price of material":double, 
+        "Sales quantity":double, 
+        "Sales revenue":double
+    )
+    FOLDER = '/sources/sap/sap bw'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "InfoCube - demo: Basic Cube"(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD "Customer ID Level 00" (any) OPT ANY
+             ADD "Customer ID Level 01" (any) OPT ANY
+             ADD "Customer ID_key" (any) OPT ANY
+             ADD "Material number Level 00" (any) OPT ANY
+             ADD "Material number Level 01" (any) OPT ANY
+             ADD "Material number_key" (any) OPT ANY
+             ADD "Level 01" (any) OPT ANY
+             ADD "Level 02" (any) OPT ANY
+             ADD "Level 03" (any) OPT ANY
+             ADD "Sales representative_key" (any) OPT ANY
+             ADD "Price of material" (any) OPT ANY
+             ADD "Sales quantity" (any) OPT ANY
+             ADD "Sales revenue" (any) OPT ANY
+        )
+        OUTPUTLIST ("Customer ID Level 00", "Customer ID Level 01", "Customer ID_key", "Level 01", "Level 02", "Level 03", "Material number Level 00", "Material number Level 01", "Material number_key", "Price of material", "Sales quantity", "Sales representative_key", "Sales revenue"
+        )
+        WRAPPER (sapbwbapi "InfoCube - demo: Basic Cube")
+    );
+

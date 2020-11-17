@@ -1,0 +1,53 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_customer_demographics
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_customer_demographics.SCHEMANAME}' 
+    RELATIONNAME='CUSTOMER_DEMOGRAPHICS' 
+    OUTPUTSCHEMA (
+        cd_demo_sk = 'CD_DEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        cd_gender = 'CD_GENDER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='1', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        cd_marital_status = 'CD_MARITAL_STATUS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='1', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        cd_education_status = 'CD_EDUCATION_STATUS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        cd_purchase_estimate = 'CD_PURCHASE_ESTIMATE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cd_credit_rating = 'CD_CREDIT_RATING' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        cd_dep_count = 'CD_DEP_COUNT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cd_dep_employed_count = 'CD_DEP_EMPLOYED_COUNT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cd_dep_college_count = 'CD_DEP_COLLEGE_COUNT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008666' PRIMARY KEY ( 'CD_DEMO_SK' )
+    INDEX 'SYS_C008666' CLUSTER UNIQUE PRIMARY ( 'CD_DEMO_SK' );
+
+CREATE OR REPLACE TABLE oracle_customer_demographics I18N us_pst (
+        cd_demo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cd_gender:text (sourcetyperadix = '10', sourcetypesize = '1', sourcetypeid = '1'), 
+        cd_marital_status:text (sourcetyperadix = '10', sourcetypesize = '1', sourcetypeid = '1'), 
+        cd_education_status:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '1'), 
+        cd_purchase_estimate:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cd_credit_rating:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        cd_dep_count:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cd_dep_employed_count:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cd_dep_college_count:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008666' PRIMARY KEY ( 'cd_demo_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_customer_demographics(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD cd_demo_sk (any) OPT ANY
+             ADD cd_gender (any) OPT ANY
+             ADD cd_marital_status (any) OPT ANY
+             ADD cd_education_status (any) OPT ANY
+             ADD cd_purchase_estimate (any) OPT ANY
+             ADD cd_credit_rating (any) OPT ANY
+             ADD cd_dep_count (any) OPT ANY
+             ADD cd_dep_employed_count (any) OPT ANY
+             ADD cd_dep_college_count (any) OPT ANY
+        )
+        OUTPUTLIST (cd_credit_rating, cd_demo_sk, cd_dep_college_count, cd_dep_count, cd_dep_employed_count, cd_education_status, cd_gender, cd_marital_status, cd_purchase_estimate
+        )
+        WRAPPER (jdbc oracle_customer_demographics)
+    );
+

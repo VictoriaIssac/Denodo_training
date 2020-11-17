@@ -1,0 +1,35 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_income_band
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_income_band.SCHEMANAME}' 
+    RELATIONNAME='INCOME_BAND' 
+    OUTPUTSCHEMA (
+        ib_income_band_sk = 'IB_INCOME_BAND_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        ib_lower_bound = 'IB_LOWER_BOUND' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        ib_upper_bound = 'IB_UPPER_BOUND' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008672' PRIMARY KEY ( 'IB_INCOME_BAND_SK' )
+    INDEX 'SYS_C008672' CLUSTER UNIQUE PRIMARY ( 'IB_INCOME_BAND_SK' );
+
+CREATE OR REPLACE TABLE oracle_income_band I18N us_pst (
+        ib_income_band_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        ib_lower_bound:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        ib_upper_bound:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008672' PRIMARY KEY ( 'ib_income_band_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_income_band(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD ib_income_band_sk (any) OPT ANY
+             ADD ib_lower_bound (any) OPT ANY
+             ADD ib_upper_bound (any) OPT ANY
+        )
+        OUTPUTLIST (ib_income_band_sk, ib_lower_bound, ib_upper_bound
+        )
+        WRAPPER (jdbc oracle_income_band)
+    );
+

@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_customer_demographics_oracle_customer REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_customer oracle_customer_demographics PRINCIPAL (0,1)
+    ENDPOINT oracle_customer_demographics oracle_customer_cached (0,*)
+    ADD MAPPING cd_demo_sk=c_zip_code;
+

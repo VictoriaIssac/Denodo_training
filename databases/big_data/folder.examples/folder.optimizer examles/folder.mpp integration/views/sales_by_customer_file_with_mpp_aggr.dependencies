@@ -1,0 +1,8 @@
+﻿/databases/big_data/folder.examples/examples.vql
+/databases/big_data/folder.examples/folder.optimizer examles/optimizer examles.vql
+/databases/big_data/folder.examples/folder.optimizer examles/folder.mpp integration/mpp integration.vql
+/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.files/files.vql
+/databases/big_data/folder.sources/folder.files/folder.csv/csv.vql
+/databases/big_data/folder.sources/folder.files/folder.csv/datasources/df/sales_file.vql
+/databases/big_data/folder.sources/folder.files/folder.csv/views/sales_file.vql

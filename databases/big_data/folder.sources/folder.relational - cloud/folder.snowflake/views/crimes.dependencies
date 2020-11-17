@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.relational - cloud/relational - cloud.vql
+/databases/big_data/folder.sources/folder.relational - cloud/folder.snowflake/snowflake.vql
+/databases/big_data/folder.sources/folder.relational - cloud/folder.snowflake/datasources/jdbc/snowflake.vql

@@ -1,0 +1,87 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "Employees"
+    FOLDER = '/sources/relational - traditional/ms access'
+    DATASOURCENAME=access_ucanaccess
+    CATALOGNAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.ms access.views.jdbc.employees.CATALOGNAME}' ESCAPE
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.ms access.views.jdbc.employees.SCHEMANAME}' ESCAPE
+    RELATIONNAME='Employees' ESCAPE
+    OUTPUTSCHEMA (
+        "ID" = 'ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='2', sourcetypesize='32', sourcetypeid='4', sourcetypename='INTEGER')  NOT NULL SORTABLE IS_AUTOINCREMENT,
+        "Company" = 'Company' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Last Name" = 'Last Name' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "First Name" = 'First Name' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "E-mail Address" = 'E-mail Address' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Job Title" = 'Job Title' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Business Phone" = 'Business Phone' :'java.lang.String' (OPT) (sourcetypesize='25', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Home Phone" = 'Home Phone' :'java.lang.String' (OPT) (sourcetypesize='25', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Mobile Phone" = 'Mobile Phone' :'java.lang.String' (OPT) (sourcetypesize='25', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Fax Number" = 'Fax Number' :'java.lang.String' (OPT) (sourcetypesize='25', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Address" = 'Address' :'java.lang.String' (OPT) (sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "City" = 'City' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "State/Province" = 'State/Province' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "ZIP/Postal Code" = 'ZIP/Postal Code' :'java.lang.String' (OPT) (sourcetypesize='15', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Country/Region" = 'Country/Region' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Web Page" = 'Web Page' :'java.lang.String' (OPT) (sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Notes" = 'Notes' :'java.lang.String' (OPT) (sourcetypesize='16777216', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE,
+        "Attachments" = 'Attachments' :'java.lang.String' (OPT) (sourcetypesize='0', sourcetypeid='1111', sourcetypename='OTHER')  ESCAPE NOT SORTABLE
+    )
+    CONSTRAINT 'SYS_PK_10625' PRIMARY KEY ( 'ID' )
+    INDEX 'SYS_IDX_10399' OTHER UNIQUE PRIMARY ( 'ID' )
+    INDEX 'EMPLOYEES_CITY' OTHER ( 'City' )
+    INDEX 'EMPLOYEES_COMPANY' OTHER ( 'Company' )
+    INDEX 'EMPLOYEES_FIRST NAME' OTHER ( 'First Name' )
+    INDEX 'EMPLOYEES_LAST NAME' OTHER ( 'Last Name' )
+    INDEX 'EMPLOYEES_POSTAL CODE' OTHER ( 'ZIP/Postal Code' )
+    INDEX 'EMPLOYEES_STATE/PROVINCE' OTHER ( 'State/Province' );
+
+CREATE OR REPLACE TABLE "Employees" I18N us_pst (
+        "ID":int (sourcetypedecimals = '0', sourcetyperadix = '2', sourcetypesize = '32', sourcetypeid = '4'), 
+        "Company":text (sourcetypesize = '50', sourcetypeid = '12'), 
+        "Last Name":text (sourcetypesize = '50', sourcetypeid = '12'), 
+        "First Name":text (sourcetypesize = '50', sourcetypeid = '12'), 
+        "E-mail Address":text (sourcetypesize = '50', sourcetypeid = '12'), 
+        "Job Title":text (sourcetypesize = '50', sourcetypeid = '12'), 
+        "Business Phone":text (sourcetypesize = '25', sourcetypeid = '12'), 
+        "Home Phone":text (sourcetypesize = '25', sourcetypeid = '12'), 
+        "Mobile Phone":text (sourcetypesize = '25', sourcetypeid = '12'), 
+        "Fax Number":text (sourcetypesize = '25', sourcetypeid = '12'), 
+        "Address":text (sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "City":text (sourcetypesize = '50', sourcetypeid = '12'), 
+        "State/Province":text (sourcetypesize = '50', sourcetypeid = '12'), 
+        "ZIP/Postal Code":text (sourcetypesize = '15', sourcetypeid = '12'), 
+        "Country/Region":text (sourcetypesize = '50', sourcetypeid = '12'), 
+        "Web Page":text (sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "Notes":text (sourcetypesize = '16777216', sourcetypeid = '12'), 
+        "Attachments":text
+    )
+    FOLDER = '/sources/relational - traditional/ms access'
+    CONSTRAINT 'SYS_PK_10625' PRIMARY KEY ( 'ID' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "Employees"(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD "ID" (any) OPT ANY
+             ADD "Company" (any) OPT ANY
+             ADD "Last Name" (any) OPT ANY
+             ADD "First Name" (any) OPT ANY
+             ADD "E-mail Address" (any) OPT ANY
+             ADD "Job Title" (any) OPT ANY
+             ADD "Business Phone" (any) OPT ANY
+             ADD "Home Phone" (any) OPT ANY
+             ADD "Mobile Phone" (any) OPT ANY
+             ADD "Fax Number" (any) OPT ANY
+             ADD "Address" (any) OPT ANY
+             ADD "City" (any) OPT ANY
+             ADD "State/Province" (any) OPT ANY
+             ADD "ZIP/Postal Code" (any) OPT ANY
+             ADD "Country/Region" (any) OPT ANY
+             ADD "Web Page" (any) OPT ANY
+             ADD "Notes" (any) OPT ANY
+             ADD "Attachments" (any) OPT ANY
+        )
+        OUTPUTLIST ("Address", "Attachments", "Business Phone", "City", "Company", "Country/Region", "E-mail Address", "Fax Number", "First Name", "Home Phone", "ID", "Job Title", "Last Name", "Mobile Phone", "Notes", "State/Province", "Web Page", "ZIP/Postal Code"
+        )
+        WRAPPER (jdbc "Employees")
+    );
+

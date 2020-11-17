@@ -1,0 +1,13 @@
+﻿CREATE OR REPLACE VIEW all_sales FOLDER = '/examples/optimizer examles/partitioning by date' DESCRIPTION = 'A simple example of partitioning pruning based on date. Each side of the UNION has data for a particular time frame. The "partition" column is d_date.
+
+Depending on the queries, Denodo will go to both sides, or prune one of them, accordingly.
+
+For example:
+SELECT * FROM big_data.all_sales
+where d_date  = DATE''2018-01-01''
+
+will remove the branch coming from Hadoop (with Historical data)'  AS SELECT ss_sold_date_sk, ss_sold_time_sk, ss_item_sk, ss_customer_sk, ss_cdemo_sk, ss_hdemo_sk, ss_addr_sk, ss_store_sk, ss_promo_sk, ss_ticket_number, ss_quantity, ss_wholesale_cost, ss_list_price, ss_sales_price, ss_ext_discount_amt, ss_ext_sales_price, ss_ext_wholesale_cost, ss_ext_list_price, ss_ext_tax, ss_coupon_amt, ss_net_paid, ss_net_paid_inc_tax, ss_net_profit, d_date FROM (SELECT * FROM current_sales UNION SELECT ss_ext_tax, ss_item_sk, ss_sold_time_sk, ss_sales_price, ss_coupon_amt, ss_list_price, ss_promo_sk, ss_addr_sk, ss_ext_list_price, ss_customer_sk, ss_quantity, ss_wholesale_cost, d_date, ss_store_sk, ss_ext_discount_amt, ss_ext_wholesale_cost, ss_net_profit, ss_ext_sales_price, ss_sold_date_sk, ss_net_paid, ss_cdemo_sk, ss_net_paid_inc_tax, ss_ticket_number, ss_hdemo_sk FROM historical_sales);
+
+ALTER VIEW all_sales
+ LAYOUT (current_sales = [20, 20, 260, 506], historical_sales = [610, 20, 230, 506]);
+

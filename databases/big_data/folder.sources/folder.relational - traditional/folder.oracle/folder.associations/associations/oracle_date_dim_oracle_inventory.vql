@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_date_dim_oracle_inventory REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_inventory oracle_date_dim PRINCIPAL (0,1)
+    ENDPOINT oracle_date_dim oracle_inventory (0,*)
+    ADD MAPPING d_date_sk=inv_date_sk;
+

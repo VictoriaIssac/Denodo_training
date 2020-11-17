@@ -1,0 +1,37 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC emp
+    FOLDER = '/sources/nosql/cassandra'
+    DATASOURCENAME=cassandra
+    SCHEMANAME='${databases.big_data.folder.sources.folder.nosql.folder.cassandra.views.jdbc.emp.SCHEMANAME}' 
+    RELATIONNAME='emp' 
+    OUTPUTSCHEMA (
+        empid = 'empid' :'java.lang.Integer' (OPT) (description='empid int', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        emp_dept = 'emp_dept' :'java.lang.String' (OPT) (description='emp_dept text', sourcetypeid='12', sourcetypename='text')  NOT NULL NOT SORTABLE,
+        emp_first = 'emp_first' :'java.lang.String' (OPT) (description='emp_first text', sourcetypeid='12', sourcetypename='text')  NOT NULL NOT SORTABLE,
+        emp_last = 'emp_last' :'java.lang.String' (OPT) (description='emp_last text', sourcetypeid='12', sourcetypename='text')  NOT NULL NOT SORTABLE
+    )
+    PRIMARY KEY ( 'empid' );
+
+CREATE OR REPLACE TABLE emp I18N us_pst (
+        empid:int (description = 'empid int', sourcetypeid = '4'), 
+        emp_dept:text (description = 'emp_dept text', sourcetypeid = '12'), 
+        emp_first:text (description = 'emp_first text', sourcetypeid = '12'), 
+        emp_last:text (description = 'emp_last text', sourcetypeid = '12')
+    )
+    FOLDER = '/sources/nosql/cassandra'
+    PRIMARY KEY ( 'empid' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD emp(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD empid (any) OPT ANY
+             ADD emp_dept (any) OPT ANY
+             ADD emp_first (any) OPT ANY
+             ADD emp_last (any) OPT ANY
+        )
+        OUTPUTLIST (emp_dept, emp_first, emp_last, empid
+        )
+        WRAPPER (jdbc emp)
+    );
+

@@ -1,0 +1,108 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_web_site
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_web_site.SCHEMANAME}' 
+    RELATIONNAME='WEB_SITE' 
+    OUTPUTSCHEMA (
+        web_site_sk = 'WEB_SITE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        web_site_id = 'WEB_SITE_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='16', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL SORTABLE,
+        web_rec_start_date = 'WEB_REC_START_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE,
+        web_rec_end_date = 'WEB_REC_END_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE,
+        web_name = 'WEB_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_open_date_sk = 'WEB_OPEN_DATE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        web_close_date_sk = 'WEB_CLOSE_DATE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        web_class = 'WEB_CLASS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_manager = 'WEB_MANAGER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='40', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_mkt_id = 'WEB_MKT_ID' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        web_mkt_class = 'WEB_MKT_CLASS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_mkt_desc = 'WEB_MKT_DESC' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_market_manager = 'WEB_MARKET_MANAGER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='40', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_company_id = 'WEB_COMPANY_ID' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        web_company_name = 'WEB_COMPANY_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        web_street_number = 'WEB_STREET_NUMBER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        web_street_name = 'WEB_STREET_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='60', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_street_type = 'WEB_STREET_TYPE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='15', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        web_suite_number = 'WEB_SUITE_NUMBER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        web_city = 'WEB_CITY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='60', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_county = 'WEB_COUNTY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='30', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_state = 'WEB_STATE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        web_zip = 'WEB_ZIP' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        web_country = 'WEB_COUNTRY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        web_gmt_offset = 'WEB_GMT_OFFSET' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='5', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        web_tax_percentage = 'WEB_TAX_PERCENTAGE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='5', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008677' PRIMARY KEY ( 'WEB_SITE_SK' )
+    CONSTRAINT 'WEB_D1' FOREIGN KEY ( 'WEB_CLOSE_DATE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'DATE_DIM'( 'D_DATE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WEB_D2' FOREIGN KEY ( 'WEB_OPEN_DATE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'DATE_DIM'( 'D_DATE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'SYS_C008677' CLUSTER UNIQUE PRIMARY ( 'WEB_SITE_SK' );
+
+CREATE OR REPLACE TABLE oracle_web_site I18N us_pst (
+        web_site_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        web_site_id:text (sourcetyperadix = '10', sourcetypesize = '16', sourcetypeid = '1'), 
+        web_rec_start_date:timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93'), 
+        web_rec_end_date:timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93'), 
+        web_name:text (sourcetyperadix = '10', sourcetypesize = '50', sourcetypeid = '12'), 
+        web_open_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        web_close_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        web_class:text (sourcetyperadix = '10', sourcetypesize = '50', sourcetypeid = '12'), 
+        web_manager:text (sourcetyperadix = '10', sourcetypesize = '40', sourcetypeid = '12'), 
+        web_mkt_id:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        web_mkt_class:text (sourcetyperadix = '10', sourcetypesize = '50', sourcetypeid = '12'), 
+        web_mkt_desc:text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '12'), 
+        web_market_manager:text (sourcetyperadix = '10', sourcetypesize = '40', sourcetypeid = '12'), 
+        web_company_id:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        web_company_name:text (sourcetyperadix = '10', sourcetypesize = '50', sourcetypeid = '1'), 
+        web_street_number:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        web_street_name:text (sourcetyperadix = '10', sourcetypesize = '60', sourcetypeid = '12'), 
+        web_street_type:text (sourcetyperadix = '10', sourcetypesize = '15', sourcetypeid = '1'), 
+        web_suite_number:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        web_city:text (sourcetyperadix = '10', sourcetypesize = '60', sourcetypeid = '12'), 
+        web_county:text (sourcetyperadix = '10', sourcetypesize = '30', sourcetypeid = '12'), 
+        web_state:text (sourcetyperadix = '10', sourcetypesize = '2', sourcetypeid = '1'), 
+        web_zip:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        web_country:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        web_gmt_offset:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '5', sourcetypeid = '3'), 
+        web_tax_percentage:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '5', sourcetypeid = '3')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008677' PRIMARY KEY ( 'web_site_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_web_site(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD web_site_sk (any) OPT ANY
+             ADD web_site_id (any) OPT ANY
+             ADD web_rec_start_date (any) OPT ANY
+             ADD web_rec_end_date (any) OPT ANY
+             ADD web_name (any) OPT ANY
+             ADD web_open_date_sk (any) OPT ANY
+             ADD web_close_date_sk (any) OPT ANY
+             ADD web_class (any) OPT ANY
+             ADD web_manager (any) OPT ANY
+             ADD web_mkt_id (any) OPT ANY
+             ADD web_mkt_class (any) OPT ANY
+             ADD web_mkt_desc (any) OPT ANY
+             ADD web_market_manager (any) OPT ANY
+             ADD web_company_id (any) OPT ANY
+             ADD web_company_name (any) OPT ANY
+             ADD web_street_number (any) OPT ANY
+             ADD web_street_name (any) OPT ANY
+             ADD web_street_type (any) OPT ANY
+             ADD web_suite_number (any) OPT ANY
+             ADD web_city (any) OPT ANY
+             ADD web_county (any) OPT ANY
+             ADD web_state (any) OPT ANY
+             ADD web_zip (any) OPT ANY
+             ADD web_country (any) OPT ANY
+             ADD web_gmt_offset (any) OPT ANY
+             ADD web_tax_percentage (any) OPT ANY
+        )
+        OUTPUTLIST (web_city, web_class, web_close_date_sk, web_company_id, web_company_name, web_country, web_county, web_gmt_offset, web_manager, web_market_manager, web_mkt_class, web_mkt_desc, web_mkt_id, web_name, web_open_date_sk, web_rec_end_date, web_rec_start_date, web_site_id, web_site_sk, web_state, web_street_name, web_street_number, web_street_type, web_suite_number, web_tax_percentage, web_zip
+        )
+        WRAPPER (jdbc oracle_web_site)
+    );
+

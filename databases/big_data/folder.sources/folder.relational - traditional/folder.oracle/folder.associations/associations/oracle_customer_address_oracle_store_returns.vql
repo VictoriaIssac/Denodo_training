@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_customer_address_oracle_store_returns REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_store_returns oracle_customer_address PRINCIPAL (0,1)
+    ENDPOINT oracle_customer_address oracle_store_returns (0,*)
+    ADD MAPPING ca_address_sk=sr_addr_sk;
+

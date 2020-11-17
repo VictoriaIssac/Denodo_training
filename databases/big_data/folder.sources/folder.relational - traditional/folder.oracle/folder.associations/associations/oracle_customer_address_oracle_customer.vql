@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_customer_address_oracle_customer REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_customer oracle_customer_address PRINCIPAL (0,1)
+    ENDPOINT oracle_customer_address oracle_customer_cached (0,*)
+    ADD MAPPING ca_address_sk=c_current_addr_sk;
+

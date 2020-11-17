@@ -1,0 +1,22 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JSON neo4j
+    FOLDER = '/sources/nosql/neo4j/rest api'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' POST '${databases.big_data.folder.sources.folder.nosql.folder.neo4j.folder.rest api.datasources.json.neo4j.ROUTE.HTTP.URL}'
+    POSTBODY '\{{
+  "statements": [
+    \{{
+      "statement": "@{{statement}}",
+      "resultDataContents": [
+        "row",
+        "graph"
+      ],
+      "includeStats": true
+    \}}
+  ]
+\}}'
+    MIME 'application/json'
+    AUTHENTICATION BASIC ( 
+      USER '${databases.big_data.folder.sources.folder.nosql.folder.neo4j.folder.rest api.datasources.json.neo4j.ROUTE.HTTP.USER}'
+      PASSWORD '${databases.big_data.folder.sources.folder.nosql.folder.neo4j.folder.rest api.datasources.json.neo4j.ROUTE.HTTP.PASSWORD}' ${databases.big_data.folder.sources.folder.nosql.folder.neo4j.folder.rest api.datasources.json.neo4j.ROUTE.HTTP.PASSWORD.ENCRYPTED} )
+    PROXY OFF;
+

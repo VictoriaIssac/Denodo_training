@@ -1,0 +1,5 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.nosql/nosql.vql
+/databases/big_data/folder.sources/folder.nosql/folder.neo4j/neo4j.vql
+/databases/big_data/folder.sources/folder.nosql/folder.neo4j/folder.jdbc/jdbc.vql
+/databases/big_data/folder.sources/folder.nosql/folder.neo4j/folder.jdbc/datasources/jdbc/neo4j_jdbc.vql

@@ -1,0 +1,35 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_reason
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_reason.SCHEMANAME}' 
+    RELATIONNAME='REASON' 
+    OUTPUTSCHEMA (
+        r_reason_sk = 'R_REASON_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        r_reason_id = 'R_REASON_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='16', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL SORTABLE,
+        r_reason_desc = 'R_REASON_DESC' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008671' PRIMARY KEY ( 'R_REASON_SK' )
+    INDEX 'SYS_C008671' CLUSTER UNIQUE PRIMARY ( 'R_REASON_SK' );
+
+CREATE OR REPLACE TABLE oracle_reason I18N us_pst (
+        r_reason_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        r_reason_id:text (sourcetyperadix = '10', sourcetypesize = '16', sourcetypeid = '1'), 
+        r_reason_desc:text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '1')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008671' PRIMARY KEY ( 'r_reason_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_reason(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD r_reason_sk (any) OPT ANY
+             ADD r_reason_id (any) OPT ANY
+             ADD r_reason_desc (any) OPT ANY
+        )
+        OUTPUTLIST (r_reason_desc, r_reason_id, r_reason_sk
+        )
+        WRAPPER (jdbc oracle_reason)
+    );
+

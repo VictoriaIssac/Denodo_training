@@ -1,0 +1,21 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE SALESFORCE sfdc
+    FOLDER = '/sources/saas/sfdc'
+    BASE_URL = 'https://na3.salesforce.com'
+    API_VERSION = 'v41.0'
+    AUTHENTICATION OAUTH20 ( 
+      ACCESSTOKEN = '${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.ACCESSTOKEN}' ${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.ACCESSTOKEN.ENCRYPTED}
+      REQUESTSIGNINGMETHOD = ${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.REQUESTSIGNINGMETHOD}
+      AUTHENTICATION_GRANT = ${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.AUTHENTICATION.GRANT}
+      TOKENENDPOINTURL = '${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.TOKENENDPOINTURL}'
+      CLIENTIDENTIFIER = '${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.CLIENTIDENTIFIER}'
+      CLIENTSECRET = '${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.CLIENTSECRET}' ${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.CLIENTSECRET.ENCRYPTED}
+      REFRESHTOKEN = '${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.REFRESHTOKEN}' ${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.REFRESHTOKEN.ENCRYPTED}
+      AUTHORIZATIONSERVERURL = '${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.AUTHORIZATIONSERVERURL}'
+      SETSTATEPARAMETER = ${databases.big_data.folder.sources.folder.saas.folder.sfdc.datasources.salesforce.sfdc.OAUTH20.HTTP.SETSTATEPARAMETER}
+    )
+    PROXY OFF
+    SOURCECONFIGURATION (
+        delegateliteralexpression = true
+    );
+

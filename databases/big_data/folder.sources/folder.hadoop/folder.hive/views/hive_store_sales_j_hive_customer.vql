@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW hive_store_sales_j_hive_customer FOLDER = '/sources/hadoop/hive' AS SELECT hive_customer.c_birth_country AS c_birth_country, sum(hive_store_sales.ss_sales_price) AS total FROM hive_store_sales AS hive_store_sales INNER JOIN hive_customer AS hive_customer ON hive_store_sales.ss_customer_sk = hive_customer.c_customer_sk  WHERE hive_store_sales.ss_item_sk = 1 GROUP BY hive_customer.c_birth_country;
+
+ALTER VIEW hive_store_sales_j_hive_customer
+ LAYOUT (hive_store_sales = [20, 20, 200, 225], hive_customer = [350, 20, 200, 225]);
+

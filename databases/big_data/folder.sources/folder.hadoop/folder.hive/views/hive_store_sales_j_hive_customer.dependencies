@@ -1,0 +1,6 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.hadoop/hadoop.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.hive/hive.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.hive/datasources/jdbc/hive.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.hive/views/hive_store_sales.vql
+/databases/big_data/folder.sources/folder.hadoop/folder.hive/views/hive_customer.vql

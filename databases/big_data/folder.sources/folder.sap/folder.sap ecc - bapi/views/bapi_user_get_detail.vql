@@ -1,0 +1,1098 @@
+﻿CREATE OR REPLACE WRAPPER SAPERP "BAPI_USER_GET_DETAIL"
+    FOLDER = '/sources/sap/sap ecc - bapi'
+    DATASOURCENAME = demo_sap_erp_ds1
+    BAPINAME = 'BAPI_USER_GET_DETAIL'
+    OUTPUTSCHEMA (
+        "CACHE_RESULTS" = 'CACHE_RESULTS' : 'java.lang.String' (OPT),
+        "USERNAME" = 'USERNAME' : 'java.lang.String' (OBL),
+        "ADDRESS" = 'ADDRESS' : REGISTER OF (
+            "PERS_NO" = 'PERS_NO' : 'java.lang.String' (OPT),
+            "ADDR_NO" = 'ADDR_NO' : 'java.lang.String' (OPT),
+            "TITLE_P" = 'TITLE_P' : 'java.lang.String' (OPT),
+            "FIRSTNAME" = 'FIRSTNAME' : 'java.lang.String' (OPT),
+            "LASTNAME" = 'LASTNAME' : 'java.lang.String' (OPT),
+            "BIRTH_NAME" = 'BIRTH_NAME' : 'java.lang.String' (OPT),
+            "MIDDLENAME" = 'MIDDLENAME' : 'java.lang.String' (OPT),
+            "SECONDNAME" = 'SECONDNAME' : 'java.lang.String' (OPT),
+            "FULLNAME" = 'FULLNAME' : 'java.lang.String' (OPT),
+            "FULLNAME_X" = 'FULLNAME_X' : 'java.lang.String' (OPT),
+            "TITLE_ACA1" = 'TITLE_ACA1' : 'java.lang.String' (OPT),
+            "TITLE_ACA2" = 'TITLE_ACA2' : 'java.lang.String' (OPT),
+            "PREFIX1" = 'PREFIX1' : 'java.lang.String' (OPT),
+            "PREFIX2" = 'PREFIX2' : 'java.lang.String' (OPT),
+            "TITLE_SPPL" = 'TITLE_SPPL' : 'java.lang.String' (OPT),
+            "NICKNAME" = 'NICKNAME' : 'java.lang.String' (OPT),
+            "INITIALS" = 'INITIALS' : 'java.lang.String' (OPT),
+            "NAMEFORMAT" = 'NAMEFORMAT' : 'java.lang.String' (OPT),
+            "NAMCOUNTRY" = 'NAMCOUNTRY' : 'java.lang.String' (OPT),
+            "LANGU_P" = 'LANGU_P' : 'java.lang.String' (OPT),
+            "LANGUP_ISO" = 'LANGUP_ISO' : 'java.lang.String' (OPT),
+            "SORT1_P" = 'SORT1_P' : 'java.lang.String' (OPT),
+            "SORT2_P" = 'SORT2_P' : 'java.lang.String' (OPT),
+            "DEPARTMENT" = 'DEPARTMENT' : 'java.lang.String' (OPT),
+            "FUNCTION" = 'FUNCTION' : 'java.lang.String' (OPT),
+            "BUILDING_P" = 'BUILDING_P' : 'java.lang.String' (OPT),
+            "FLOOR_P" = 'FLOOR_P' : 'java.lang.String' (OPT),
+            "ROOM_NO_P" = 'ROOM_NO_P' : 'java.lang.String' (OPT),
+            "INITS_SIG" = 'INITS_SIG' : 'java.lang.String' (OPT),
+            "INHOUSE_ML" = 'INHOUSE_ML' : 'java.lang.String' (OPT),
+            "COMM_TYPE" = 'COMM_TYPE' : 'java.lang.String' (OPT),
+            "TITLE" = 'TITLE' : 'java.lang.String' (OPT),
+            "NAME" = 'NAME' : 'java.lang.String' (OPT),
+            "NAME_2" = 'NAME_2' : 'java.lang.String' (OPT),
+            "NAME_3" = 'NAME_3' : 'java.lang.String' (OPT),
+            "NAME_4" = 'NAME_4' : 'java.lang.String' (OPT),
+            "C_O_NAME" = 'C_O_NAME' : 'java.lang.String' (OPT),
+            "CITY" = 'CITY' : 'java.lang.String' (OPT),
+            "DISTRICT" = 'DISTRICT' : 'java.lang.String' (OPT),
+            "CITY_NO" = 'CITY_NO' : 'java.lang.String' (OPT),
+            "DISTRCT_NO" = 'DISTRCT_NO' : 'java.lang.String' (OPT),
+            "CHCKSTATUS" = 'CHCKSTATUS' : 'java.lang.String' (OPT),
+            "POSTL_COD1" = 'POSTL_COD1' : 'java.lang.String' (OPT),
+            "POSTL_COD2" = 'POSTL_COD2' : 'java.lang.String' (OPT),
+            "POSTL_COD3" = 'POSTL_COD3' : 'java.lang.String' (OPT),
+            "PO_BOX" = 'PO_BOX' : 'java.lang.String' (OPT),
+            "PO_BOX_CIT" = 'PO_BOX_CIT' : 'java.lang.String' (OPT),
+            "PBOXCIT_NO" = 'PBOXCIT_NO' : 'java.lang.String' (OPT),
+            "DELIV_DIS" = 'DELIV_DIS' : 'java.lang.String' (OPT),
+            "TRANSPZONE" = 'TRANSPZONE' : 'java.lang.String' (OPT),
+            "STREET" = 'STREET' : 'java.lang.String' (OPT),
+            "STREET_NO" = 'STREET_NO' : 'java.lang.String' (OPT),
+            "STR_ABBR" = 'STR_ABBR' : 'java.lang.String' (OPT),
+            "HOUSE_NO" = 'HOUSE_NO' : 'java.lang.String' (OPT),
+            "HOUSE_NO2" = 'HOUSE_NO2' : 'java.lang.String' (OPT),
+            "STR_SUPPL1" = 'STR_SUPPL1' : 'java.lang.String' (OPT),
+            "STR_SUPPL2" = 'STR_SUPPL2' : 'java.lang.String' (OPT),
+            "STR_SUPPL3" = 'STR_SUPPL3' : 'java.lang.String' (OPT),
+            "LOCATION" = 'LOCATION' : 'java.lang.String' (OPT),
+            "BUILDING" = 'BUILDING' : 'java.lang.String' (OPT),
+            "FLOOR" = 'FLOOR' : 'java.lang.String' (OPT),
+            "ROOM_NO" = 'ROOM_NO' : 'java.lang.String' (OPT),
+            "COUNTRY" = 'COUNTRY' : 'java.lang.String' (OPT),
+            "COUNTRYISO" = 'COUNTRYISO' : 'java.lang.String' (OPT),
+            "LANGU" = 'LANGU' : 'java.lang.String' (OPT),
+            "LANGU_ISO" = 'LANGU_ISO' : 'java.lang.String' (OPT),
+            "REGION" = 'REGION' : 'java.lang.String' (OPT),
+            "SORT1" = 'SORT1' : 'java.lang.String' (OPT),
+            "SORT2" = 'SORT2' : 'java.lang.String' (OPT),
+            "TIME_ZONE" = 'TIME_ZONE' : 'java.lang.String' (OPT),
+            "TAXJURCODE" = 'TAXJURCODE' : 'java.lang.String' (OPT),
+            "ADR_NOTES" = 'ADR_NOTES' : 'java.lang.String' (OPT),
+            "TEL1_NUMBR" = 'TEL1_NUMBR' : 'java.lang.String' (OPT),
+            "TEL1_EXT" = 'TEL1_EXT' : 'java.lang.String' (OPT),
+            "FAX_NUMBER" = 'FAX_NUMBER' : 'java.lang.String' (OPT),
+            "FAX_EXTENS" = 'FAX_EXTENS' : 'java.lang.String' (OPT),
+            "E_MAIL" = 'E_MAIL' : 'java.lang.String' (OPT),
+            "BUILD_LONG" = 'BUILD_LONG' : 'java.lang.String' (OPT),
+            "REGIOGROUP" = 'REGIOGROUP' : 'java.lang.String' (OPT),
+            "HOME_CITY" = 'HOME_CITY' : 'java.lang.String' (OPT),
+            "HOMECITYNO" = 'HOMECITYNO' : 'java.lang.String' (OPT),
+            "PCODE1_EXT" = 'PCODE1_EXT' : 'java.lang.String' (OPT),
+            "PCODE2_EXT" = 'PCODE2_EXT' : 'java.lang.String' (OPT),
+            "PCODE3_EXT" = 'PCODE3_EXT' : 'java.lang.String' (OPT),
+            "PO_W_O_NO" = 'PO_W_O_NO' : 'java.lang.String' (OPT),
+            "PO_BOX_REG" = 'PO_BOX_REG' : 'java.lang.String' (OPT),
+            "POBOX_CTRY" = 'POBOX_CTRY' : 'java.lang.String' (OPT),
+            "PO_CTRYISO" = 'PO_CTRYISO' : 'java.lang.String' (OPT),
+            "DONT_USE_S" = 'DONT_USE_S' : 'java.lang.String' (OPT),
+            "DONT_USE_P" = 'DONT_USE_P' : 'java.lang.String' (OPT),
+            "HOUSE_NO3" = 'HOUSE_NO3' : 'java.lang.String' (OPT),
+            "LANGU_CR_P" = 'LANGU_CR_P' : 'java.lang.String' (OPT),
+            "LANGUCPISO" = 'LANGUCPISO' : 'java.lang.String' (OPT),
+            "PO_BOX_LOBBY" = 'PO_BOX_LOBBY' : 'java.lang.String' (OPT),
+            "DELI_SERV_TYPE" = 'DELI_SERV_TYPE' : 'java.lang.String' (OPT),
+            "DELI_SERV_NUMBER" = 'DELI_SERV_NUMBER' : 'java.lang.String' (OPT),
+            "COUNTY_CODE" = 'COUNTY_CODE' : 'java.lang.String' (OPT),
+            "COUNTY" = 'COUNTY' : 'java.lang.String' (OPT),
+            "TOWNSHIP_CODE" = 'TOWNSHIP_CODE' : 'java.lang.String' (OPT),
+            "TOWNSHIP" = 'TOWNSHIP' : 'java.lang.String' (OPT)
+        ),
+        "ADMINDATA" = 'ADMINDATA' : REGISTER OF (
+            "ANAME" = 'ANAME' : 'java.lang.String' (OPT),
+            "ERDAT" = 'ERDAT' : 'java.util.Date' (OPT),
+            "TRDAT" = 'TRDAT' : 'java.util.Date' (OPT)
+        ),
+        "ALIAS" = 'ALIAS' : REGISTER OF (
+            "USERALIAS" = 'USERALIAS' : 'java.lang.String' (OPT)
+        ),
+        "COMPANY" = 'COMPANY' : REGISTER OF (
+            "COMPANY" = 'COMPANY' : 'java.lang.String' (OPT)
+        ),
+        "DEFAULTS" = 'DEFAULTS' : REGISTER OF (
+            "STCOD" = 'STCOD' : 'java.lang.String' (OPT),
+            "SPLD" = 'SPLD' : 'java.lang.String' (OPT),
+            "SPLG" = 'SPLG' : 'java.lang.String' (OPT),
+            "SPDB" = 'SPDB' : 'java.lang.String' (OPT),
+            "SPDA" = 'SPDA' : 'java.lang.String' (OPT),
+            "DATFM" = 'DATFM' : 'java.lang.String' (OPT),
+            "DCPFM" = 'DCPFM' : 'java.lang.String' (OPT),
+            "LANGU" = 'LANGU' : 'java.lang.String' (OPT),
+            "CATTKENNZ" = 'CATTKENNZ' : 'java.lang.String' (OPT),
+            "KOSTL" = 'KOSTL' : 'java.lang.String' (OPT),
+            "START_MENU" = 'START_MENU' : 'java.lang.String' (OPT),
+            "TIMEFM" = 'TIMEFM' : 'java.lang.String' (OPT)
+        ),
+        "IDENTITY" = 'IDENTITY' : REGISTER OF (
+            "IDENTITY_UUID" = 'IDENTITY_UUID' : 'java.lang.String' (OPT),
+            "BPPERSON" = 'BPPERSON' : 'java.lang.String' (OPT)
+        ),
+        "ISLOCKED" = 'ISLOCKED' : REGISTER OF (
+            "WRNG_LOGON" = 'WRNG_LOGON' : 'java.lang.String' (OPT),
+            "LOCAL_LOCK" = 'LOCAL_LOCK' : 'java.lang.String' (OPT),
+            "GLOB_LOCK" = 'GLOB_LOCK' : 'java.lang.String' (OPT),
+            "NO_USER_PW" = 'NO_USER_PW' : 'java.lang.String' (OPT)
+        ),
+        "LASTMODIFIED" = 'LASTMODIFIED' : REGISTER OF (
+            "MODDATE" = 'MODDATE' : 'java.util.Date' (OPT),
+            "MODTIME" = 'MODTIME' : 'java.util.Date' (OPT),
+            "MODIFIER" = 'MODIFIER' : 'java.lang.String' (OPT)
+        ),
+        "LOGONDATA" = 'LOGONDATA' : REGISTER OF (
+            "GLTGV" = 'GLTGV' : 'java.util.Date' (OPT),
+            "GLTGB" = 'GLTGB' : 'java.util.Date' (OPT),
+            "USTYP" = 'USTYP' : 'java.lang.String' (OPT),
+            "CLASS" = 'CLASS' : 'java.lang.String' (OPT),
+            "ACCNT" = 'ACCNT' : 'java.lang.String' (OPT),
+            "TZONE" = 'TZONE' : 'java.lang.String' (OPT),
+            "LTIME" = 'LTIME' : 'java.util.Date' (OPT),
+            "BCODE" = 'BCODE' : 'java.sql.Blob' (OPT),
+            "CODVN" = 'CODVN' : 'java.lang.String' (OPT),
+            "PASSCODE" = 'PASSCODE' : 'java.sql.Blob' (OPT),
+            "CODVC" = 'CODVC' : 'java.lang.String' (OPT),
+            "PWDSALTEDHASH" = 'PWDSALTEDHASH' : 'java.lang.String' (OPT),
+            "CODVS" = 'CODVS' : 'java.lang.String' (OPT),
+            "SECURITY_POLICY" = 'SECURITY_POLICY' : 'java.lang.String' (OPT)
+        ),
+        "REF_USER" = 'REF_USER' : REGISTER OF (
+            "REF_USER" = 'REF_USER' : 'java.lang.String' (OPT)
+        ),
+        "SNC" = 'SNC' : REGISTER OF (
+            "GUIFLAG" = 'GUIFLAG' : 'java.lang.String' (OPT),
+            "PNAME" = 'PNAME' : 'java.lang.String' (OPT)
+        ),
+        "UCLASS" = 'UCLASS' : REGISTER OF (
+            "LIC_TYPE" = 'LIC_TYPE' : 'java.lang.String' (OPT),
+            "SPEC_VERS" = 'SPEC_VERS' : 'java.lang.String' (OPT),
+            "COUNTRY_SURCHARGE" = 'COUNTRY_SURCHARGE' : 'java.lang.Double' (OPT),
+            "SUBSTITUTE_FROM" = 'SUBSTITUTE_FROM' : 'java.util.Date' (OPT),
+            "SUBSTITUTE_UNTIL" = 'SUBSTITUTE_UNTIL' : 'java.util.Date' (OPT),
+            "SYSID" = 'SYSID' : 'java.lang.String' (OPT),
+            "CLIENT" = 'CLIENT' : 'java.lang.String' (OPT),
+            "BNAME_CHARGEABLE" = 'BNAME_CHARGEABLE' : 'java.lang.String' (OPT)
+        ),
+        "ACTIVITYGROUPS_array" = 'ACTIVITYGROUPS' : ARRAY OF (
+            "ACTIVITYGROUPS" = 'ACTIVITYGROUPS' : REGISTER OF (
+                "AGR_NAME" = 'AGR_NAME' : 'java.lang.String' (OPT),
+                "FROM_DAT" = 'FROM_DAT' : 'java.util.Date' (OPT),
+                "TO_DAT" = 'TO_DAT' : 'java.util.Date' (OPT),
+                "AGR_TEXT" = 'AGR_TEXT' : 'java.lang.String' (OPT),
+                "ORG_FLAG" = 'ORG_FLAG' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDCOMREM_array" = 'ADDCOMREM' : ARRAY OF (
+            "ADDCOMREM" = 'ADDCOMREM' : REGISTER OF (
+                "COMM_TYPE" = 'COMM_TYPE' : 'java.lang.String' (OPT),
+                "LANGU" = 'LANGU' : 'java.lang.String' (OPT),
+                "LANGU_ISO" = 'LANGU_ISO' : 'java.lang.String' (OPT),
+                "COMM_NOTES" = 'COMM_NOTES' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDFAX_array" = 'ADDFAX' : ARRAY OF (
+            "ADDFAX" = 'ADDFAX' : REGISTER OF (
+                "COUNTRY" = 'COUNTRY' : 'java.lang.String' (OPT),
+                "COUNTRYISO" = 'COUNTRYISO' : 'java.lang.String' (OPT),
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "FAX" = 'FAX' : 'java.lang.String' (OPT),
+                "EXTENSION" = 'EXTENSION' : 'java.lang.String' (OPT),
+                "FAX_NO" = 'FAX_NO' : 'java.lang.String' (OPT),
+                "SENDER_NO" = 'SENDER_NO' : 'java.lang.String' (OPT),
+                "FAX_GROUP" = 'FAX_GROUP' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "R_3_USER" = 'R_3_USER' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDPAG_array" = 'ADDPAG' : ARRAY OF (
+            "ADDPAG" = 'ADDPAG' : REGISTER OF (
+                "COUNTRY" = 'COUNTRY' : 'java.lang.String' (OPT),
+                "COUNTRYISO" = 'COUNTRYISO' : 'java.lang.String' (OPT),
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "PAGER_TYPE" = 'PAGER_TYPE' : 'java.lang.String' (OPT),
+                "PAGER" = 'PAGER' : 'java.lang.String' (OPT),
+                "PAGER_NO" = 'PAGER_NO' : 'java.lang.String' (OPT),
+                "CALLER_NO" = 'CALLER_NO' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "R_3_USER" = 'R_3_USER' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDPRT_array" = 'ADDPRT' : ARRAY OF (
+            "ADDPRT" = 'ADDPRT' : REGISTER OF (
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "PRINT_DEST" = 'PRINT_DEST' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDRFC_array" = 'ADDRFC' : ARRAY OF (
+            "ADDRFC" = 'ADDRFC' : REGISTER OF (
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "LOG_DEST" = 'LOG_DEST' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "R_3_USER" = 'R_3_USER' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDRML_array" = 'ADDRML' : ARRAY OF (
+            "ADDRML" = 'ADDRML' : REGISTER OF (
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "SYMB_DEST" = 'SYMB_DEST' : 'java.lang.String' (OPT),
+                "REC_TYPE" = 'REC_TYPE' : 'java.lang.String' (OPT),
+                "R_MAIL_CLT" = 'R_MAIL_CLT' : 'java.lang.String' (OPT),
+                "R_MAIL" = 'R_MAIL' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "R_3_USER" = 'R_3_USER' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDSMTP_array" = 'ADDSMTP' : ARRAY OF (
+            "ADDSMTP" = 'ADDSMTP' : REGISTER OF (
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "E_MAIL" = 'E_MAIL' : 'java.lang.String' (OPT),
+                "EMAIL_SRCH" = 'EMAIL_SRCH' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "R_3_USER" = 'R_3_USER' : 'java.lang.String' (OPT),
+                "ENCODE" = 'ENCODE' : 'java.lang.String' (OPT),
+                "TNEF" = 'TNEF' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDSSF_array" = 'ADDSSF' : ARRAY OF (
+            "ADDSSF" = 'ADDSSF' : REGISTER OF (
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "DUMMY" = 'DUMMY' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "RFCDEST" = 'RFCDEST' : 'java.lang.String' (OPT),
+                "SSFIDSHORT" = 'SSFIDSHORT' : 'java.lang.String' (OPT),
+                "SSF_NS" = 'SSF_NS' : 'java.lang.String' (OPT),
+                "SSF_PROF" = 'SSF_PROF' : 'java.lang.String' (OPT),
+                "SSFIDPART1" = 'SSFIDPART1' : 'java.lang.String' (OPT),
+                "SSFIDPART2" = 'SSFIDPART2' : 'java.lang.String' (OPT),
+                "SSFIDPART3" = 'SSFIDPART3' : 'java.lang.String' (OPT),
+                "SSFIDPART4" = 'SSFIDPART4' : 'java.lang.String' (OPT),
+                "SSFIDPART5" = 'SSFIDPART5' : 'java.lang.String' (OPT),
+                "SSFIDPART6" = 'SSFIDPART6' : 'java.lang.String' (OPT),
+                "SSFIDPART7" = 'SSFIDPART7' : 'java.lang.String' (OPT),
+                "SSFIDPART8" = 'SSFIDPART8' : 'java.lang.String' (OPT),
+                "SSFIDPART9" = 'SSFIDPART9' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDTEL_array" = 'ADDTEL' : ARRAY OF (
+            "ADDTEL" = 'ADDTEL' : REGISTER OF (
+                "COUNTRY" = 'COUNTRY' : 'java.lang.String' (OPT),
+                "COUNTRYISO" = 'COUNTRYISO' : 'java.lang.String' (OPT),
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "TELEPHONE" = 'TELEPHONE' : 'java.lang.String' (OPT),
+                "EXTENSION" = 'EXTENSION' : 'java.lang.String' (OPT),
+                "TEL_NO" = 'TEL_NO' : 'java.lang.String' (OPT),
+                "CALLER_NO" = 'CALLER_NO' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "R_3_USER" = 'R_3_USER' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDTLX_array" = 'ADDTLX' : ARRAY OF (
+            "ADDTLX" = 'ADDTLX' : REGISTER OF (
+                "COUNTRY" = 'COUNTRY' : 'java.lang.String' (OPT),
+                "COUNTRYISO" = 'COUNTRYISO' : 'java.lang.String' (OPT),
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "TELEX_NO" = 'TELEX_NO' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "R_3_USER" = 'R_3_USER' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDTTX_array" = 'ADDTTX' : ARRAY OF (
+            "ADDTTX" = 'ADDTTX' : REGISTER OF (
+                "COUNTRY" = 'COUNTRY' : 'java.lang.String' (OPT),
+                "COUNTRYISO" = 'COUNTRYISO' : 'java.lang.String' (OPT),
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "TELETEX" = 'TELETEX' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "R_3_USER" = 'R_3_USER' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDURI_array" = 'ADDURI' : ARRAY OF (
+            "ADDURI" = 'ADDURI' : REGISTER OF (
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "URI_TYPE" = 'URI_TYPE' : 'java.lang.String' (OPT),
+                "URI" = 'URI' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "URI_PART1" = 'URI_PART1' : 'java.lang.String' (OPT),
+                "URI_PART2" = 'URI_PART2' : 'java.lang.String' (OPT),
+                "URI_PART3" = 'URI_PART3' : 'java.lang.String' (OPT),
+                "URI_PART4" = 'URI_PART4' : 'java.lang.String' (OPT),
+                "URI_PART5" = 'URI_PART5' : 'java.lang.String' (OPT),
+                "URI_PART6" = 'URI_PART6' : 'java.lang.String' (OPT),
+                "URI_PART7" = 'URI_PART7' : 'java.lang.String' (OPT),
+                "URI_PART8" = 'URI_PART8' : 'java.lang.String' (OPT),
+                "URI_PART9" = 'URI_PART9' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "ADDX400_array" = 'ADDX400' : ARRAY OF (
+            "ADDX400" = 'ADDX400' : REGISTER OF (
+                "STD_NO" = 'STD_NO' : 'java.lang.String' (OPT),
+                "COUNTRY" = 'COUNTRY' : 'java.lang.String' (OPT),
+                "COUNTRYISO" = 'COUNTRYISO' : 'java.lang.String' (OPT),
+                "ADM_DOM" = 'ADM_DOM' : 'java.lang.String' (OPT),
+                "PRIV_DOM" = 'PRIV_DOM' : 'java.lang.String' (OPT),
+                "ORGANIZATN" = 'ORGANIZATN' : 'java.lang.String' (OPT),
+                "ORG_UNIT_1" = 'ORG_UNIT_1' : 'java.lang.String' (OPT),
+                "ORG_UNIT_2" = 'ORG_UNIT_2' : 'java.lang.String' (OPT),
+                "ORG_UNIT_3" = 'ORG_UNIT_3' : 'java.lang.String' (OPT),
+                "ORG_UNIT_4" = 'ORG_UNIT_4' : 'java.lang.String' (OPT),
+                "LASTNAME" = 'LASTNAME' : 'java.lang.String' (OPT),
+                "FIRSTNAME" = 'FIRSTNAME' : 'java.lang.String' (OPT),
+                "INITIALS" = 'INITIALS' : 'java.lang.String' (OPT),
+                "GENERATION" = 'GENERATION' : 'java.lang.String' (OPT),
+                "X_121_ADDR" = 'X_121_ADDR' : 'java.lang.String' (OPT),
+                "TERM_ID" = 'TERM_ID' : 'java.lang.String' (OPT),
+                "TERM_TYPE" = 'TERM_TYPE' : 'java.lang.String' (OPT),
+                "UANID" = 'UANID' : 'java.lang.String' (OPT),
+                "DDA_TYPE1" = 'DDA_TYPE1' : 'java.lang.String' (OPT),
+                "DDA_VALUE1" = 'DDA_VALUE1' : 'java.lang.String' (OPT),
+                "DDA_TYPE2" = 'DDA_TYPE2' : 'java.lang.String' (OPT),
+                "DDA_VALUE2" = 'DDA_VALUE2' : 'java.lang.String' (OPT),
+                "DDA_TYPE3" = 'DDA_TYPE3' : 'java.lang.String' (OPT),
+                "DDA_VALUE3" = 'DDA_VALUE3' : 'java.lang.String' (OPT),
+                "DDA_TYPE4" = 'DDA_TYPE4' : 'java.lang.String' (OPT),
+                "DDA_VALUE4" = 'DDA_VALUE4' : 'java.lang.String' (OPT),
+                "STD_RECIP" = 'STD_RECIP' : 'java.lang.String' (OPT),
+                "R_3_USER" = 'R_3_USER' : 'java.lang.String' (OPT),
+                "TXT_ENCODE" = 'TXT_ENCODE' : 'java.lang.String' (OPT),
+                "TNEF" = 'TNEF' : 'java.lang.String' (OPT),
+                "HOME_FLAG" = 'HOME_FLAG' : 'java.lang.String' (OPT),
+                "CONSNUMBER" = 'CONSNUMBER' : 'java.lang.String' (OPT),
+                "ERRORFLAG" = 'ERRORFLAG' : 'java.lang.String' (OPT),
+                "FLG_NOUSE" = 'FLG_NOUSE' : 'java.lang.String' (OPT),
+                "VALID_FROM" = 'VALID_FROM' : 'java.lang.String' (OPT),
+                "VALID_TO" = 'VALID_TO' : 'java.lang.String' (OPT)
+            )
+        ),
+        "EXTIDHEAD_array" = 'EXTIDHEAD' : ARRAY OF (
+            "EXTIDHEAD" = 'EXTIDHEAD' : REGISTER OF (
+                "SEQ_NO_ID" = 'SEQ_NO_ID' : 'java.lang.String' (OPT),
+                "TYPE" = 'TYPE' : 'java.lang.String' (OPT),
+                "CODE_TYPE" = 'CODE_TYPE' : 'java.lang.String' (OPT),
+                "EXTID_LEN" = 'EXTID_LEN' : 'java.lang.Integer' (OPT),
+                "ISSUER_LEN" = 'ISSUER_LEN' : 'java.lang.Integer' (OPT),
+                "SERIAL_LEN" = 'SERIAL_LEN' : 'java.lang.Integer' (OPT),
+                "VALITYINFO" = 'VALITYINFO' : 'java.sql.Blob' (OPT),
+                "VERSION" = 'VERSION' : 'java.lang.Integer' (OPT),
+                "STATUS" = 'STATUS' : 'java.lang.String' (OPT),
+                "EXTFLAG" = 'EXTFLAG' : 'java.lang.String' (OPT)
+            )
+        ),
+        "EXTIDPART_array" = 'EXTIDPART' : ARRAY OF (
+            "EXTIDPART" = 'EXTIDPART' : REGISTER OF (
+                "SEQ_NO_ID" = 'SEQ_NO_ID' : 'java.lang.String' (OPT),
+                "FIELDNAME" = 'FIELDNAME' : 'java.lang.String' (OPT),
+                "SEQ_NO_PART" = 'SEQ_NO_PART' : 'java.lang.String' (OPT),
+                "PART_DATA" = 'PART_DATA' : 'java.lang.String' (OPT),
+                "EXTFLAG" = 'EXTFLAG' : 'java.lang.String' (OPT)
+            )
+        ),
+        "GROUPS_array" = 'GROUPS' : ARRAY OF (
+            "GROUPS" = 'GROUPS' : REGISTER OF (
+                "USERGROUP" = 'USERGROUP' : 'java.lang.String' (OPT)
+            )
+        ),
+        "PARAMETER_array" = 'PARAMETER' : ARRAY OF (
+            "PARAMETER" = 'PARAMETER' : REGISTER OF (
+                "PARID" = 'PARID' : 'java.lang.String' (OPT),
+                "PARVA" = 'PARVA' : 'java.lang.String' (OPT),
+                "PARTXT" = 'PARTXT' : 'java.lang.String' (OPT)
+            )
+        ),
+        "PARAMETER1_array" = 'PARAMETER1' : ARRAY OF (
+            "PARAMETER1" = 'PARAMETER1' : REGISTER OF (
+                "PARID" = 'PARID' : 'java.lang.String' (OPT),
+                "PARVA" = 'PARVA' : 'java.lang.String' (OPT),
+                "PARTXT" = 'PARTXT' : 'java.lang.String' (OPT)
+            )
+        ),
+        "PROFILES_array" = 'PROFILES' : ARRAY OF (
+            "PROFILES" = 'PROFILES' : REGISTER OF (
+                "BAPIPROF" = 'BAPIPROF' : 'java.lang.String' (OPT),
+                "BAPIPTEXT" = 'BAPIPTEXT' : 'java.lang.String' (OPT),
+                "BAPITYPE" = 'BAPITYPE' : 'java.lang.String' (OPT),
+                "BAPIAKTPS" = 'BAPIAKTPS' : 'java.lang.String' (OPT)
+            )
+        ),
+        "RETURN_array" = 'RETURN' : ARRAY OF (
+            "RETURN" = 'RETURN' : REGISTER OF (
+                "TYPE" = 'TYPE' : 'java.lang.String' (OPT),
+                "ID" = 'ID' : 'java.lang.String' (OPT),
+                "NUMBER" = 'NUMBER' : 'java.lang.String' (OPT),
+                "MESSAGE" = 'MESSAGE' : 'java.lang.String' (OPT),
+                "LOG_NO" = 'LOG_NO' : 'java.lang.String' (OPT),
+                "LOG_MSG_NO" = 'LOG_MSG_NO' : 'java.lang.String' (OPT),
+                "MESSAGE_V1" = 'MESSAGE_V1' : 'java.lang.String' (OPT),
+                "MESSAGE_V2" = 'MESSAGE_V2' : 'java.lang.String' (OPT),
+                "MESSAGE_V3" = 'MESSAGE_V3' : 'java.lang.String' (OPT),
+                "MESSAGE_V4" = 'MESSAGE_V4' : 'java.lang.String' (OPT),
+                "PARAMETER" = 'PARAMETER' : 'java.lang.String' (OPT),
+                "ROW" = 'ROW' : 'java.lang.Integer' (OPT),
+                "FIELD" = 'FIELD' : 'java.lang.String' (OPT),
+                "SYSTEM" = 'SYSTEM' : 'java.lang.String' (OPT)
+            )
+        ),
+        "SYSTEMS_array" = 'SYSTEMS' : ARRAY OF (
+            "SYSTEMS" = 'SYSTEMS' : REGISTER OF (
+                "SUBSYSTEM" = 'SUBSYSTEM' : 'java.lang.String' (OPT)
+            )
+        ),
+        "UCLASSSYS_array" = 'UCLASSSYS' : ARRAY OF (
+            "UCLASSSYS" = 'UCLASSSYS' : REGISTER OF (
+                "RCVSYSTEM" = 'RCVSYSTEM' : 'java.lang.String' (OPT),
+                "LIC_TYPE" = 'LIC_TYPE' : 'java.lang.String' (OPT),
+                "SPEC_VERS" = 'SPEC_VERS' : 'java.lang.String' (OPT),
+                "COUNTRY_SURCHARGE" = 'COUNTRY_SURCHARGE' : 'java.lang.Double' (OPT),
+                "SUBSTITUTE_FROM" = 'SUBSTITUTE_FROM' : 'java.util.Date' (OPT),
+                "SUBSTITUTE_UNTIL" = 'SUBSTITUTE_UNTIL' : 'java.util.Date' (OPT),
+                "SYSID" = 'SYSID' : 'java.lang.String' (OPT),
+                "CLIENT" = 'CLIENT' : 'java.lang.String' (OPT),
+                "BNAME_CHARGEABLE" = 'BNAME_CHARGEABLE' : 'java.lang.String' (OPT)
+            )
+        )
+    );
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDRESS" AS REGISTER OF ("PERS_NO":text, "ADDR_NO":text, "TITLE_P":text, "FIRSTNAME":text, "LASTNAME":text, "BIRTH_NAME":text, "MIDDLENAME":text, "SECONDNAME":text, "FULLNAME":text, "FULLNAME_X":text, "TITLE_ACA1":text, "TITLE_ACA2":text, "PREFIX1":text, "PREFIX2":text, "TITLE_SPPL":text, "NICKNAME":text, "INITIALS":text, "NAMEFORMAT":text, "NAMCOUNTRY":text, "LANGU_P":text, "LANGUP_ISO":text, "SORT1_P":text, "SORT2_P":text, "DEPARTMENT":text, "FUNCTION":text, "BUILDING_P":text, "FLOOR_P":text, "ROOM_NO_P":text, "INITS_SIG":text, "INHOUSE_ML":text, "COMM_TYPE":text, "TITLE":text, "NAME":text, "NAME_2":text, "NAME_3":text, "NAME_4":text, "C_O_NAME":text, "CITY":text, "DISTRICT":text, "CITY_NO":text, "DISTRCT_NO":text, "CHCKSTATUS":text, "POSTL_COD1":text, "POSTL_COD2":text, "POSTL_COD3":text, "PO_BOX":text, "PO_BOX_CIT":text, "PBOXCIT_NO":text, "DELIV_DIS":text, "TRANSPZONE":text, "STREET":text, "STREET_NO":text, "STR_ABBR":text, "HOUSE_NO":text, "HOUSE_NO2":text, "STR_SUPPL1":text, "STR_SUPPL2":text, "STR_SUPPL3":text, "LOCATION":text, "BUILDING":text, "FLOOR":text, "ROOM_NO":text, "COUNTRY":text, "COUNTRYISO":text, "LANGU":text, "LANGU_ISO":text, "REGION":text, "SORT1":text, "SORT2":text, "TIME_ZONE":text, "TAXJURCODE":text, "ADR_NOTES":text, "TEL1_NUMBR":text, "TEL1_EXT":text, "FAX_NUMBER":text, "FAX_EXTENS":text, "E_MAIL":text, "BUILD_LONG":text, "REGIOGROUP":text, "HOME_CITY":text, "HOMECITYNO":text, "PCODE1_EXT":text, "PCODE2_EXT":text, "PCODE3_EXT":text, "PO_W_O_NO":text, "PO_BOX_REG":text, "POBOX_CTRY":text, "PO_CTRYISO":text, "DONT_USE_S":text, "DONT_USE_P":text, "HOUSE_NO3":text, "LANGU_CR_P":text, "LANGUCPISO":text, "PO_BOX_LOBBY":text, "DELI_SERV_TYPE":text, "DELI_SERV_NUMBER":text, "COUNTY_CODE":text, "COUNTY":text, "TOWNSHIP_CODE":text, "TOWNSHIP":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADMINDATA" AS REGISTER OF ("ANAME":text, "ERDAT":date, "TRDAT":date);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ALIAS" AS REGISTER OF ("USERALIAS":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_COMPANY" AS REGISTER OF ("COMPANY":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_DEFAULTS" AS REGISTER OF ("STCOD":text, "SPLD":text, "SPLG":text, "SPDB":text, "SPDA":text, "DATFM":text, "DCPFM":text, "LANGU":text, "CATTKENNZ":text, "KOSTL":text, "START_MENU":text, "TIMEFM":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_IDENTITY" AS REGISTER OF ("IDENTITY_UUID":text, "BPPERSON":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ISLOCKED" AS REGISTER OF ("WRNG_LOGON":text, "LOCAL_LOCK":text, "GLOB_LOCK":text, "NO_USER_PW":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_LASTMODIFIED" AS REGISTER OF ("MODDATE":date, "MODTIME":date, "MODIFIER":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_LOGONDATA" AS REGISTER OF ("GLTGV":date, "GLTGB":date, "USTYP":text, "CLASS":text, "ACCNT":text, "TZONE":text, "LTIME":date, "BCODE":blob, "CODVN":text, "PASSCODE":blob, "CODVC":text, "PWDSALTEDHASH":text, "CODVS":text, "SECURITY_POLICY":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_REF_USER" AS REGISTER OF ("REF_USER":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_SNC" AS REGISTER OF ("GUIFLAG":text, "PNAME":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_UCLASS" AS REGISTER OF ("LIC_TYPE":text, "SPEC_VERS":text, "COUNTRY_SURCHARGE":double, "SUBSTITUTE_FROM":date, "SUBSTITUTE_UNTIL":date, "SYSID":text, "CLIENT":text, "BNAME_CHARGEABLE":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ACTIVITYGROUPS_array_ACTIVITYGROUPS" AS REGISTER OF ("AGR_NAME":text, "FROM_DAT":date, "TO_DAT":date, "AGR_TEXT":text, "ORG_FLAG":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ACTIVITYGROUPS_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ACTIVITYGROUPS_array_ACTIVITYGROUPS";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDCOMREM_array_ADDCOMREM" AS REGISTER OF ("COMM_TYPE":text, "LANGU":text, "LANGU_ISO":text, "COMM_NOTES":text, "CONSNUMBER":text, "ERRORFLAG":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDCOMREM_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDCOMREM_array_ADDCOMREM";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDFAX_array_ADDFAX" AS REGISTER OF ("COUNTRY":text, "COUNTRYISO":text, "STD_NO":text, "FAX":text, "EXTENSION":text, "FAX_NO":text, "SENDER_NO":text, "FAX_GROUP":text, "STD_RECIP":text, "R_3_USER":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDFAX_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDFAX_array_ADDFAX";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDPAG_array_ADDPAG" AS REGISTER OF ("COUNTRY":text, "COUNTRYISO":text, "STD_NO":text, "PAGER_TYPE":text, "PAGER":text, "PAGER_NO":text, "CALLER_NO":text, "STD_RECIP":text, "R_3_USER":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDPAG_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDPAG_array_ADDPAG";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDPRT_array_ADDPRT" AS REGISTER OF ("STD_NO":text, "PRINT_DEST":text, "STD_RECIP":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDPRT_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDPRT_array_ADDPRT";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDRFC_array_ADDRFC" AS REGISTER OF ("STD_NO":text, "LOG_DEST":text, "STD_RECIP":text, "R_3_USER":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDRFC_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDRFC_array_ADDRFC";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDRML_array_ADDRML" AS REGISTER OF ("STD_NO":text, "SYMB_DEST":text, "REC_TYPE":text, "R_MAIL_CLT":text, "R_MAIL":text, "STD_RECIP":text, "R_3_USER":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDRML_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDRML_array_ADDRML";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDSMTP_array_ADDSMTP" AS REGISTER OF ("STD_NO":text, "E_MAIL":text, "EMAIL_SRCH":text, "STD_RECIP":text, "R_3_USER":text, "ENCODE":text, "TNEF":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDSMTP_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDSMTP_array_ADDSMTP";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDSSF_array_ADDSSF" AS REGISTER OF ("STD_NO":text, "DUMMY":text, "STD_RECIP":text, "HOME_FLAG":text, "CONSNUMBER":text, "RFCDEST":text, "SSFIDSHORT":text, "SSF_NS":text, "SSF_PROF":text, "SSFIDPART1":text, "SSFIDPART2":text, "SSFIDPART3":text, "SSFIDPART4":text, "SSFIDPART5":text, "SSFIDPART6":text, "SSFIDPART7":text, "SSFIDPART8":text, "SSFIDPART9":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDSSF_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDSSF_array_ADDSSF";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDTEL_array_ADDTEL" AS REGISTER OF ("COUNTRY":text, "COUNTRYISO":text, "STD_NO":text, "TELEPHONE":text, "EXTENSION":text, "TEL_NO":text, "CALLER_NO":text, "STD_RECIP":text, "R_3_USER":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDTEL_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDTEL_array_ADDTEL";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDTLX_array_ADDTLX" AS REGISTER OF ("COUNTRY":text, "COUNTRYISO":text, "STD_NO":text, "TELEX_NO":text, "STD_RECIP":text, "R_3_USER":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDTLX_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDTLX_array_ADDTLX";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDTTX_array_ADDTTX" AS REGISTER OF ("COUNTRY":text, "COUNTRYISO":text, "STD_NO":text, "TELETEX":text, "STD_RECIP":text, "R_3_USER":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDTTX_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDTTX_array_ADDTTX";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDURI_array_ADDURI" AS REGISTER OF ("STD_NO":text, "URI_TYPE":text, "URI":text, "STD_RECIP":text, "HOME_FLAG":text, "CONSNUMBER":text, "URI_PART1":text, "URI_PART2":text, "URI_PART3":text, "URI_PART4":text, "URI_PART5":text, "URI_PART6":text, "URI_PART7":text, "URI_PART8":text, "URI_PART9":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDURI_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDURI_array_ADDURI";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDX400_array_ADDX400" AS REGISTER OF ("STD_NO":text, "COUNTRY":text, "COUNTRYISO":text, "ADM_DOM":text, "PRIV_DOM":text, "ORGANIZATN":text, "ORG_UNIT_1":text, "ORG_UNIT_2":text, "ORG_UNIT_3":text, "ORG_UNIT_4":text, "LASTNAME":text, "FIRSTNAME":text, "INITIALS":text, "GENERATION":text, "X_121_ADDR":text, "TERM_ID":text, "TERM_TYPE":text, "UANID":text, "DDA_TYPE1":text, "DDA_VALUE1":text, "DDA_TYPE2":text, "DDA_VALUE2":text, "DDA_TYPE3":text, "DDA_VALUE3":text, "DDA_TYPE4":text, "DDA_VALUE4":text, "STD_RECIP":text, "R_3_USER":text, "TXT_ENCODE":text, "TNEF":text, "HOME_FLAG":text, "CONSNUMBER":text, "ERRORFLAG":text, "FLG_NOUSE":text, "VALID_FROM":text, "VALID_TO":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_ADDX400_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_ADDX400_array_ADDX400";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_EXTIDHEAD_array_EXTIDHEAD" AS REGISTER OF ("SEQ_NO_ID":text, "TYPE":text, "CODE_TYPE":text, "EXTID_LEN":int, "ISSUER_LEN":int, "SERIAL_LEN":int, "VALITYINFO":blob, "VERSION":int, "STATUS":text, "EXTFLAG":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_EXTIDHEAD_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_EXTIDHEAD_array_EXTIDHEAD";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_EXTIDPART_array_EXTIDPART" AS REGISTER OF ("SEQ_NO_ID":text, "FIELDNAME":text, "SEQ_NO_PART":text, "PART_DATA":text, "EXTFLAG":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_EXTIDPART_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_EXTIDPART_array_EXTIDPART";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_GROUPS_array_GROUPS" AS REGISTER OF ("USERGROUP":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_GROUPS_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_GROUPS_array_GROUPS";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_PARAMETER_array_PARAMETER" AS REGISTER OF ("PARID":text, "PARVA":text, "PARTXT":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_PARAMETER_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_PARAMETER_array_PARAMETER";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_PROFILES_array_PROFILES" AS REGISTER OF ("BAPIPROF":text, "BAPIPTEXT":text, "BAPITYPE":text, "BAPIAKTPS":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_PROFILES_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_PROFILES_array_PROFILES";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_RETURN_array_RETURN" AS REGISTER OF ("TYPE":text, "ID":text, "NUMBER":text, "MESSAGE":text, "LOG_NO":text, "LOG_MSG_NO":text, "MESSAGE_V1":text, "MESSAGE_V2":text, "MESSAGE_V3":text, "MESSAGE_V4":text, "PARAMETER":text, "ROW":int, "FIELD":text, "SYSTEM":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_RETURN_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_RETURN_array_RETURN";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_SYSTEMS_array_SYSTEMS" AS REGISTER OF ("SUBSYSTEM":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_SYSTEMS_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_SYSTEMS_array_SYSTEMS";
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_UCLASSSYS_array_UCLASSSYS" AS REGISTER OF ("RCVSYSTEM":text, "LIC_TYPE":text, "SPEC_VERS":text, "COUNTRY_SURCHARGE":double, "SUBSTITUTE_FROM":date, "SUBSTITUTE_UNTIL":date, "SYSID":text, "CLIENT":text, "BNAME_CHARGEABLE":text);
+
+CREATE OR REPLACE TYPE "BAPI_USER_GET_DETAIL_UCLASSSYS_array" AS ARRAY OF "BAPI_USER_GET_DETAIL_UCLASSSYS_array_UCLASSSYS";
+
+CREATE OR REPLACE TABLE "BAPI_USER_GET_DETAIL" I18N us_pst (
+        "CACHE_RESULTS":text, 
+        "USERNAME":text, 
+        "ADDRESS":"BAPI_USER_GET_DETAIL_ADDRESS", 
+        "ADMINDATA":"BAPI_USER_GET_DETAIL_ADMINDATA", 
+        "ALIAS":"BAPI_USER_GET_DETAIL_ALIAS", 
+        "COMPANY":"BAPI_USER_GET_DETAIL_COMPANY", 
+        "DEFAULTS":"BAPI_USER_GET_DETAIL_DEFAULTS", 
+        "IDENTITY":"BAPI_USER_GET_DETAIL_IDENTITY", 
+        "ISLOCKED":"BAPI_USER_GET_DETAIL_ISLOCKED", 
+        "LASTMODIFIED":"BAPI_USER_GET_DETAIL_LASTMODIFIED", 
+        "LOGONDATA":"BAPI_USER_GET_DETAIL_LOGONDATA", 
+        "REF_USER":"BAPI_USER_GET_DETAIL_REF_USER", 
+        "SNC":"BAPI_USER_GET_DETAIL_SNC", 
+        "UCLASS":"BAPI_USER_GET_DETAIL_UCLASS", 
+        "ACTIVITYGROUPS_array":"BAPI_USER_GET_DETAIL_ACTIVITYGROUPS_array", 
+        "ADDCOMREM_array":"BAPI_USER_GET_DETAIL_ADDCOMREM_array", 
+        "ADDFAX_array":"BAPI_USER_GET_DETAIL_ADDFAX_array", 
+        "ADDPAG_array":"BAPI_USER_GET_DETAIL_ADDPAG_array", 
+        "ADDPRT_array":"BAPI_USER_GET_DETAIL_ADDPRT_array", 
+        "ADDRFC_array":"BAPI_USER_GET_DETAIL_ADDRFC_array", 
+        "ADDRML_array":"BAPI_USER_GET_DETAIL_ADDRML_array", 
+        "ADDSMTP_array":"BAPI_USER_GET_DETAIL_ADDSMTP_array", 
+        "ADDSSF_array":"BAPI_USER_GET_DETAIL_ADDSSF_array", 
+        "ADDTEL_array":"BAPI_USER_GET_DETAIL_ADDTEL_array", 
+        "ADDTLX_array":"BAPI_USER_GET_DETAIL_ADDTLX_array", 
+        "ADDTTX_array":"BAPI_USER_GET_DETAIL_ADDTTX_array", 
+        "ADDURI_array":"BAPI_USER_GET_DETAIL_ADDURI_array", 
+        "ADDX400_array":"BAPI_USER_GET_DETAIL_ADDX400_array", 
+        "EXTIDHEAD_array":"BAPI_USER_GET_DETAIL_EXTIDHEAD_array", 
+        "EXTIDPART_array":"BAPI_USER_GET_DETAIL_EXTIDPART_array", 
+        "GROUPS_array":"BAPI_USER_GET_DETAIL_GROUPS_array", 
+        "PARAMETER_array":"BAPI_USER_GET_DETAIL_PARAMETER_array", 
+        "PARAMETER1_array":"BAPI_USER_GET_DETAIL_PARAMETER_array", 
+        "PROFILES_array":"BAPI_USER_GET_DETAIL_PROFILES_array", 
+        "RETURN_array":"BAPI_USER_GET_DETAIL_RETURN_array", 
+        "SYSTEMS_array":"BAPI_USER_GET_DETAIL_SYSTEMS_array", 
+        "UCLASSSYS_array":"BAPI_USER_GET_DETAIL_UCLASSSYS_array"
+    )
+    FOLDER = '/sources/sap/sap ecc - bapi'
+    CACHE PARTIAL
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "BAPI_USER_GET_DETAIL"(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD "CACHE_RESULTS" (any) OPT ANY
+             ADD "USERNAME" (any) OBL ONE
+             ADD "ADDRESS"."PERS_NO" NOS ZERO ()
+             ADD "ADDRESS"."ADDR_NO" NOS ZERO ()
+             ADD "ADDRESS"."TITLE_P" NOS ZERO ()
+             ADD "ADDRESS"."FIRSTNAME" NOS ZERO ()
+             ADD "ADDRESS"."LASTNAME" NOS ZERO ()
+             ADD "ADDRESS"."BIRTH_NAME" NOS ZERO ()
+             ADD "ADDRESS"."MIDDLENAME" NOS ZERO ()
+             ADD "ADDRESS"."SECONDNAME" NOS ZERO ()
+             ADD "ADDRESS"."FULLNAME" NOS ZERO ()
+             ADD "ADDRESS"."FULLNAME_X" NOS ZERO ()
+             ADD "ADDRESS"."TITLE_ACA1" NOS ZERO ()
+             ADD "ADDRESS"."TITLE_ACA2" NOS ZERO ()
+             ADD "ADDRESS"."PREFIX1" NOS ZERO ()
+             ADD "ADDRESS"."PREFIX2" NOS ZERO ()
+             ADD "ADDRESS"."TITLE_SPPL" NOS ZERO ()
+             ADD "ADDRESS"."NICKNAME" NOS ZERO ()
+             ADD "ADDRESS"."INITIALS" NOS ZERO ()
+             ADD "ADDRESS"."NAMEFORMAT" NOS ZERO ()
+             ADD "ADDRESS"."NAMCOUNTRY" NOS ZERO ()
+             ADD "ADDRESS"."LANGU_P" NOS ZERO ()
+             ADD "ADDRESS"."LANGUP_ISO" NOS ZERO ()
+             ADD "ADDRESS"."SORT1_P" NOS ZERO ()
+             ADD "ADDRESS"."SORT2_P" NOS ZERO ()
+             ADD "ADDRESS"."DEPARTMENT" NOS ZERO ()
+             ADD "ADDRESS"."FUNCTION" NOS ZERO ()
+             ADD "ADDRESS"."BUILDING_P" NOS ZERO ()
+             ADD "ADDRESS"."FLOOR_P" NOS ZERO ()
+             ADD "ADDRESS"."ROOM_NO_P" NOS ZERO ()
+             ADD "ADDRESS"."INITS_SIG" NOS ZERO ()
+             ADD "ADDRESS"."INHOUSE_ML" NOS ZERO ()
+             ADD "ADDRESS"."COMM_TYPE" NOS ZERO ()
+             ADD "ADDRESS"."TITLE" NOS ZERO ()
+             ADD "ADDRESS"."NAME" NOS ZERO ()
+             ADD "ADDRESS"."NAME_2" NOS ZERO ()
+             ADD "ADDRESS"."NAME_3" NOS ZERO ()
+             ADD "ADDRESS"."NAME_4" NOS ZERO ()
+             ADD "ADDRESS"."C_O_NAME" NOS ZERO ()
+             ADD "ADDRESS"."CITY" NOS ZERO ()
+             ADD "ADDRESS"."DISTRICT" NOS ZERO ()
+             ADD "ADDRESS"."CITY_NO" NOS ZERO ()
+             ADD "ADDRESS"."DISTRCT_NO" NOS ZERO ()
+             ADD "ADDRESS"."CHCKSTATUS" NOS ZERO ()
+             ADD "ADDRESS"."POSTL_COD1" NOS ZERO ()
+             ADD "ADDRESS"."POSTL_COD2" NOS ZERO ()
+             ADD "ADDRESS"."POSTL_COD3" NOS ZERO ()
+             ADD "ADDRESS"."PO_BOX" NOS ZERO ()
+             ADD "ADDRESS"."PO_BOX_CIT" NOS ZERO ()
+             ADD "ADDRESS"."PBOXCIT_NO" NOS ZERO ()
+             ADD "ADDRESS"."DELIV_DIS" NOS ZERO ()
+             ADD "ADDRESS"."TRANSPZONE" NOS ZERO ()
+             ADD "ADDRESS"."STREET" NOS ZERO ()
+             ADD "ADDRESS"."STREET_NO" NOS ZERO ()
+             ADD "ADDRESS"."STR_ABBR" NOS ZERO ()
+             ADD "ADDRESS"."HOUSE_NO" NOS ZERO ()
+             ADD "ADDRESS"."HOUSE_NO2" NOS ZERO ()
+             ADD "ADDRESS"."STR_SUPPL1" NOS ZERO ()
+             ADD "ADDRESS"."STR_SUPPL2" NOS ZERO ()
+             ADD "ADDRESS"."STR_SUPPL3" NOS ZERO ()
+             ADD "ADDRESS"."LOCATION" NOS ZERO ()
+             ADD "ADDRESS"."BUILDING" NOS ZERO ()
+             ADD "ADDRESS"."FLOOR" NOS ZERO ()
+             ADD "ADDRESS"."ROOM_NO" NOS ZERO ()
+             ADD "ADDRESS"."COUNTRY" NOS ZERO ()
+             ADD "ADDRESS"."COUNTRYISO" NOS ZERO ()
+             ADD "ADDRESS"."LANGU" NOS ZERO ()
+             ADD "ADDRESS"."LANGU_ISO" NOS ZERO ()
+             ADD "ADDRESS"."REGION" NOS ZERO ()
+             ADD "ADDRESS"."SORT1" NOS ZERO ()
+             ADD "ADDRESS"."SORT2" NOS ZERO ()
+             ADD "ADDRESS"."TIME_ZONE" NOS ZERO ()
+             ADD "ADDRESS"."TAXJURCODE" NOS ZERO ()
+             ADD "ADDRESS"."ADR_NOTES" NOS ZERO ()
+             ADD "ADDRESS"."TEL1_NUMBR" NOS ZERO ()
+             ADD "ADDRESS"."TEL1_EXT" NOS ZERO ()
+             ADD "ADDRESS"."FAX_NUMBER" NOS ZERO ()
+             ADD "ADDRESS"."FAX_EXTENS" NOS ZERO ()
+             ADD "ADDRESS"."E_MAIL" NOS ZERO ()
+             ADD "ADDRESS"."BUILD_LONG" NOS ZERO ()
+             ADD "ADDRESS"."REGIOGROUP" NOS ZERO ()
+             ADD "ADDRESS"."HOME_CITY" NOS ZERO ()
+             ADD "ADDRESS"."HOMECITYNO" NOS ZERO ()
+             ADD "ADDRESS"."PCODE1_EXT" NOS ZERO ()
+             ADD "ADDRESS"."PCODE2_EXT" NOS ZERO ()
+             ADD "ADDRESS"."PCODE3_EXT" NOS ZERO ()
+             ADD "ADDRESS"."PO_W_O_NO" NOS ZERO ()
+             ADD "ADDRESS"."PO_BOX_REG" NOS ZERO ()
+             ADD "ADDRESS"."POBOX_CTRY" NOS ZERO ()
+             ADD "ADDRESS"."PO_CTRYISO" NOS ZERO ()
+             ADD "ADDRESS"."DONT_USE_S" NOS ZERO ()
+             ADD "ADDRESS"."DONT_USE_P" NOS ZERO ()
+             ADD "ADDRESS"."HOUSE_NO3" NOS ZERO ()
+             ADD "ADDRESS"."LANGU_CR_P" NOS ZERO ()
+             ADD "ADDRESS"."LANGUCPISO" NOS ZERO ()
+             ADD "ADDRESS"."PO_BOX_LOBBY" NOS ZERO ()
+             ADD "ADDRESS"."DELI_SERV_TYPE" NOS ZERO ()
+             ADD "ADDRESS"."DELI_SERV_NUMBER" NOS ZERO ()
+             ADD "ADDRESS"."COUNTY_CODE" NOS ZERO ()
+             ADD "ADDRESS"."COUNTY" NOS ZERO ()
+             ADD "ADDRESS"."TOWNSHIP_CODE" NOS ZERO ()
+             ADD "ADDRESS"."TOWNSHIP" NOS ZERO ()
+             ADD "ADMINDATA"."ANAME" NOS ZERO ()
+             ADD "ADMINDATA"."ERDAT" NOS ZERO ()
+             ADD "ADMINDATA"."TRDAT" NOS ZERO ()
+             ADD "ALIAS"."USERALIAS" NOS ZERO ()
+             ADD "COMPANY"."COMPANY" NOS ZERO ()
+             ADD "DEFAULTS"."STCOD" NOS ZERO ()
+             ADD "DEFAULTS"."SPLD" NOS ZERO ()
+             ADD "DEFAULTS"."SPLG" NOS ZERO ()
+             ADD "DEFAULTS"."SPDB" NOS ZERO ()
+             ADD "DEFAULTS"."SPDA" NOS ZERO ()
+             ADD "DEFAULTS"."DATFM" NOS ZERO ()
+             ADD "DEFAULTS"."DCPFM" NOS ZERO ()
+             ADD "DEFAULTS"."LANGU" NOS ZERO ()
+             ADD "DEFAULTS"."CATTKENNZ" NOS ZERO ()
+             ADD "DEFAULTS"."KOSTL" NOS ZERO ()
+             ADD "DEFAULTS"."START_MENU" NOS ZERO ()
+             ADD "DEFAULTS"."TIMEFM" NOS ZERO ()
+             ADD "IDENTITY"."IDENTITY_UUID" NOS ZERO ()
+             ADD "IDENTITY"."BPPERSON" NOS ZERO ()
+             ADD "ISLOCKED"."WRNG_LOGON" NOS ZERO ()
+             ADD "ISLOCKED"."LOCAL_LOCK" NOS ZERO ()
+             ADD "ISLOCKED"."GLOB_LOCK" NOS ZERO ()
+             ADD "ISLOCKED"."NO_USER_PW" NOS ZERO ()
+             ADD "LASTMODIFIED"."MODDATE" NOS ZERO ()
+             ADD "LASTMODIFIED"."MODTIME" NOS ZERO ()
+             ADD "LASTMODIFIED"."MODIFIER" NOS ZERO ()
+             ADD "LOGONDATA"."GLTGV" NOS ZERO ()
+             ADD "LOGONDATA"."GLTGB" NOS ZERO ()
+             ADD "LOGONDATA"."USTYP" NOS ZERO ()
+             ADD "LOGONDATA"."CLASS" NOS ZERO ()
+             ADD "LOGONDATA"."ACCNT" NOS ZERO ()
+             ADD "LOGONDATA"."TZONE" NOS ZERO ()
+             ADD "LOGONDATA"."LTIME" NOS ZERO ()
+             ADD "LOGONDATA"."BCODE" NOS ZERO ()
+             ADD "LOGONDATA"."CODVN" NOS ZERO ()
+             ADD "LOGONDATA"."PASSCODE" NOS ZERO ()
+             ADD "LOGONDATA"."CODVC" NOS ZERO ()
+             ADD "LOGONDATA"."PWDSALTEDHASH" NOS ZERO ()
+             ADD "LOGONDATA"."CODVS" NOS ZERO ()
+             ADD "LOGONDATA"."SECURITY_POLICY" NOS ZERO ()
+             ADD "REF_USER"."REF_USER" NOS ZERO ()
+             ADD "SNC"."GUIFLAG" NOS ZERO ()
+             ADD "SNC"."PNAME" NOS ZERO ()
+             ADD "UCLASS"."LIC_TYPE" NOS ZERO ()
+             ADD "UCLASS"."SPEC_VERS" NOS ZERO ()
+             ADD "UCLASS"."COUNTRY_SURCHARGE" NOS ZERO ()
+             ADD "UCLASS"."SUBSTITUTE_FROM" NOS ZERO ()
+             ADD "UCLASS"."SUBSTITUTE_UNTIL" NOS ZERO ()
+             ADD "UCLASS"."SYSID" NOS ZERO ()
+             ADD "UCLASS"."CLIENT" NOS ZERO ()
+             ADD "UCLASS"."BNAME_CHARGEABLE" NOS ZERO ()
+             ADD "ACTIVITYGROUPS_array"."AGR_NAME" (any) OPT ANY
+             ADD "ACTIVITYGROUPS_array"."FROM_DAT" (any) OPT ANY
+             ADD "ACTIVITYGROUPS_array"."TO_DAT" (any) OPT ANY
+             ADD "ACTIVITYGROUPS_array"."AGR_TEXT" (any) OPT ANY
+             ADD "ACTIVITYGROUPS_array"."ORG_FLAG" (any) OPT ANY
+             ADD "ADDCOMREM_array"."COMM_TYPE" (any) OPT ANY
+             ADD "ADDCOMREM_array"."LANGU" (any) OPT ANY
+             ADD "ADDCOMREM_array"."LANGU_ISO" (any) OPT ANY
+             ADD "ADDCOMREM_array"."COMM_NOTES" (any) OPT ANY
+             ADD "ADDCOMREM_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDCOMREM_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDFAX_array"."COUNTRY" (any) OPT ANY
+             ADD "ADDFAX_array"."COUNTRYISO" (any) OPT ANY
+             ADD "ADDFAX_array"."STD_NO" (any) OPT ANY
+             ADD "ADDFAX_array"."FAX" (any) OPT ANY
+             ADD "ADDFAX_array"."EXTENSION" (any) OPT ANY
+             ADD "ADDFAX_array"."FAX_NO" (any) OPT ANY
+             ADD "ADDFAX_array"."SENDER_NO" (any) OPT ANY
+             ADD "ADDFAX_array"."FAX_GROUP" (any) OPT ANY
+             ADD "ADDFAX_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDFAX_array"."R_3_USER" (any) OPT ANY
+             ADD "ADDFAX_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDFAX_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDFAX_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDFAX_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDFAX_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDFAX_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDPAG_array"."COUNTRY" (any) OPT ANY
+             ADD "ADDPAG_array"."COUNTRYISO" (any) OPT ANY
+             ADD "ADDPAG_array"."STD_NO" (any) OPT ANY
+             ADD "ADDPAG_array"."PAGER_TYPE" (any) OPT ANY
+             ADD "ADDPAG_array"."PAGER" (any) OPT ANY
+             ADD "ADDPAG_array"."PAGER_NO" (any) OPT ANY
+             ADD "ADDPAG_array"."CALLER_NO" (any) OPT ANY
+             ADD "ADDPAG_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDPAG_array"."R_3_USER" (any) OPT ANY
+             ADD "ADDPAG_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDPAG_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDPAG_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDPAG_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDPAG_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDPAG_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDPRT_array"."STD_NO" (any) OPT ANY
+             ADD "ADDPRT_array"."PRINT_DEST" (any) OPT ANY
+             ADD "ADDPRT_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDPRT_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDPRT_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDPRT_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDPRT_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDPRT_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDPRT_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDRFC_array"."STD_NO" (any) OPT ANY
+             ADD "ADDRFC_array"."LOG_DEST" (any) OPT ANY
+             ADD "ADDRFC_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDRFC_array"."R_3_USER" (any) OPT ANY
+             ADD "ADDRFC_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDRFC_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDRFC_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDRFC_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDRFC_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDRFC_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDRML_array"."STD_NO" (any) OPT ANY
+             ADD "ADDRML_array"."SYMB_DEST" (any) OPT ANY
+             ADD "ADDRML_array"."REC_TYPE" (any) OPT ANY
+             ADD "ADDRML_array"."R_MAIL_CLT" (any) OPT ANY
+             ADD "ADDRML_array"."R_MAIL" (any) OPT ANY
+             ADD "ADDRML_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDRML_array"."R_3_USER" (any) OPT ANY
+             ADD "ADDRML_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDRML_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDRML_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDRML_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDRML_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDRML_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDSMTP_array"."STD_NO" (any) OPT ANY
+             ADD "ADDSMTP_array"."E_MAIL" (any) OPT ANY
+             ADD "ADDSMTP_array"."EMAIL_SRCH" (any) OPT ANY
+             ADD "ADDSMTP_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDSMTP_array"."R_3_USER" (any) OPT ANY
+             ADD "ADDSMTP_array"."ENCODE" (any) OPT ANY
+             ADD "ADDSMTP_array"."TNEF" (any) OPT ANY
+             ADD "ADDSMTP_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDSMTP_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDSMTP_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDSMTP_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDSMTP_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDSMTP_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDSSF_array"."STD_NO" (any) OPT ANY
+             ADD "ADDSSF_array"."DUMMY" (any) OPT ANY
+             ADD "ADDSSF_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDSSF_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDSSF_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDSSF_array"."RFCDEST" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDSHORT" (any) OPT ANY
+             ADD "ADDSSF_array"."SSF_NS" (any) OPT ANY
+             ADD "ADDSSF_array"."SSF_PROF" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDPART1" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDPART2" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDPART3" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDPART4" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDPART5" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDPART6" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDPART7" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDPART8" (any) OPT ANY
+             ADD "ADDSSF_array"."SSFIDPART9" (any) OPT ANY
+             ADD "ADDSSF_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDSSF_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDSSF_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDSSF_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDTEL_array"."COUNTRY" (any) OPT ANY
+             ADD "ADDTEL_array"."COUNTRYISO" (any) OPT ANY
+             ADD "ADDTEL_array"."STD_NO" (any) OPT ANY
+             ADD "ADDTEL_array"."TELEPHONE" (any) OPT ANY
+             ADD "ADDTEL_array"."EXTENSION" (any) OPT ANY
+             ADD "ADDTEL_array"."TEL_NO" (any) OPT ANY
+             ADD "ADDTEL_array"."CALLER_NO" (any) OPT ANY
+             ADD "ADDTEL_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDTEL_array"."R_3_USER" (any) OPT ANY
+             ADD "ADDTEL_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDTEL_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDTEL_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDTEL_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDTEL_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDTEL_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDTLX_array"."COUNTRY" (any) OPT ANY
+             ADD "ADDTLX_array"."COUNTRYISO" (any) OPT ANY
+             ADD "ADDTLX_array"."STD_NO" (any) OPT ANY
+             ADD "ADDTLX_array"."TELEX_NO" (any) OPT ANY
+             ADD "ADDTLX_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDTLX_array"."R_3_USER" (any) OPT ANY
+             ADD "ADDTLX_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDTLX_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDTLX_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDTLX_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDTLX_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDTLX_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDTTX_array"."COUNTRY" (any) OPT ANY
+             ADD "ADDTTX_array"."COUNTRYISO" (any) OPT ANY
+             ADD "ADDTTX_array"."STD_NO" (any) OPT ANY
+             ADD "ADDTTX_array"."TELETEX" (any) OPT ANY
+             ADD "ADDTTX_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDTTX_array"."R_3_USER" (any) OPT ANY
+             ADD "ADDTTX_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDTTX_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDTTX_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDTTX_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDTTX_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDTTX_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDURI_array"."STD_NO" (any) OPT ANY
+             ADD "ADDURI_array"."URI_TYPE" (any) OPT ANY
+             ADD "ADDURI_array"."URI" (any) OPT ANY
+             ADD "ADDURI_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDURI_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDURI_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDURI_array"."URI_PART1" (any) OPT ANY
+             ADD "ADDURI_array"."URI_PART2" (any) OPT ANY
+             ADD "ADDURI_array"."URI_PART3" (any) OPT ANY
+             ADD "ADDURI_array"."URI_PART4" (any) OPT ANY
+             ADD "ADDURI_array"."URI_PART5" (any) OPT ANY
+             ADD "ADDURI_array"."URI_PART6" (any) OPT ANY
+             ADD "ADDURI_array"."URI_PART7" (any) OPT ANY
+             ADD "ADDURI_array"."URI_PART8" (any) OPT ANY
+             ADD "ADDURI_array"."URI_PART9" (any) OPT ANY
+             ADD "ADDURI_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDURI_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDURI_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDURI_array"."VALID_TO" (any) OPT ANY
+             ADD "ADDX400_array"."STD_NO" (any) OPT ANY
+             ADD "ADDX400_array"."COUNTRY" (any) OPT ANY
+             ADD "ADDX400_array"."COUNTRYISO" (any) OPT ANY
+             ADD "ADDX400_array"."ADM_DOM" (any) OPT ANY
+             ADD "ADDX400_array"."PRIV_DOM" (any) OPT ANY
+             ADD "ADDX400_array"."ORGANIZATN" (any) OPT ANY
+             ADD "ADDX400_array"."ORG_UNIT_1" (any) OPT ANY
+             ADD "ADDX400_array"."ORG_UNIT_2" (any) OPT ANY
+             ADD "ADDX400_array"."ORG_UNIT_3" (any) OPT ANY
+             ADD "ADDX400_array"."ORG_UNIT_4" (any) OPT ANY
+             ADD "ADDX400_array"."LASTNAME" (any) OPT ANY
+             ADD "ADDX400_array"."FIRSTNAME" (any) OPT ANY
+             ADD "ADDX400_array"."INITIALS" (any) OPT ANY
+             ADD "ADDX400_array"."GENERATION" (any) OPT ANY
+             ADD "ADDX400_array"."X_121_ADDR" (any) OPT ANY
+             ADD "ADDX400_array"."TERM_ID" (any) OPT ANY
+             ADD "ADDX400_array"."TERM_TYPE" (any) OPT ANY
+             ADD "ADDX400_array"."UANID" (any) OPT ANY
+             ADD "ADDX400_array"."DDA_TYPE1" (any) OPT ANY
+             ADD "ADDX400_array"."DDA_VALUE1" (any) OPT ANY
+             ADD "ADDX400_array"."DDA_TYPE2" (any) OPT ANY
+             ADD "ADDX400_array"."DDA_VALUE2" (any) OPT ANY
+             ADD "ADDX400_array"."DDA_TYPE3" (any) OPT ANY
+             ADD "ADDX400_array"."DDA_VALUE3" (any) OPT ANY
+             ADD "ADDX400_array"."DDA_TYPE4" (any) OPT ANY
+             ADD "ADDX400_array"."DDA_VALUE4" (any) OPT ANY
+             ADD "ADDX400_array"."STD_RECIP" (any) OPT ANY
+             ADD "ADDX400_array"."R_3_USER" (any) OPT ANY
+             ADD "ADDX400_array"."TXT_ENCODE" (any) OPT ANY
+             ADD "ADDX400_array"."TNEF" (any) OPT ANY
+             ADD "ADDX400_array"."HOME_FLAG" (any) OPT ANY
+             ADD "ADDX400_array"."CONSNUMBER" (any) OPT ANY
+             ADD "ADDX400_array"."ERRORFLAG" (any) OPT ANY
+             ADD "ADDX400_array"."FLG_NOUSE" (any) OPT ANY
+             ADD "ADDX400_array"."VALID_FROM" (any) OPT ANY
+             ADD "ADDX400_array"."VALID_TO" (any) OPT ANY
+             ADD "EXTIDHEAD_array"."SEQ_NO_ID" (any) OPT ANY
+             ADD "EXTIDHEAD_array"."TYPE" (any) OPT ANY
+             ADD "EXTIDHEAD_array"."CODE_TYPE" (any) OPT ANY
+             ADD "EXTIDHEAD_array"."EXTID_LEN" (any) OPT ANY
+             ADD "EXTIDHEAD_array"."ISSUER_LEN" (any) OPT ANY
+             ADD "EXTIDHEAD_array"."SERIAL_LEN" (any) OPT ANY
+             ADD "EXTIDHEAD_array"."VALITYINFO" NOS ZERO ()
+             ADD "EXTIDHEAD_array"."VERSION" (any) OPT ANY
+             ADD "EXTIDHEAD_array"."STATUS" (any) OPT ANY
+             ADD "EXTIDHEAD_array"."EXTFLAG" (any) OPT ANY
+             ADD "EXTIDPART_array"."SEQ_NO_ID" (any) OPT ANY
+             ADD "EXTIDPART_array"."FIELDNAME" (any) OPT ANY
+             ADD "EXTIDPART_array"."SEQ_NO_PART" (any) OPT ANY
+             ADD "EXTIDPART_array"."PART_DATA" (any) OPT ANY
+             ADD "EXTIDPART_array"."EXTFLAG" (any) OPT ANY
+             ADD "GROUPS_array"."USERGROUP" (any) OPT ANY
+             ADD "PARAMETER_array"."PARID" (any) OPT ANY
+             ADD "PARAMETER_array"."PARVA" (any) OPT ANY
+             ADD "PARAMETER_array"."PARTXT" (any) OPT ANY
+             ADD "PARAMETER1_array"."PARID" (any) OPT ANY
+             ADD "PARAMETER1_array"."PARVA" (any) OPT ANY
+             ADD "PARAMETER1_array"."PARTXT" (any) OPT ANY
+             ADD "PROFILES_array"."BAPIPROF" (any) OPT ANY
+             ADD "PROFILES_array"."BAPIPTEXT" (any) OPT ANY
+             ADD "PROFILES_array"."BAPITYPE" (any) OPT ANY
+             ADD "PROFILES_array"."BAPIAKTPS" (any) OPT ANY
+             ADD "RETURN_array"."TYPE" (any) OPT ANY
+             ADD "RETURN_array"."ID" (any) OPT ANY
+             ADD "RETURN_array"."NUMBER" (any) OPT ANY
+             ADD "RETURN_array"."MESSAGE" (any) OPT ANY
+             ADD "RETURN_array"."LOG_NO" (any) OPT ANY
+             ADD "RETURN_array"."LOG_MSG_NO" (any) OPT ANY
+             ADD "RETURN_array"."MESSAGE_V1" (any) OPT ANY
+             ADD "RETURN_array"."MESSAGE_V2" (any) OPT ANY
+             ADD "RETURN_array"."MESSAGE_V3" (any) OPT ANY
+             ADD "RETURN_array"."MESSAGE_V4" (any) OPT ANY
+             ADD "RETURN_array"."PARAMETER" (any) OPT ANY
+             ADD "RETURN_array"."ROW" (any) OPT ANY
+             ADD "RETURN_array"."FIELD" (any) OPT ANY
+             ADD "RETURN_array"."SYSTEM" (any) OPT ANY
+             ADD "SYSTEMS_array"."SUBSYSTEM" (any) OPT ANY
+             ADD "UCLASSSYS_array"."RCVSYSTEM" (any) OPT ANY
+             ADD "UCLASSSYS_array"."LIC_TYPE" (any) OPT ANY
+             ADD "UCLASSSYS_array"."SPEC_VERS" (any) OPT ANY
+             ADD "UCLASSSYS_array"."COUNTRY_SURCHARGE" (any) OPT ANY
+             ADD "UCLASSSYS_array"."SUBSTITUTE_FROM" (any) OPT ANY
+             ADD "UCLASSSYS_array"."SUBSTITUTE_UNTIL" (any) OPT ANY
+             ADD "UCLASSSYS_array"."SYSID" (any) OPT ANY
+             ADD "UCLASSSYS_array"."CLIENT" (any) OPT ANY
+             ADD "UCLASSSYS_array"."BNAME_CHARGEABLE" (any) OPT ANY
+        )
+        OUTPUTLIST ("ACTIVITYGROUPS_array", "ADDCOMREM_array", "ADDFAX_array", "ADDPAG_array", "ADDPRT_array", "ADDRESS", "ADDRFC_array", "ADDRML_array", "ADDSMTP_array", "ADDSSF_array", "ADDTEL_array", "ADDTLX_array", "ADDTTX_array", "ADDURI_array", "ADDX400_array", "ADMINDATA", "ALIAS", "CACHE_RESULTS", "COMPANY", "DEFAULTS", "EXTIDHEAD_array", "EXTIDPART_array", "GROUPS_array", "IDENTITY", "ISLOCKED", "LASTMODIFIED", "LOGONDATA", "PARAMETER1_array", "PARAMETER_array", "PROFILES_array", "REF_USER", "RETURN_array", "SNC", "SYSTEMS_array", "UCLASS", "UCLASSSYS_array", "USERNAME"
+        )
+        WRAPPER (saperp "BAPI_USER_GET_DETAIL")
+    );
+

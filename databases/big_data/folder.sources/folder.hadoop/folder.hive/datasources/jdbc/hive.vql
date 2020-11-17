@@ -1,0 +1,35 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC hive
+    FOLDER = '/sources/hadoop/hive'
+    DRIVERCLASSNAME = 'com.cloudera.hive.jdbc41.HS2Driver'
+    DATABASEURI = '${databases.big_data.folder.sources.folder.hadoop.folder.hive.datasources.jdbc.hive.DATABASEURI}'
+    USERNAME = '${databases.big_data.folder.sources.folder.hadoop.folder.hive.datasources.jdbc.hive.USERNAME}'
+    USERPASSWORD = '${databases.big_data.folder.sources.folder.hadoop.folder.hive.datasources.jdbc.hive.USERPASSWORD}' ${databases.big_data.folder.sources.folder.hadoop.folder.hive.datasources.jdbc.hive.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'hive-1.1.0-cloudera'
+    DATABASENAME = 'hive'
+    DATABASEVERSION = '1_1_0'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'select * from tpcds.date_dim limit 0'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 200
+    )
+    PROCESSING_UNITS = 8
+    CPUS_PER_PROCESSING_UNIT = 8
+    DESCRIPTION  = '''hive-1.1.0-cloudera''
+com.cloudera.hive.jdbc41.HS2Driver
+jdbc:hive2://quickstart:10000/tpcds';
+

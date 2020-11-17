@@ -1,0 +1,5 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+UNDEPLOY IF EXISTS WEBSERVICE customer_sales_api;
+
+DEPLOY WEBSERVICE customer_sales_api LOGIN = '${databases.big_data.webcontainer.webservices.customer_sales_api.LOGIN}' PASSWORD = '${databases.big_data.webcontainer.webservices.customer_sales_api.PASSWORD}' ${databases.big_data.webcontainer.webservices.customer_sales_api.PASSWORD.ENCRYPTED};
+

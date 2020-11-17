@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW inventory_summary_mpp_integration FOLDER = '/examples/optimizer examles/mpp integration' DESCRIPTION = 'Another example of the combination of data movement to an MPP for query acceleration. In this case, multiple tables are moved to Hadoop in parallel.'  AS SELECT oracle_item.i_item_desc AS i_item_desc, oracle_item.i_brand AS i_brand, sum(impala_inventory.inv_quantity_on_hand) AS total, oracle_date_dim.d_year AS d_year FROM (impala_inventory AS impala_inventory INNER JOIN oracle_item AS oracle_item ON impala_inventory.inv_item_sk = oracle_item.i_item_sk ) INNER JOIN oracle_date_dim AS oracle_date_dim ON impala_inventory.inv_date_sk = oracle_date_dim.d_date_sk  GROUP BY oracle_item.i_item_desc, oracle_item.i_brand, oracle_date_dim.d_year;
+
+ALTER VIEW inventory_summary_mpp_integration
+ LAYOUT (impala_inventory = [50, 100, 200, 106], oracle_item = [640, 50, 200, 225], oracle_date_dim = [390, 260, 200, 225]);
+

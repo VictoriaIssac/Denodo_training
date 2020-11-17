@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION "oracle_date_dim_oracle_web_page_WP_ACCESS_DATE_SK" REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT "oracle_web_page_WP_ACCESS_DATE_SK" oracle_date_dim PRINCIPAL (0,1)
+    ENDPOINT "oracle_date_dim_WP_ACCESS_DATE_SK" oracle_web_page (0,*)
+    ADD MAPPING d_date_sk=wp_access_date_sk;
+

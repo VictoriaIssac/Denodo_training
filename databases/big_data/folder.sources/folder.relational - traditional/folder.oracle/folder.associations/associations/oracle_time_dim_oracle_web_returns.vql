@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_time_dim_oracle_web_returns REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_web_returns oracle_time_dim PRINCIPAL (0,1)
+    ENDPOINT oracle_time_dim oracle_web_returns (0,*)
+    ADD MAPPING t_time_sk=wr_returned_time_sk;
+

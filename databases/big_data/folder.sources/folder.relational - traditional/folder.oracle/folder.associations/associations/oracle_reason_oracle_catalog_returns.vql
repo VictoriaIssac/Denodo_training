@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_reason_oracle_catalog_returns REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_catalog_returns oracle_reason PRINCIPAL (0,1)
+    ENDPOINT oracle_reason oracle_catalog_returns (0,*)
+    ADD MAPPING r_reason_sk=cr_reason_sk;
+

@@ -1,0 +1,125 @@
+﻿CREATE OR REPLACE WRAPPER JSON google_analytics
+    FOLDER = '/sources/saas/google/google analytics'
+    DATASOURCENAME=google_analytics
+    TUPLEROOT '/JSONFile'
+    OUTPUTSCHEMA ("JSONFile" = 'JSONFile' : REGISTER OF (
+        kind = 'kind' : 'java.lang.String',
+        id = 'id' : 'java.lang.String',
+        query = 'query' : REGISTER OF (
+            "start-date" = 'start-date' : 'java.lang.String',
+            "end-date" = 'end-date' : 'java.lang.String',
+            ids = 'ids' : 'java.lang.String',
+            metrics = 'metrics' : ARRAY OF (
+                metrics = 'metrics' : REGISTER OF (
+                    field_0 = 'field_0' : 'java.lang.String'
+                )
+            ),
+            "start-index" = 'start-index' : 'java.lang.Integer',
+            "max-results" = 'max-results' : 'java.lang.Integer'
+        ),
+        "itemsPerPage" = 'itemsPerPage' : 'java.lang.Integer',
+        "totalResults" = 'totalResults' : 'java.lang.Integer',
+        "selfLink" = 'selfLink' : 'java.lang.String',
+        "profileInfo" = 'profileInfo' : REGISTER OF (
+            "profileId" = 'profileId' : 'java.lang.String',
+            "accountId" = 'accountId' : 'java.lang.String',
+            "webPropertyId" = 'webPropertyId' : 'java.lang.String',
+            "internalWebPropertyId" = 'internalWebPropertyId' : 'java.lang.String',
+            "profileName" = 'profileName' : 'java.lang.String',
+            "tableId" = 'tableId' : 'java.lang.String'
+        ),
+        "containsSampledData" = 'containsSampledData' : 'java.lang.String',
+        "columnHeaders" = 'columnHeaders' : ARRAY OF (
+            "columnHeaders" = 'columnHeaders' : REGISTER OF (
+                name = 'name' : 'java.lang.String',
+                "columnType" = 'columnType' : 'java.lang.String',
+                "dataType" = 'dataType' : 'java.lang.String'
+            )
+        ),
+        "totalsForAllResults" = 'totalsForAllResults' : REGISTER OF (
+            "ga:sessions" = 'ga:sessions' : 'java.lang.String',
+            "ga:pageviews" = 'ga:pageviews' : 'java.lang.String'
+        ),
+        rows = 'rows' : ARRAY OF (
+            rows = 'rows' : REGISTER OF (
+                rows = 'rows' : ARRAY OF (
+                    rows = 'rows' : REGISTER OF (
+                        field_0 = 'field_0' : 'java.lang.String'
+                    )
+                )
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE google_analytics_query_metrics_metrics AS REGISTER OF (field_0:text);
+
+CREATE OR REPLACE TYPE google_analytics_query_metrics AS ARRAY OF google_analytics_query_metrics_metrics;
+
+CREATE OR REPLACE TYPE google_analytics_query AS REGISTER OF ("start-date":text, "end-date":text, ids:text, metrics:google_analytics_query_metrics, "start-index":int, "max-results":int);
+
+CREATE OR REPLACE TYPE "google_analytics_profileInfo" AS REGISTER OF ("profileId":text, "accountId":text, "webPropertyId":text, "internalWebPropertyId":text, "profileName":text, "tableId":text);
+
+CREATE OR REPLACE TYPE "google_analytics_columnHeaders_columnHeaders" AS REGISTER OF (name:text, "columnType":text, "dataType":text);
+
+CREATE OR REPLACE TYPE "google_analytics_columnHeaders" AS ARRAY OF "google_analytics_columnHeaders_columnHeaders";
+
+CREATE OR REPLACE TYPE "google_analytics_totalsForAllResults" AS REGISTER OF ("ga:sessions":text, "ga:pageviews":text);
+
+CREATE OR REPLACE TYPE google_analytics_rows_rows_rows_rows AS REGISTER OF (field_0:text);
+
+CREATE OR REPLACE TYPE google_analytics_rows_rows_rows AS ARRAY OF google_analytics_rows_rows_rows_rows;
+
+CREATE OR REPLACE TYPE google_analytics_rows_rows AS REGISTER OF (rows:google_analytics_rows_rows_rows);
+
+CREATE OR REPLACE TYPE google_analytics_rows AS ARRAY OF google_analytics_rows_rows;
+
+CREATE OR REPLACE TABLE google_analytics I18N us_pst (
+        kind:text, 
+        id:text, 
+        query:google_analytics_query, 
+        "itemsPerPage":int, 
+        "totalResults":int, 
+        "selfLink":text, 
+        "profileInfo":"google_analytics_profileInfo", 
+        "containsSampledData":text, 
+        "columnHeaders":"google_analytics_columnHeaders", 
+        "totalsForAllResults":"google_analytics_totalsForAllResults", 
+        rows:google_analytics_rows
+    )
+    FOLDER = '/sources/saas/google/google analytics'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD google_analytics(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD kind NOS ZERO ()
+             ADD id NOS ZERO ()
+             ADD query."start-date" NOS ZERO ()
+             ADD query."end-date" NOS ZERO ()
+             ADD query.ids NOS ZERO ()
+             ADD query.metrics.field_0 NOS ZERO ()
+             ADD query."start-index" NOS ZERO ()
+             ADD query."max-results" NOS ZERO ()
+             ADD "itemsPerPage" NOS ZERO ()
+             ADD "totalResults" NOS ZERO ()
+             ADD "selfLink" NOS ZERO ()
+             ADD "profileInfo"."profileId" NOS ZERO ()
+             ADD "profileInfo"."accountId" NOS ZERO ()
+             ADD "profileInfo"."webPropertyId" NOS ZERO ()
+             ADD "profileInfo"."internalWebPropertyId" NOS ZERO ()
+             ADD "profileInfo"."profileName" NOS ZERO ()
+             ADD "profileInfo"."tableId" NOS ZERO ()
+             ADD "containsSampledData" NOS ZERO ()
+             ADD "columnHeaders".name NOS ZERO ()
+             ADD "columnHeaders"."columnType" NOS ZERO ()
+             ADD "columnHeaders"."dataType" NOS ZERO ()
+             ADD "totalsForAllResults"."ga:sessions" NOS ZERO ()
+             ADD "totalsForAllResults"."ga:pageviews" NOS ZERO ()
+             ADD rows.rows.field_0 NOS ZERO ()
+        )
+        OUTPUTLIST ("columnHeaders", "containsSampledData", id, "itemsPerPage", kind, "profileInfo", query, rows, "selfLink", "totalResults", "totalsForAllResults"
+        )
+        WRAPPER (json google_analytics)
+    );
+

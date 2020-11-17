@@ -1,0 +1,101 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC request_notification
+    FOLDER = '/sources/hadoop/impala'
+    DATASOURCENAME=impala
+    SCHEMANAME='${databases.big_data.folder.sources.folder.hadoop.folder.impala.views.jdbc.request_notification.SCHEMANAME}' ESCAPE
+    RELATIONNAME='request_notification' 
+    OUTPUTSCHEMA (
+        autoincrementid = 'autoincrementid' :'java.lang.Byte' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='3', description='', sourcetypeid='-6', sourcetypename='TINYINT')  SORTABLE,
+        servername = 'servername' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        host = 'host' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        port = 'port' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='10', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        id = 'id' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        databasename = 'databasename' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        username = 'username' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        notificationtype = 'notificationtype' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='30', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        sessionid = 'sessionid' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        starttime = 'starttime' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='0', sourcetypesize='29', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        endtime = 'endtime' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='9', sourcetyperadix='0', sourcetypesize='29', description='', sourcetypeid='93', sourcetypename='TIMESTAMP')  SORTABLE,
+        duration = 'duration' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        waitingtime = 'waitingtime' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        numrows = 'numrows' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  SORTABLE,
+        state = 'state' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='30', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        completed = 'completed' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  SORTABLE,
+        cache = 'cache' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  SORTABLE,
+        query = 'query' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='4000', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        requesttype = 'requesttype' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='50', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        elements = 'elements' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='4000', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        truncateddata = 'truncateddata' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='4', sourcetypename='INT')  SORTABLE,
+        useragent = 'useragent' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        accessinterface = 'accessinterface' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        clientip = 'clientip' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='50', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        transactionid = 'transactionid' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', description='', sourcetypeid='-5', sourcetypename='BIGINT')  SORTABLE,
+        webservicename = 'webservicename' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='200', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE request_notification I18N au_cst (
+        autoincrementid:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '3', description = '', sourcetypeid = '-6'), 
+        servername:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        host:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        port:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '10', description = '', sourcetypeid = '12'), 
+        id:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        databasename:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        username:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        notificationtype:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '30', description = '', sourcetypeid = '12'), 
+        sessionid:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        starttime:timestamp (sourcetypedecimals = '9', sourcetyperadix = '0', sourcetypesize = '29', description = '', sourcetypeid = '93'), 
+        endtime:timestamp (sourcetypedecimals = '9', sourcetyperadix = '0', sourcetypesize = '29', description = '', sourcetypeid = '93'), 
+        duration:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        waitingtime:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        numrows:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '4'), 
+        state:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '30', description = '', sourcetypeid = '12'), 
+        completed:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '4'), 
+        cache:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '4'), 
+        query:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '4000', description = '', sourcetypeid = '12'), 
+        requesttype:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '50', description = '', sourcetypeid = '12'), 
+        elements:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '4000', description = '', sourcetypeid = '12'), 
+        truncateddata:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '4'), 
+        useragent:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        accessinterface:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        clientip:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '50', description = '', sourcetypeid = '12'), 
+        transactionid:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', description = '', sourcetypeid = '-5'), 
+        webservicename:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '200', description = '', sourcetypeid = '12')
+    )
+    FOLDER = '/sources/hadoop/impala'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD request_notification(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD autoincrementid (any) OPT ANY
+             ADD servername (any) OPT ANY
+             ADD host (any) OPT ANY
+             ADD port (any) OPT ANY
+             ADD id (any) OPT ANY
+             ADD databasename (any) OPT ANY
+             ADD username (any) OPT ANY
+             ADD notificationtype (any) OPT ANY
+             ADD sessionid (any) OPT ANY
+             ADD starttime (any) OPT ANY
+             ADD endtime (any) OPT ANY
+             ADD duration (any) OPT ANY
+             ADD waitingtime (any) OPT ANY
+             ADD numrows (any) OPT ANY
+             ADD state (any) OPT ANY
+             ADD completed (any) OPT ANY
+             ADD cache (any) OPT ANY
+             ADD query (any) OPT ANY
+             ADD requesttype (any) OPT ANY
+             ADD elements (any) OPT ANY
+             ADD truncateddata (any) OPT ANY
+             ADD useragent (any) OPT ANY
+             ADD accessinterface (any) OPT ANY
+             ADD clientip (any) OPT ANY
+             ADD transactionid (any) OPT ANY
+             ADD webservicename (any) OPT ANY
+        )
+        OUTPUTLIST (accessinterface, autoincrementid, cache, clientip, completed, databasename, duration, elements, endtime, host, id, notificationtype, numrows, port, query, requesttype, servername, sessionid, starttime, state, transactionid, truncateddata, useragent, username, waitingtime, webservicename
+        )
+        WRAPPER (jdbc request_notification)
+    );
+

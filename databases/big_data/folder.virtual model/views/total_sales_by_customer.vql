@@ -1,0 +1,12 @@
+﻿CREATE OR REPLACE VIEW total_sales_by_customer FOLDER = '/virtual model' DESCRIPTION = 'This data provides some metrics into the revenue collected from each individual customer'  (
+    customer_first_name (description = 'Customer first name'),
+    customer_last_name (description = 'Customer last name'),
+    customer_country (description = 'Country wehre the customer was born'),
+    total_paid (description = 'Total amount paid by the customer, excluding taxes. This data is a sum of the net paid value in the EDW'),
+    total_profit (description = 'Total profit customer, excluding taxes. This data is a sum of the profit value in the EDW')
+)
+ AS SELECT oracle_customer.c_first_name AS customer_first_name, oracle_customer.c_last_name AS customer_last_name, oracle_customer.c_birth_country AS customer_country, sum(impala_store_sales.ss_net_paid) AS total_paid, sum(impala_store_sales.ss_net_profit) AS total_profit FROM oracle_customer AS oracle_customer INNER JOIN impala_store_sales AS impala_store_sales ON oracle_customer.c_customer_sk = impala_store_sales.ss_customer_sk  GROUP BY oracle_customer.c_first_name, oracle_customer.c_last_name, oracle_customer.c_birth_country;
+
+ALTER VIEW total_sales_by_customer
+ LAYOUT (oracle_customer = [410, 110, 200, 225], impala_store_sales = [40, 90, 200, 225]);
+

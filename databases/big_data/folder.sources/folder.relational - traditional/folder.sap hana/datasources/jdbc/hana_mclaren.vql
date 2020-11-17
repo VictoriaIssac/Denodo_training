@@ -1,0 +1,33 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC hana_mclaren
+    FOLDER = '/sources/relational - traditional/sap hana'
+    DRIVERCLASSNAME = 'com.sap.db.jdbc.Driver'
+    DATABASEURI = '${databases.big_data.folder.sources.folder.relational - traditional.folder.sap hana.datasources.jdbc.hana_mclaren.DATABASEURI}'
+    USERNAME = '${databases.big_data.folder.sources.folder.relational - traditional.folder.sap hana.datasources.jdbc.hana_mclaren.USERNAME}'
+    USERPASSWORD = '${databases.big_data.folder.sources.folder.relational - traditional.folder.sap hana.datasources.jdbc.hana_mclaren.USERPASSWORD}' ${databases.big_data.folder.sources.folder.relational - traditional.folder.sap hana.datasources.jdbc.hana_mclaren.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'hana'
+    DATABASENAME = 'hdb'
+    DATABASEVERSION = '1'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'select 1 from dummy'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 200
+    )
+    SOURCECONFIGURATION (
+        delegatescalarfunctionslist = (abs, acos, addday, addhour, addminute, addmonth, addsecond, addweek, addyear, ascii, asin, atan, atan2, case, cast, ceil, coalesce, concat, cos, cot, current_date, degrees, div, exp, firstdayofmonth, firstdayofweek, floor, formatdate, getday, getdayofweek, getdayofyear, getdaysbetween, gethour, getmicrosecond, getmillisecond, getminute, getmonth, getmonthsbetween, getnanosecond, getsecond, getyear, instr, lastdayofmonth, lastdayofweek, len, ln, log, lower, ltrim, max, min, mod, mult, nextweekday, now, nullif, position, pow, power, previousweekday, radians, rand, removeaccents, repeat, replace, round, rtrim, sign, sin, sqrt, substr, substring, subtract, sum, tan, textcat, textconstant, to_date, to_localdate, to_time, to_timestamp, trim, trunc, upper)
+    );
+

@@ -1,0 +1,8 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE ESSBASE essbase11
+    FOLDER = '/sources/cubes/essbase'
+    DATABASEVERSION='11'
+    URI='${databases.big_data.folder.sources.folder.cubes.folder.essbase.datasources.essbase.essbase11.URI}'
+    USERNAME='${databases.big_data.folder.sources.folder.cubes.folder.essbase.datasources.essbase.essbase11.USERNAME}'
+    USERPASSWORD='${databases.big_data.folder.sources.folder.cubes.folder.essbase.datasources.essbase.essbase11.USERPASSWORD}' ${databases.big_data.folder.sources.folder.cubes.folder.essbase.datasources.essbase.essbase11.USERPASSWORD.ENCRYPTED};
+

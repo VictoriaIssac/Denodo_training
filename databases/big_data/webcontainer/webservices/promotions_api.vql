@@ -1,0 +1,4 @@
+﻿UNDEPLOY IF EXISTS WEBSERVICE promotions_api;
+
+DEPLOY WEBSERVICE promotions_api;
+

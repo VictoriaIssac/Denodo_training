@@ -1,0 +1,85 @@
+﻿CREATE OR REPLACE WRAPPER JSON neo4j_actors
+    FOLDER = '/sources/nosql/neo4j/rest api'
+    DATASOURCENAME=neo4j
+    TUPLEROOT '/JSONFile'
+    OUTPUTSCHEMA ("JSONFile" = 'JSONFile' : REGISTER OF (
+        "STATEMENT" = 'STATEMENT' : 'java.lang.String' (OBL) (DEFAULTVALUE='MATCH (people:Person) RETURN people') EXTERN,
+        commit = 'commit' : 'java.lang.String',
+        results = 'results' : ARRAY OF (
+            results = 'results' : REGISTER OF (
+                columns = 'columns' : ARRAY OF (
+                    columns = 'columns' : REGISTER OF (
+                        field_0 = 'field_0' : 'java.lang.String'
+                    )
+                ),
+                data = 'data' : ARRAY OF (
+                    data = 'data' : REGISTER OF (
+                        "row" = 'row' : ARRAY OF (
+                            "row" = 'row' : REGISTER OF (
+                                born = 'born' : 'java.lang.Integer',
+                                name = 'name' : 'java.lang.String'
+                            )
+                        )
+                    )
+                )
+            )
+        ),
+        transaction = 'transaction' : REGISTER OF (
+            expires = 'expires' : 'java.lang.String'
+        ),
+        errors = 'errors' : ARRAY OF (
+            errors = 'errors' : REGISTER OF (
+                field_0 = 'field_0' : 'java.lang.String'
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE neo4j_results_results_columns_columns AS REGISTER OF (field_0:text);
+
+CREATE OR REPLACE TYPE neo4j_results_results_columns AS ARRAY OF neo4j_results_results_columns_columns;
+
+CREATE OR REPLACE TYPE neo4j_results_results_data_data_row_row AS REGISTER OF (born:int, name:text);
+
+CREATE OR REPLACE TYPE neo4j_results_results_data_data_row AS ARRAY OF neo4j_results_results_data_data_row_row;
+
+CREATE OR REPLACE TYPE neo4j_results_results_data_data AS REGISTER OF ("row":neo4j_results_results_data_data_row);
+
+CREATE OR REPLACE TYPE neo4j_results_results_data AS ARRAY OF neo4j_results_results_data_data;
+
+CREATE OR REPLACE TYPE neo4j_results_results AS REGISTER OF (columns:neo4j_results_results_columns, data:neo4j_results_results_data);
+
+CREATE OR REPLACE TYPE neo4j_results AS ARRAY OF neo4j_results_results;
+
+CREATE OR REPLACE TYPE neo4j_transaction AS REGISTER OF (expires:text);
+
+CREATE OR REPLACE TYPE neo4j_errors_errors AS REGISTER OF (field_0:text);
+
+CREATE OR REPLACE TYPE neo4j_errors AS ARRAY OF neo4j_errors_errors;
+
+CREATE OR REPLACE TABLE neo4j_person I18N us_pst (
+        "STATEMENT":text (defaultvalue = 'MATCH (people:Person) RETURN people'), 
+        commit:text, 
+        results:neo4j_results, 
+        transaction:neo4j_transaction, 
+        errors:neo4j_errors
+    )
+    FOLDER = '/sources/nosql/neo4j/rest api'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD neo4j_actors(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD "STATEMENT" (any) OBL ONE
+             ADD commit NOS ZERO ()
+             ADD results.columns.field_0 NOS ZERO ()
+             ADD results.data."row".born NOS ZERO ()
+             ADD results.data."row".name NOS ZERO ()
+             ADD transaction.expires NOS ZERO ()
+             ADD errors.field_0 NOS ZERO ()
+        )
+        OUTPUTLIST (commit, errors, results, transaction
+        )
+        WRAPPER (json neo4j_actors)
+    );
+

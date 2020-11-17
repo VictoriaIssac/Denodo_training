@@ -1,0 +1,35 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC hive_inventory
+    FOLDER = '/sources/hadoop/hive'
+    DATASOURCENAME=hive
+    SCHEMANAME='${databases.big_data.folder.sources.folder.hadoop.folder.hive.views.jdbc.hive_inventory.SCHEMANAME}' 
+    RELATIONNAME='inventory' 
+    OUTPUTSCHEMA (
+        inv_date_sk = 'inv_date_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        inv_item_sk = 'inv_item_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        inv_warehouse_sk = 'inv_warehouse_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        inv_quantity_on_hand = 'inv_quantity_on_hand' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE hive_inventory I18N us_pst (
+        inv_date_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        inv_item_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        inv_warehouse_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        inv_quantity_on_hand:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5')
+    )
+    FOLDER = '/sources/hadoop/hive'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD hive_inventory(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD inv_date_sk (any) OPT ANY
+             ADD inv_item_sk (any) OPT ANY
+             ADD inv_warehouse_sk (any) OPT ANY
+             ADD inv_quantity_on_hand (any) OPT ANY
+        )
+        OUTPUTLIST (inv_date_sk, inv_item_sk, inv_quantity_on_hand, inv_warehouse_sk
+        )
+        WRAPPER (jdbc hive_inventory)
+    );
+

@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_date_dim_oracle_catalog_returns REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_catalog_returns oracle_date_dim PRINCIPAL (0,1)
+    ENDPOINT oracle_date_dim oracle_catalog_returns (0,*)
+    ADD MAPPING d_date_sk=cr_returned_date_sk;
+

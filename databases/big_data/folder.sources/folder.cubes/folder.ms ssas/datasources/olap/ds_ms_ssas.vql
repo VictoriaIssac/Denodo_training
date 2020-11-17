@@ -1,0 +1,11 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE OLAP ds_ms_ssas
+    FOLDER = '/sources/cubes/ms ssas'
+    DATABASENAME = 'SSAS'
+    DATABASEVERSION = '200x'
+    XMLAURI = '${databases.big_data.folder.sources.folder.cubes.folder.ms ssas.datasources.olap.ds_ms_ssas.XMLAURI}'
+    USERNAME = '${databases.big_data.folder.sources.folder.cubes.folder.ms ssas.datasources.olap.ds_ms_ssas.USERNAME}'
+    USERPASSWORD = '${databases.big_data.folder.sources.folder.cubes.folder.ms ssas.datasources.olap.ds_ms_ssas.USERPASSWORD}' ${databases.big_data.folder.sources.folder.cubes.folder.ms ssas.datasources.olap.ds_ms_ssas.USERPASSWORD.ENCRYPTED}
+    INITIALSIZE = 2
+    MAXACTIVE = 20;
+

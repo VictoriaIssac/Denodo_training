@@ -1,0 +1,15 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE SAPERP demo_sap_erp_ds1
+    FOLDER = '/sources/sap/sap ecc - bapi'
+    SYSTEMNAME = '${databases.big_data.folder.sources.folder.sap.folder.sap ecc - bapi.datasources.saperp.demo_sap_erp_ds1.SYSTEMNAME}'
+    HOSTNAME = '${databases.big_data.folder.sources.folder.sap.folder.sap ecc - bapi.datasources.saperp.demo_sap_erp_ds1.HOSTNAME}'
+    CLIENTID = '${databases.big_data.folder.sources.folder.sap.folder.sap ecc - bapi.datasources.saperp.demo_sap_erp_ds1.CLIENTID}'
+    SYSTEMNUMBER = '${databases.big_data.folder.sources.folder.sap.folder.sap ecc - bapi.datasources.saperp.demo_sap_erp_ds1.SYSTEMNUMBER}'
+    USERNAME = '${databases.big_data.folder.sources.folder.sap.folder.sap ecc - bapi.datasources.saperp.demo_sap_erp_ds1.USERNAME}'
+    USERPASSWORD = '${databases.big_data.folder.sources.folder.sap.folder.sap ecc - bapi.datasources.saperp.demo_sap_erp_ds1.USERPASSWORD}' ${databases.big_data.folder.sources.folder.sap.folder.sap ecc - bapi.datasources.saperp.demo_sap_erp_ds1.USERPASSWORD.ENCRYPTED}
+    MAX_ACTIVE = 10
+    MAX_IDLE = 10
+    MAX_WAIT = 30000
+    MIN_EVICTABLE_IDLE_TIME = 60000
+    TIME_BETWEEN_EVICTION = 60000;
+

@@ -1,0 +1,57 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_catalog_page
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_catalog_page.SCHEMANAME}' 
+    RELATIONNAME='CATALOG_PAGE' 
+    OUTPUTSCHEMA (
+        cp_catalog_page_sk = 'CP_CATALOG_PAGE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        cp_catalog_page_id = 'CP_CATALOG_PAGE_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='16', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL SORTABLE,
+        cp_start_date_sk = 'CP_START_DATE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cp_end_date_sk = 'CP_END_DATE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cp_department = 'CP_DEPARTMENT' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        cp_catalog_number = 'CP_CATALOG_NUMBER' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cp_catalog_page_number = 'CP_CATALOG_PAGE_NUMBER' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        cp_description = 'CP_DESCRIPTION' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        cp_type = 'CP_TYPE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008682' PRIMARY KEY ( 'CP_CATALOG_PAGE_SK' )
+    CONSTRAINT 'CP_D1' FOREIGN KEY ( 'CP_END_DATE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'DATE_DIM'( 'D_DATE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'CP_D2' FOREIGN KEY ( 'CP_START_DATE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'DATE_DIM'( 'D_DATE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'SYS_C008682' CLUSTER UNIQUE PRIMARY ( 'CP_CATALOG_PAGE_SK' );
+
+CREATE OR REPLACE TABLE oracle_catalog_page I18N us_pst (
+        cp_catalog_page_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cp_catalog_page_id:text (sourcetyperadix = '10', sourcetypesize = '16', sourcetypeid = '1'), 
+        cp_start_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cp_end_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cp_department:text (sourcetyperadix = '10', sourcetypesize = '50', sourcetypeid = '12'), 
+        cp_catalog_number:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cp_catalog_page_number:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        cp_description:text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '12'), 
+        cp_type:text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '12')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008682' PRIMARY KEY ( 'cp_catalog_page_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_catalog_page(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD cp_catalog_page_sk (any) OPT ANY
+             ADD cp_catalog_page_id (any) OPT ANY
+             ADD cp_start_date_sk (any) OPT ANY
+             ADD cp_end_date_sk (any) OPT ANY
+             ADD cp_department (any) OPT ANY
+             ADD cp_catalog_number (any) OPT ANY
+             ADD cp_catalog_page_number (any) OPT ANY
+             ADD cp_description (any) OPT ANY
+             ADD cp_type (any) OPT ANY
+        )
+        OUTPUTLIST (cp_catalog_number, cp_catalog_page_id, cp_catalog_page_number, cp_catalog_page_sk, cp_department, cp_description, cp_end_date_sk, cp_start_date_sk, cp_type
+        )
+        WRAPPER (jdbc oracle_catalog_page)
+    );
+

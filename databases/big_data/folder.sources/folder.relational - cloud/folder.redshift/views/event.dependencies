@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.relational - cloud/relational - cloud.vql
+/databases/big_data/folder.sources/folder.relational - cloud/folder.redshift/redshift.vql
+/databases/big_data/folder.sources/folder.relational - cloud/folder.redshift/datasources/jdbc/aws_redshift_pga.vql

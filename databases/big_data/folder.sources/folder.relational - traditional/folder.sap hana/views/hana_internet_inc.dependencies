@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.relational - traditional/relational - traditional.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.sap hana/sap hana.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.sap hana/datasources/jdbc/hana_mclaren.vql

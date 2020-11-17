@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_catalog_page_oracle_catalog_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_catalog_sales oracle_catalog_page PRINCIPAL (0,1)
+    ENDPOINT oracle_catalog_page oracle_catalog_sales (0,*)
+    ADD MAPPING cp_catalog_page_sk=cs_catalog_page_sk;
+

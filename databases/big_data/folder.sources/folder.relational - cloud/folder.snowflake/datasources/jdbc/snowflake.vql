@@ -1,0 +1,39 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC snowflake
+    FOLDER = '/sources/relational - cloud/snowflake'
+    DRIVERCLASSNAME = 'com.snowflake.client.jdbc.SnowflakeDriver'
+    DATABASEURI = '${databases.big_data.folder.sources.folder.relational - cloud.folder.snowflake.datasources.jdbc.snowflake.DATABASEURI}'
+    USERNAME = '${databases.big_data.folder.sources.folder.relational - cloud.folder.snowflake.datasources.jdbc.snowflake.USERNAME}'
+    USERPASSWORD = '${databases.big_data.folder.sources.folder.relational - cloud.folder.snowflake.datasources.jdbc.snowflake.USERPASSWORD}' ${databases.big_data.folder.sources.folder.relational - cloud.folder.snowflake.datasources.jdbc.snowflake.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'snowflake-1.x'
+    DATABASENAME = 'snowflake'
+    DATABASEVERSION = '1_x'
+    ISOLATIONLEVEL = TRANSACTION_READ_COMMITTED
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'Select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 500000
+        USEEXTERNALTABLES ( 
+            ONMOVEREAD = false,
+            ONMOVEWRITE = true
+        )
+    )
+    SOURCECONFIGURATION (
+        delegateoffset = true,
+        delegateaggregatefunctionslist = (avg, count, group_concat, list, max, min, nest, stdev, stdevp, sum, var, varp)
+    );
+

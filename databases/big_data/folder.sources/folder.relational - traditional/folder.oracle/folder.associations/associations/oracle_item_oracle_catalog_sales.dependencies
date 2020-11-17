@@ -1,0 +1,7 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.relational - traditional/relational - traditional.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/oracle.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/folder.associations/associations.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/datasources/jdbc/oracle_tpcds.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/views/oracle_item.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/views/oracle_catalog_sales.vql

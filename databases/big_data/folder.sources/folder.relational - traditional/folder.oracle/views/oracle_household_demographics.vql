@@ -1,0 +1,43 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_household_demographics
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_household_demographics.SCHEMANAME}' 
+    RELATIONNAME='HOUSEHOLD_DEMOGRAPHICS' 
+    OUTPUTSCHEMA (
+        hd_demo_sk = 'HD_DEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        hd_income_band_sk = 'HD_INCOME_BAND_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        hd_buy_potential = 'HD_BUY_POTENTIAL' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='15', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        hd_dep_count = 'HD_DEP_COUNT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        hd_vehicle_count = 'HD_VEHICLE_COUNT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008679' PRIMARY KEY ( 'HD_DEMO_SK' )
+    CONSTRAINT 'HD_IB' FOREIGN KEY ( 'HD_INCOME_BAND_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'INCOME_BAND'( 'IB_INCOME_BAND_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'SYS_C008679' CLUSTER UNIQUE PRIMARY ( 'HD_DEMO_SK' );
+
+CREATE OR REPLACE TABLE oracle_household_demographics I18N us_pst (
+        hd_demo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        hd_income_band_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        hd_buy_potential:text (sourcetyperadix = '10', sourcetypesize = '15', sourcetypeid = '1'), 
+        hd_dep_count:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        hd_vehicle_count:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008679' PRIMARY KEY ( 'hd_demo_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_household_demographics(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD hd_demo_sk (any) OPT ANY
+             ADD hd_income_band_sk (any) OPT ANY
+             ADD hd_buy_potential (any) OPT ANY
+             ADD hd_dep_count (any) OPT ANY
+             ADD hd_vehicle_count (any) OPT ANY
+        )
+        OUTPUTLIST (hd_buy_potential, hd_demo_sk, hd_dep_count, hd_income_band_sk, hd_vehicle_count
+        )
+        WRAPPER (jdbc oracle_household_demographics)
+    );
+

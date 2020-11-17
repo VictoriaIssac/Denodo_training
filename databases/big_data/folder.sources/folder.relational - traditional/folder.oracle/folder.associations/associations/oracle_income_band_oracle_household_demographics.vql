@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_income_band_oracle_household_demographics REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_household_demographics oracle_income_band PRINCIPAL (0,1)
+    ENDPOINT oracle_income_band oracle_household_demographics (0,*)
+    ADD MAPPING ib_income_band_sk=hd_income_band_sk;
+

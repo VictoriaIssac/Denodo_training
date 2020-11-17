@@ -1,0 +1,92 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC hive_store_sales
+    FOLDER = '/sources/hadoop/hive'
+    DATASOURCENAME=hive
+    SCHEMANAME='${databases.big_data.folder.sources.folder.hadoop.folder.hive.views.jdbc.hive_store_sales.SCHEMANAME}' 
+    RELATIONNAME='store_sales' 
+    OUTPUTSCHEMA (
+        ss_sold_date_sk = 'ss_sold_date_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_sold_time_sk = 'ss_sold_time_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_item_sk = 'ss_item_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_customer_sk = 'ss_customer_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_cdemo_sk = 'ss_cdemo_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_hdemo_sk = 'ss_hdemo_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_addr_sk = 'ss_addr_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_store_sk = 'ss_store_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_promo_sk = 'ss_promo_sk' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_ticket_number = 'ss_ticket_number' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_quantity = 'ss_quantity' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_wholesale_cost = 'ss_wholesale_cost' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_list_price = 'ss_list_price' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_sales_price = 'ss_sales_price' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_ext_discount_amt = 'ss_ext_discount_amt' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_ext_sales_price = 'ss_ext_sales_price' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_ext_wholesale_cost = 'ss_ext_wholesale_cost' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_ext_list_price = 'ss_ext_list_price' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_ext_tax = 'ss_ext_tax' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_coupon_amt = 'ss_coupon_amt' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_net_paid = 'ss_net_paid' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_net_paid_inc_tax = 'ss_net_paid_inc_tax' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE,
+        ss_net_profit = 'ss_net_profit' :'java.lang.Double' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', description='', sourcetypeid='3', sourcetypename='DECIMAL')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE hive_store_sales I18N us_pst (
+        ss_sold_date_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_sold_time_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_item_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_customer_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_cdemo_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_hdemo_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_addr_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_store_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_promo_sk:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_ticket_number:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_quantity:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', description = '', sourcetypeid = '-5'), 
+        ss_wholesale_cost:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_list_price:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_sales_price:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_ext_discount_amt:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_ext_sales_price:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_ext_wholesale_cost:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_ext_list_price:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_ext_tax:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_coupon_amt:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_net_paid:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_net_paid_inc_tax:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3'), 
+        ss_net_profit:double (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', description = '', sourcetypeid = '3')
+    )
+    FOLDER = '/sources/hadoop/hive'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD hive_store_sales(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD ss_sold_date_sk (any) OPT ANY
+             ADD ss_sold_time_sk (any) OPT ANY
+             ADD ss_item_sk (any) OPT ANY
+             ADD ss_customer_sk (any) OPT ANY
+             ADD ss_cdemo_sk (any) OPT ANY
+             ADD ss_hdemo_sk (any) OPT ANY
+             ADD ss_addr_sk (any) OPT ANY
+             ADD ss_store_sk (any) OPT ANY
+             ADD ss_promo_sk (any) OPT ANY
+             ADD ss_ticket_number (any) OPT ANY
+             ADD ss_quantity (any) OPT ANY
+             ADD ss_wholesale_cost (any) OPT ANY
+             ADD ss_list_price (any) OPT ANY
+             ADD ss_sales_price (any) OPT ANY
+             ADD ss_ext_discount_amt (any) OPT ANY
+             ADD ss_ext_sales_price (any) OPT ANY
+             ADD ss_ext_wholesale_cost (any) OPT ANY
+             ADD ss_ext_list_price (any) OPT ANY
+             ADD ss_ext_tax (any) OPT ANY
+             ADD ss_coupon_amt (any) OPT ANY
+             ADD ss_net_paid (any) OPT ANY
+             ADD ss_net_paid_inc_tax (any) OPT ANY
+             ADD ss_net_profit (any) OPT ANY
+        )
+        OUTPUTLIST (ss_addr_sk, ss_cdemo_sk, ss_coupon_amt, ss_customer_sk, ss_ext_discount_amt, ss_ext_list_price, ss_ext_sales_price, ss_ext_tax, ss_ext_wholesale_cost, ss_hdemo_sk, ss_item_sk, ss_list_price, ss_net_paid, ss_net_paid_inc_tax, ss_net_profit, ss_promo_sk, ss_quantity, ss_sales_price, ss_sold_date_sk, ss_sold_time_sk, ss_store_sk, ss_ticket_number, ss_wholesale_cost
+        )
+        WRAPPER (jdbc hive_store_sales)
+    );
+

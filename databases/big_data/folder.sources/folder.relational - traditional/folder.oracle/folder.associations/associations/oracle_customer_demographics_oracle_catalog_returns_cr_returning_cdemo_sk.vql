@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION "oracle_customer_demographics_oracle_catalog_returns_CR_RETURNING_CDEMO_SK" REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT "oracle_catalog_returns_CR_RETURNING_CDEMO_SK" oracle_customer_demographics PRINCIPAL (0,1)
+    ENDPOINT "oracle_customer_demographics_CR_RETURNING_CDEMO_SK" oracle_catalog_returns (0,*)
+    ADD MAPPING cd_demo_sk=cr_returning_cdemo_sk;
+

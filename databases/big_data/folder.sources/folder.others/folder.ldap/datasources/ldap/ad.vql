@@ -1,0 +1,10 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE LDAP ad
+    FOLDER = '/sources/others/ldap'
+    URI='${databases.big_data.folder.sources.folder.others.folder.ldap.datasources.ldap.ad.URI}'
+    USERNAME='${databases.big_data.folder.sources.folder.others.folder.ldap.datasources.ldap.ad.USERNAME}'
+    USERPASSWORD='${databases.big_data.folder.sources.folder.others.folder.ldap.datasources.ldap.ad.USERPASSWORD}' ${databases.big_data.folder.sources.folder.others.folder.ldap.datasources.ldap.ad.USERPASSWORD.ENCRYPTED}
+    USEPAGING=FALSE
+    MAXPAGESIZE=1000
+    POOL_ENABLED = TRUE;
+

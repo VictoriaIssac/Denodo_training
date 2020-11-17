@@ -1,0 +1,68 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_warehouse
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_warehouse.SCHEMANAME}' 
+    RELATIONNAME='WAREHOUSE' 
+    OUTPUTSCHEMA (
+        w_warehouse_sk = 'W_WAREHOUSE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        w_warehouse_id = 'W_WAREHOUSE_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='16', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL SORTABLE,
+        w_warehouse_name = 'W_WAREHOUSE_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        w_warehouse_sq_ft = 'W_WAREHOUSE_SQ_FT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        w_street_number = 'W_STREET_NUMBER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        w_street_name = 'W_STREET_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='60', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        w_street_type = 'W_STREET_TYPE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='15', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        w_suite_number = 'W_SUITE_NUMBER' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        w_city = 'W_CITY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='60', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        w_county = 'W_COUNTY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='30', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        w_state = 'W_STATE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        w_zip = 'W_ZIP' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE,
+        w_country = 'W_COUNTRY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        w_gmt_offset = 'W_GMT_OFFSET' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='5', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008668' PRIMARY KEY ( 'W_WAREHOUSE_SK' )
+    INDEX 'SYS_C008668' CLUSTER UNIQUE PRIMARY ( 'W_WAREHOUSE_SK' );
+
+CREATE OR REPLACE TABLE oracle_warehouse I18N us_pst (
+        w_warehouse_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        w_warehouse_id:text (sourcetyperadix = '10', sourcetypesize = '16', sourcetypeid = '1'), 
+        w_warehouse_name:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        w_warehouse_sq_ft:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        w_street_number:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        w_street_name:text (sourcetyperadix = '10', sourcetypesize = '60', sourcetypeid = '12'), 
+        w_street_type:text (sourcetyperadix = '10', sourcetypesize = '15', sourcetypeid = '1'), 
+        w_suite_number:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        w_city:text (sourcetyperadix = '10', sourcetypesize = '60', sourcetypeid = '12'), 
+        w_county:text (sourcetyperadix = '10', sourcetypesize = '30', sourcetypeid = '12'), 
+        w_state:text (sourcetyperadix = '10', sourcetypesize = '2', sourcetypeid = '1'), 
+        w_zip:text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '1'), 
+        w_country:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        w_gmt_offset:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '5', sourcetypeid = '3')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008668' PRIMARY KEY ( 'w_warehouse_sk' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_warehouse(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD w_warehouse_sk (any) OPT ANY
+             ADD w_warehouse_id (any) OPT ANY
+             ADD w_warehouse_name (any) OPT ANY
+             ADD w_warehouse_sq_ft (any) OPT ANY
+             ADD w_street_number (any) OPT ANY
+             ADD w_street_name (any) OPT ANY
+             ADD w_street_type (any) OPT ANY
+             ADD w_suite_number (any) OPT ANY
+             ADD w_city (any) OPT ANY
+             ADD w_county (any) OPT ANY
+             ADD w_state (any) OPT ANY
+             ADD w_zip (any) OPT ANY
+             ADD w_country (any) OPT ANY
+             ADD w_gmt_offset (any) OPT ANY
+        )
+        OUTPUTLIST (w_city, w_country, w_county, w_gmt_offset, w_state, w_street_name, w_street_number, w_street_type, w_suite_number, w_warehouse_id, w_warehouse_name, w_warehouse_sk, w_warehouse_sq_ft, w_zip
+        )
+        WRAPPER (jdbc oracle_warehouse)
+    );
+

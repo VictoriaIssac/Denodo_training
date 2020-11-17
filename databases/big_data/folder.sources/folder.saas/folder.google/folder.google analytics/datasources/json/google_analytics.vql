@@ -1,0 +1,7 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JSON google_analytics
+    FOLDER = '/sources/saas/google/google analytics'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.big_data.folder.sources.folder.saas.folder.google.folder.google analytics.datasources.json.google_analytics.ROUTE.HTTP.URL}'
+    AUTHENTICATION OFF
+    PROXY OFF;
+

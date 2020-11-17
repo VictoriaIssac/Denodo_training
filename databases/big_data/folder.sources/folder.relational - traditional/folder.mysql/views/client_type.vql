@@ -1,0 +1,32 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC client_type
+    FOLDER = '/sources/relational - traditional/mysql'
+    DATASOURCENAME=mysql
+    CATALOGNAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.mysql.views.jdbc.client_type.CATALOGNAME}' 
+    RELATIONNAME='client_type' 
+    OUTPUTSCHEMA (
+        code = 'code' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', description='', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE,
+        value = 'value' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE
+    )
+    CONSTRAINT 'PRIMARY' PRIMARY KEY ( 'code' )
+    INDEX 'PRIMARY' CLUSTER UNIQUE PRIMARY ( 'code' );
+
+CREATE OR REPLACE TABLE client_type I18N us_pst (
+        code:text (sourcetyperadix = '10', sourcetypesize = '10', description = '', sourcetypeid = '12'), 
+        value:text (sourcetyperadix = '10', sourcetypesize = '100', description = '', sourcetypeid = '12')
+    )
+    FOLDER = '/sources/relational - traditional/mysql'
+    CONSTRAINT 'PRIMARY' PRIMARY KEY ( 'code' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD client_type(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD code (any) OPT ANY
+             ADD value (any) OPT ANY
+        )
+        OUTPUTLIST (code, value
+        )
+        WRAPPER (jdbc client_type)
+    );
+

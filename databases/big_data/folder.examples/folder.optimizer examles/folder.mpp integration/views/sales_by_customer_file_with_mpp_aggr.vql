@@ -1,0 +1,8 @@
+﻿CREATE OR REPLACE VIEW sales_by_customer_file_with_mpp_aggr FOLDER = '/examples/optimizer examles/mpp integration' DESCRIPTION = 'This query shows how Denodo can use an external MPP for query execution when the optimizer determines that it is the best strategy. In this case, the data source is a CSV file. Since the query requires an aggregation, if the CBO estimates that the calculation of that aggregation won''t fit in memory, it will move that processing to the MPP.'  AS SELECT ws_bill_customer_sk AS ws_bill_customer_sk, sum(ws_wholesale_cost) AS total FROM sales_file GROUP BY ws_bill_customer_sk;
+
+ALTER VIEW sales_by_customer_file_with_mpp_aggr
+ LAYOUT (sales_file = [20, 20, 258, 433]);
+
+ALTER VIEW sales_by_customer_file_with_mpp_aggr
+ MAXRESULTSIZE 5;
+

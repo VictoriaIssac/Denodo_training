@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.saas/saas.vql
+/databases/big_data/folder.sources/folder.saas/folder.workday/workday.vql
+/databases/big_data/folder.sources/folder.saas/folder.workday/datasources/ws/workday_abscense.vql

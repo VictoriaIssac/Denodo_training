@@ -1,0 +1,67 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC savings_tran
+    FOLDER = '/sources/relational - mpp/teradata'
+    DATASOURCENAME=teradata_vdev
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - mpp.folder.teradata.views.jdbc.savings_tran.SCHEMANAME}' 
+    RELATIONNAME='savings_tran' 
+    OUTPUTSCHEMA (
+        "Tran_Id" = 'Tran_Id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='INTEGER', sourcetypeid='4', sourcetypesize='10')  NOT NULL SORTABLE,
+        "Cust_Id" = 'Cust_Id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='INTEGER', sourcetypeid='4', sourcetypesize='10')  NOT NULL SORTABLE,
+        "Acct_Nbr" = 'Acct_Nbr' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='CHAR', sourcetypeid='1', sourcetypesize='16')  NOT NULL SORTABLE,
+        "Channel_Nbr" = 'Channel_Nbr' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='INTEGER', sourcetypeid='4', sourcetypesize='10')  SORTABLE,
+        "Session_Id" = 'Session_Id' :'java.lang.Integer' (OPT) (sourcetyperadix='10', sourcetypename='INTEGER', sourcetypeid='4', sourcetypesize='10')  SORTABLE,
+        "Tran_Duration" = 'Tran_Duration' :'java.lang.Short' (OPT) (sourcetyperadix='10', sourcetypename='SMALLINT', sourcetypeid='5', sourcetypesize='5')  SORTABLE,
+        "Tran_Amt" = 'Tran_Amt' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='3', sourcetypedecimals='2', sourcetypesize='9')  SORTABLE,
+        "Principal_Amt" = 'Principal_Amt' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='3', sourcetypedecimals='2', sourcetypesize='9')  SORTABLE,
+        "Interest_Amt" = 'Interest_Amt' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='3', sourcetypedecimals='2', sourcetypesize='9')  SORTABLE,
+        "New_Balance" = 'New_Balance' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypename='DECIMAL', sourcetypeid='3', sourcetypedecimals='2', sourcetypesize='9')  SORTABLE,
+        "Tran_Date" = 'Tran_Date' :'java.sql.Date' (OPT) (sourcetyperadix='10', sourcetypename='DATE', sourcetypeid='91', sourcetypesize='10')  SORTABLE,
+        "Tran_Time" = 'Tran_Time' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='CHAR', sourcetypeid='1', sourcetypesize='6')  SORTABLE,
+        "Channel" = 'Channel' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='CHAR', sourcetypeid='1', sourcetypesize='1')  SORTABLE,
+        "Tran_Code" = 'Tran_Code' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='CHAR', sourcetypeid='1', sourcetypesize='2')  SORTABLE
+    )
+    INDEX '' CLUSTER ( 'Tran_Id' );
+
+CREATE OR REPLACE TABLE savings_tran I18N us_pst (
+        "Tran_Id":int (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '4'), 
+        "Cust_Id":int (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '4'), 
+        "Acct_Nbr":text (sourcetyperadix = '10', sourcetypesize = '16', sourcetypeid = '1'), 
+        "Channel_Nbr":int (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '4'), 
+        "Session_Id":int (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '4'), 
+        "Tran_Duration":int (sourcetyperadix = '10', sourcetypesize = '5', sourcetypeid = '5'), 
+        "Tran_Amt":decimal (sourcetyperadix = '10', sourcetypedecimals = '2', sourcetypesize = '9', sourcetypeid = '3'), 
+        "Principal_Amt":decimal (sourcetyperadix = '10', sourcetypedecimals = '2', sourcetypesize = '9', sourcetypeid = '3'), 
+        "Interest_Amt":decimal (sourcetyperadix = '10', sourcetypedecimals = '2', sourcetypesize = '9', sourcetypeid = '3'), 
+        "New_Balance":decimal (sourcetyperadix = '10', sourcetypedecimals = '2', sourcetypesize = '9', sourcetypeid = '3'), 
+        "Tran_Date":date (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '91'), 
+        "Tran_Time":text (sourcetyperadix = '10', sourcetypesize = '6', sourcetypeid = '1'), 
+        "Channel":text (sourcetyperadix = '10', sourcetypesize = '1', sourcetypeid = '1'), 
+        "Tran_Code":text (sourcetyperadix = '10', sourcetypesize = '2', sourcetypeid = '1')
+    )
+    FOLDER = '/sources/relational - mpp/teradata'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD savings_tran(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD "Tran_Id" (any) OPT ANY
+             ADD "Cust_Id" (any) OPT ANY
+             ADD "Acct_Nbr" (any) OPT ANY
+             ADD "Channel_Nbr" (any) OPT ANY
+             ADD "Session_Id" (any) OPT ANY
+             ADD "Tran_Duration" (any) OPT ANY
+             ADD "Tran_Amt" (any) OPT ANY
+             ADD "Principal_Amt" (any) OPT ANY
+             ADD "Interest_Amt" (any) OPT ANY
+             ADD "New_Balance" (any) OPT ANY
+             ADD "Tran_Date" (any) OPT ANY
+             ADD "Tran_Time" (any) OPT ANY
+             ADD "Channel" (any) OPT ANY
+             ADD "Tran_Code" (any) OPT ANY
+        )
+        OUTPUTLIST ("Acct_Nbr", "Channel", "Channel_Nbr", "Cust_Id", "Interest_Amt", "New_Balance", "Principal_Amt", "Session_Id", "Tran_Amt", "Tran_Code", "Tran_Date", "Tran_Duration", "Tran_Id", "Tran_Time"
+        )
+        WRAPPER (jdbc savings_tran)
+    )
+    SMART_ONLY;
+

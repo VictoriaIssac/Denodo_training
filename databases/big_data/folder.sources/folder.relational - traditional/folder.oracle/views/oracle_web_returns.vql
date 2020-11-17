@@ -1,0 +1,124 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC oracle_web_returns
+    FOLDER = '/sources/relational - traditional/oracle'
+    DATASOURCENAME=oracle_tpcds
+    SCHEMANAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.oracle.views.jdbc.oracle_web_returns.SCHEMANAME}' 
+    RELATIONNAME='WEB_RETURNS' 
+    OUTPUTSCHEMA (
+        wr_returned_date_sk = 'WR_RETURNED_DATE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_returned_time_sk = 'WR_RETURNED_TIME_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_item_sk = 'WR_ITEM_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        wr_refunded_customer_sk = 'WR_REFUNDED_CUSTOMER_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_refunded_cdemo_sk = 'WR_REFUNDED_CDEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_refunded_hdemo_sk = 'WR_REFUNDED_HDEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_refunded_addr_sk = 'WR_REFUNDED_ADDR_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_returning_customer_sk = 'WR_RETURNING_CUSTOMER_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_returning_cdemo_sk = 'WR_RETURNING_CDEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_returning_hdemo_sk = 'WR_RETURNING_HDEMO_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_returning_addr_sk = 'WR_RETURNING_ADDR_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_web_page_sk = 'WR_WEB_PAGE_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_reason_sk = 'WR_REASON_SK' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_order_number = 'WR_ORDER_NUMBER' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        wr_return_quantity = 'WR_RETURN_QUANTITY' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_return_amt = 'WR_RETURN_AMT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_return_tax = 'WR_RETURN_TAX' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_return_amt_inc_tax = 'WR_RETURN_AMT_INC_TAX' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_fee = 'WR_FEE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_return_ship_cost = 'WR_RETURN_SHIP_COST' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_refunded_cash = 'WR_REFUNDED_CASH' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_reversed_charge = 'WR_REVERSED_CHARGE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_account_credit = 'WR_ACCOUNT_CREDIT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        wr_net_loss = 'WR_NET_LOSS' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='7', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'SYS_C008685' PRIMARY KEY ( 'WR_ITEM_SK' , 'WR_ORDER_NUMBER' )
+    CONSTRAINT 'WR_RET_C' FOREIGN KEY ( 'WR_RETURNING_CUSTOMER_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER'( 'C_CUSTOMER_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_REF_C' FOREIGN KEY ( 'WR_REFUNDED_CUSTOMER_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER'( 'C_CUSTOMER_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_REF_A' FOREIGN KEY ( 'WR_REFUNDED_ADDR_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER_ADDRESS'( 'CA_ADDRESS_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_RET_A' FOREIGN KEY ( 'WR_RETURNING_ADDR_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER_ADDRESS'( 'CA_ADDRESS_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_REF_CD' FOREIGN KEY ( 'WR_REFUNDED_CDEMO_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER_DEMOGRAPHICS'( 'CD_DEMO_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_RET_CD' FOREIGN KEY ( 'WR_RETURNING_CDEMO_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'CUSTOMER_DEMOGRAPHICS'( 'CD_DEMO_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_RET_D' FOREIGN KEY ( 'WR_RETURNED_DATE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'DATE_DIM'( 'D_DATE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_REF_HD' FOREIGN KEY ( 'WR_REFUNDED_HDEMO_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'HOUSEHOLD_DEMOGRAPHICS'( 'HD_DEMO_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_RET_HD' FOREIGN KEY ( 'WR_RETURNING_HDEMO_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'HOUSEHOLD_DEMOGRAPHICS'( 'HD_DEMO_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_I' FOREIGN KEY ( 'WR_ITEM_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'ITEM'( 'I_ITEM_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_R' FOREIGN KEY ( 'WR_REASON_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'REASON'( 'R_REASON_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_RET_T' FOREIGN KEY ( 'WR_RETURNED_TIME_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'TIME_DIM'( 'T_TIME_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'WR_WP' FOREIGN KEY ( 'WR_WEB_PAGE_SK' ) 
+    REFERENCES 'EDW_TPCDS'.'WEB_PAGE'( 'WP_WEB_PAGE_SK' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'SYS_C008685' CLUSTER UNIQUE PRIMARY ( 'WR_ITEM_SK' , 'WR_ORDER_NUMBER' );
+
+CREATE OR REPLACE TABLE oracle_web_returns I18N us_pst (
+        wr_returned_date_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_returned_time_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_item_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_refunded_customer_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_refunded_cdemo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_refunded_hdemo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_refunded_addr_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_returning_customer_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_returning_cdemo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_returning_hdemo_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_returning_addr_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_web_page_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_reason_sk:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_order_number:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_return_quantity:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '3'), 
+        wr_return_amt:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        wr_return_tax:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        wr_return_amt_inc_tax:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        wr_fee:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        wr_return_ship_cost:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        wr_refunded_cash:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        wr_reversed_charge:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        wr_account_credit:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3'), 
+        wr_net_loss:decimal (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '3')
+    )
+    FOLDER = '/sources/relational - traditional/oracle'
+    CONSTRAINT 'SYS_C008685' PRIMARY KEY ( 'wr_item_sk' , 'wr_order_number' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD oracle_web_returns(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD wr_returned_date_sk (any) OPT ANY
+             ADD wr_returned_time_sk (any) OPT ANY
+             ADD wr_item_sk (any) OPT ANY
+             ADD wr_refunded_customer_sk (any) OPT ANY
+             ADD wr_refunded_cdemo_sk (any) OPT ANY
+             ADD wr_refunded_hdemo_sk (any) OPT ANY
+             ADD wr_refunded_addr_sk (any) OPT ANY
+             ADD wr_returning_customer_sk (any) OPT ANY
+             ADD wr_returning_cdemo_sk (any) OPT ANY
+             ADD wr_returning_hdemo_sk (any) OPT ANY
+             ADD wr_returning_addr_sk (any) OPT ANY
+             ADD wr_web_page_sk (any) OPT ANY
+             ADD wr_reason_sk (any) OPT ANY
+             ADD wr_order_number (any) OPT ANY
+             ADD wr_return_quantity (any) OPT ANY
+             ADD wr_return_amt (any) OPT ANY
+             ADD wr_return_tax (any) OPT ANY
+             ADD wr_return_amt_inc_tax (any) OPT ANY
+             ADD wr_fee (any) OPT ANY
+             ADD wr_return_ship_cost (any) OPT ANY
+             ADD wr_refunded_cash (any) OPT ANY
+             ADD wr_reversed_charge (any) OPT ANY
+             ADD wr_account_credit (any) OPT ANY
+             ADD wr_net_loss (any) OPT ANY
+        )
+        OUTPUTLIST (wr_account_credit, wr_fee, wr_item_sk, wr_net_loss, wr_order_number, wr_reason_sk, wr_refunded_addr_sk, wr_refunded_cash, wr_refunded_cdemo_sk, wr_refunded_customer_sk, wr_refunded_hdemo_sk, wr_return_amt, wr_return_amt_inc_tax, wr_return_quantity, wr_return_ship_cost, wr_return_tax, wr_returned_date_sk, wr_returned_time_sk, wr_returning_addr_sk, wr_returning_cdemo_sk, wr_returning_customer_sk, wr_returning_hdemo_sk, wr_reversed_charge, wr_web_page_sk
+        )
+        WRAPPER (jdbc oracle_web_returns)
+    );
+

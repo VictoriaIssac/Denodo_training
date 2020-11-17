@@ -1,0 +1,47 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC address
+    FOLDER = '/sources/relational - traditional/mysql'
+    DATASOURCENAME=mysql
+    CATALOGNAME='${databases.big_data.folder.sources.folder.relational - traditional.folder.mysql.views.jdbc.address.CATALOGNAME}' 
+    RELATIONNAME='address' 
+    OUTPUTSCHEMA (
+        client_identifier = 'client_identifier' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', description='', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE,
+        street = 'street' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        city = 'city' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        zip = 'zip' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        state = 'state' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        primary_phone = 'primary_phone' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+        country = 'country' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', description='', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE
+    )
+    CONSTRAINT 'PRIMARY' PRIMARY KEY ( 'client_identifier' )
+    INDEX 'PRIMARY' CLUSTER UNIQUE PRIMARY ( 'client_identifier' );
+
+CREATE OR REPLACE TABLE address I18N us_pst (
+        client_identifier:text (sourcetyperadix = '10', sourcetypesize = '50', description = '', sourcetypeid = '12'), 
+        street:text (sourcetyperadix = '10', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        city:text (sourcetyperadix = '10', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        zip:text (sourcetyperadix = '10', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        state:text (sourcetyperadix = '10', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        primary_phone:text (sourcetyperadix = '10', sourcetypesize = '100', description = '', sourcetypeid = '12'), 
+        country:text (sourcetyperadix = '10', sourcetypesize = '100', description = '', sourcetypeid = '12')
+    )
+    FOLDER = '/sources/relational - traditional/mysql'
+    CONSTRAINT 'PRIMARY' PRIMARY KEY ( 'client_identifier' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD address(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD client_identifier (any) OPT ANY
+             ADD street (any) OPT ANY
+             ADD city (any) OPT ANY
+             ADD zip (any) OPT ANY
+             ADD state (any) OPT ANY
+             ADD primary_phone (any) OPT ANY
+             ADD country (any) OPT ANY
+        )
+        OUTPUTLIST (city, client_identifier, country, primary_phone, state, street, zip
+        )
+        WRAPPER (jdbc address)
+    );
+

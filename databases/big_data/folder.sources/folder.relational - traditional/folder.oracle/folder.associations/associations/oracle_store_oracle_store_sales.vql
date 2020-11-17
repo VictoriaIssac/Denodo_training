@@ -1,0 +1,6 @@
+﻿CREATE OR REPLACE ASSOCIATION oracle_store_oracle_store_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/sources/relational - traditional/oracle/associations'
+    ENDPOINT oracle_store_sales oracle_store PRINCIPAL (0,1)
+    ENDPOINT oracle_store oracle_store_sales (0,*)
+    ADD MAPPING s_store_sk=ss_store_sk;
+

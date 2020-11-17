@@ -1,0 +1,7 @@
+﻿CREATE OR REPLACE VIEW sales_by_zip FOLDER = '/examples/optimizer examles/caching + mpp' DESCRIPTION = 'This query shows the power of a tight Hadoop integration. The query shows a case of virtual partitioning, where some data is in Hadoop and some data in Oracle. In addition, the customer table is cached in the same Hadoop source where one of our tables is (cache co-location).
+
+On the other, the cost-based optimizer decides to use Hadoop for query acceleration, and therefore moves the results of a partial aggregation (on the table from Oracle) to Hadoop, on demand, so that the final union and aggregation can be accelerated by the MPP Hadoop  system'  AS SELECT oracle_customer.c_zip_code AS c_zip_code, sum(sales.ss_quantity) AS total FROM sales AS sales INNER JOIN oracle_customer_cached AS oracle_customer ON sales.ss_customer_sk = oracle_customer.c_customer_sk  GROUP BY oracle_customer.c_zip_code;
+
+ALTER VIEW sales_by_zip
+ LAYOUT (sales = [40, 60, 200, 225], oracle_customer_cached = [376, 37, 200, 225]);
+

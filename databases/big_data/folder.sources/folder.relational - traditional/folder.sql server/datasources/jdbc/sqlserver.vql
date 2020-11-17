@@ -1,0 +1,30 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC sqlserver
+    FOLDER = '/sources/relational - traditional/sql server'
+    DRIVERCLASSNAME = 'net.sourceforge.jtds.jdbc.Driver'
+    DATABASEURI = '${databases.big_data.folder.sources.folder.relational - traditional.folder.sql server.datasources.jdbc.sqlserver.DATABASEURI}'
+    USERNAME = '${databases.big_data.folder.sources.folder.relational - traditional.folder.sql server.datasources.jdbc.sqlserver.USERNAME}'
+    USERPASSWORD = '${databases.big_data.folder.sources.folder.relational - traditional.folder.sql server.datasources.jdbc.sqlserver.USERPASSWORD}' ${databases.big_data.folder.sources.folder.relational - traditional.folder.sql server.datasources.jdbc.sqlserver.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'jtds-1.3.1'
+    DATABASENAME = 'sqlserver'
+    DATABASEVERSION = '2008'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'Select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 1000
+    );
+

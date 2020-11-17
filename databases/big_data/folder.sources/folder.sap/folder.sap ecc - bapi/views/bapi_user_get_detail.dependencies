@@ -1,0 +1,4 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.sap/sap.vql
+/databases/big_data/folder.sources/folder.sap/folder.sap ecc - bapi/sap ecc - bapi.vql
+/databases/big_data/folder.sources/folder.sap/folder.sap ecc - bapi/datasources/saperp/demo_sap_erp_ds1.vql

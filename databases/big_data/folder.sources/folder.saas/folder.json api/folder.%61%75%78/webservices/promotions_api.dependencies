@@ -1,0 +1,8 @@
+﻿/databases/big_data/folder.sources/sources.vql
+/databases/big_data/folder.sources/folder.saas/saas.vql
+/databases/big_data/folder.sources/folder.saas/folder.json api/json api.vql
+/databases/big_data/folder.sources/folder.saas/folder.json api/folder.%61%75%78/%61%75%78.vql
+/databases/big_data/folder.sources/folder.relational - traditional/relational - traditional.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/oracle.vql
+/databases/big_data/folder.sources/folder.relational - traditional/folder.oracle/datasources/jdbc/oracle_tpcds.vql
+/databases/big_data/folder.sources/folder.saas/folder.json api/folder.%61%75%78/views/promotions.vql
