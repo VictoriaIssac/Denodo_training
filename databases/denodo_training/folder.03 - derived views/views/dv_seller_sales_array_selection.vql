@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_seller_sales_array_selection FOLDER = '/03 - derived views' AS SELECT dv_products_by_category_flatten.categoryname AS categoryname, dv_sales_flatten.employeeid AS seller_id, sum(cast('int', dv_sales_flatten.bundleamount)) AS total_amount FROM dv_products_by_category_flatten AS dv_products_by_category_flatten INNER JOIN dv_sales_flatten AS dv_sales_flatten ON dv_products_by_category_flatten.productid = dv_sales_flatten.productid  GROUP BY dv_products_by_category_flatten.categoryname, dv_sales_flatten.employeeid ORDER BY total_amount DESC;
+
+ALTER VIEW dv_seller_sales_array_selection
+ LAYOUT (dv_products_by_category_flatten = [250, 100, 200, 126], dv_sales_flatten = [665, 76, 200, 206]);
+

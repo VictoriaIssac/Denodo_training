@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_employees1_time FOLDER = '/01 - data sources' AS SELECT employees1.employee_id AS employee_id, employees1.first_name AS first_name, employees1.last_name AS last_name, employees1.email AS email, employees1.phone_number AS phone_number, employees1.hire_date AS hire_date, employees1.job_id AS job_id, employees1.salary AS salary, employees1.commission_pct AS commission_pct, employees1.manager_id AS manager_id, employees1.department_id AS department_id, cast(formatdate('MM-dd-yyyy', employees1.hire_date) AS TIMESTAMP) AS birth FROM employees1;
+
+ALTER VIEW dv_employees1_time
+ LAYOUT (employees1 = [20, 20, 243, 246]);
+

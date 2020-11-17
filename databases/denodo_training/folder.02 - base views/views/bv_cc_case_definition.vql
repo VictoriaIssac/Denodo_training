@@ -1,0 +1,44 @@
+﻿CREATE OR REPLACE WRAPPER ODBC bv_cc_case_definition
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_call_center
+    SCHEMANAME='calltracking.mdb' 
+    RELATIONNAME='case_definition' 
+    OUTPUTSCHEMA (
+    case_id = 'case_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='COUNTER')  NOT NULL NOT SORTABLE,
+    date_raised = 'date_raised' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='0', sourcetypesize='19', sourcetypeid='93', sourcetypename='DATETIME')  NOT SORTABLE,
+    date_closed = 'date_closed' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='0', sourcetypesize='19', sourcetypeid='93', sourcetypename='DATETIME')  NOT SORTABLE,
+    case_status = 'case_status' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='18', sourcetypeid='2', sourcetypename='DECIMAL')  SORTABLE,
+    case_summary = 'case_summary' :'java.lang.String' (OPT) (sourcetypesize='250', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+    case_comments = 'case_comments' :'java.lang.String' (OPT) (sourcetypesize='250', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE,
+    customer_code = 'customer_code' :'java.lang.String' (OPT) (sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_cc_case_definition I18N au_cst (
+        case_id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '4'), 
+        date_raised:date (sourcetypedecimals = '0', sourcetypesize = '19', sourcetypeid = '93'), 
+        date_closed:date (sourcetypedecimals = '0', sourcetypesize = '19', sourcetypeid = '93'), 
+        case_status:long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '18', sourcetypeid = '-5'), 
+        case_summary:text (sourcetypesize = '250', sourcetypeid = '12'), 
+        case_comments:text (sourcetypesize = '250', sourcetypeid = '12'), 
+        customer_code:text (sourcetypesize = '20', sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_cc_case_definition(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD case_id (any) OPT ANY
+             ADD date_raised (any) OPT ANY
+             ADD date_closed (any) OPT ANY
+             ADD case_status (any) OPT ANY
+             ADD case_summary (any) OPT ANY
+             ADD case_comments (any) OPT ANY
+             ADD customer_code (any) OPT ANY
+        )
+        OUTPUTLIST (case_comments, case_id, case_status, case_summary, customer_code, date_closed, date_raised
+        )
+        WRAPPER (odbc bv_cc_case_definition)
+    );
+

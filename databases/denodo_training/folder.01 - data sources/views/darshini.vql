@@ -1,0 +1,33 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC darshini_56
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_new
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.darshini_56.CATALOGNAME}' 
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.darshini_56.SCHEMANAME}' 
+    RELATIONNAME='darshini' 
+    OUTPUTSCHEMA (
+        "1" = '1' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='10', sourcetypeid='1', sourcetypename='nchar')  ESCAPE SORTABLE,
+        "2" = '2' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='10', sourcetypeid='1', sourcetypename='nchar')  ESCAPE SORTABLE,
+        "3" = '3' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='10', sourcetypeid='1', sourcetypename='nchar')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE darshini I18N au_cst (
+        "1":text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '10', sourcetypeid = '-15'), 
+        "2":text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '10', sourcetypeid = '-15'), 
+        "3":text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '10', sourcetypeid = '-15')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD darshini(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD "1" (any) OPT ANY
+             ADD "2" (any) OPT ANY
+             ADD "3" (any) OPT ANY
+        )
+        OUTPUTLIST ("1", "2", "3"
+        )
+        WRAPPER (jdbc darshini_56)
+    );
+

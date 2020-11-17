@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_products_by_category_flatten FOLDER = '/03 - derived views' AS SELECT dv_product_by_category_selection.productid AS productid, dv_product_by_category_selection.productname AS productname, dv_product_by_category_selection.productprice AS productprice, (dv_product_by_category_selection.parameters).categoryname AS categoryname, category FROM dv_product_by_category_selection USING PARAMETERS ( category : text 'smartphone');
+
+ALTER VIEW dv_products_by_category_flatten
+ LAYOUT (dv_product_by_category_selection = [20, 20, 350, 106]);
+

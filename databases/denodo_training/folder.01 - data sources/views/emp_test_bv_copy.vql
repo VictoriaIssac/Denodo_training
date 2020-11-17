@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW emp_test_bv_copy FOLDER = '/01 - data sources' AS SELECT 'E001' AS emp_id, 'D100' AS dept_id FROM test.dual() UNION SELECT 'E002' AS emp_id, 'D100' AS dept_id FROM test.dual() UNION SELECT 'E003' AS emp_id, 'D100' AS dept_id FROM test.dual() UNION SELECT 'E004' AS emp_id, 'D100' AS dept_id FROM test.dual() UNION SELECT 'E010' AS emp_id, 'D200' AS dept_id FROM test.dual() UNION SELECT 'E011' AS emp_id, 'D200' AS dept_id FROM test.dual();
+

@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_seller_sales_array FOLDER = '/03 - derived views' AS SELECT dv_seller_sales_array_selection.categoryname AS categoryname, dv_seller_sales_array_selection.seller_id AS seller_id, dv_seller_sales_array_selection.total_amount AS total_amount, rownum() AS ranking FROM dv_seller_sales_array_selection;
+
+ALTER VIEW dv_seller_sales_array
+ LAYOUT (dv_seller_sales_array_selection = [20, 20, 200, 86]);
+

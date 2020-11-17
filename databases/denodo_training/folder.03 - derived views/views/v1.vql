@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW v1 FOLDER = '/03 - derived views' (
+    phone_number (description = 'Identifier of the incident')
+)
+ AS SELECT employee_id, phone_number, first_name, last_name FROM employees1;
+

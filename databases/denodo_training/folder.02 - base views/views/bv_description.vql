@@ -1,0 +1,40 @@
+﻿CREATE OR REPLACE TABLE bv_description I18N au_cst (
+        input_database_name:text (sourcetypeid = '12'), 
+        input_view_name:text (sourcetypeid = '12'), 
+        database_name:text (sourcetypeid = '12'), 
+        view_name:text (sourcetypeid = '12'), 
+        view_type:int (sourcetypeid = '4'), 
+        column_name:text (sourcetypeid = '12'), 
+        column_type_name:text (sourcetypeid = '12'), 
+        column_type:int (sourcetypeid = '4'), 
+        column_type_precision:int (sourcetypeid = '4'), 
+        column_type_length:int (sourcetypeid = '4'), 
+        column_type_scale:int (sourcetypeid = '4'), 
+        column_vdp_type_name:text (sourcetypeid = '12'), 
+        column_description:text (sourcetypeid = '12')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_description(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD input_database_name (any) OPT ANY
+             ADD input_view_name (any) OPT ANY
+             ADD database_name (any) OPT ANY
+             ADD view_name (any) OPT ANY
+             ADD view_type (any) OPT ANY
+             ADD column_name (any) OPT ANY
+             ADD column_type_name (any) OPT ANY
+             ADD column_type (any) OPT ANY
+             ADD column_type_precision (any) OPT ANY
+             ADD column_type_length (any) OPT ANY
+             ADD column_type_scale (any) OPT ANY
+             ADD column_vdp_type_name (any) OPT ANY
+             ADD column_description (any) OPT ANY
+        )
+        OUTPUTLIST (column_description, column_name, column_type, column_type_length, column_type_name, column_type_precision, column_type_scale, column_vdp_type_name, database_name, input_database_name, input_view_name, view_name, view_type
+        )
+        WRAPPER (custom ds_description)
+    );
+

@@ -1,0 +1,29 @@
+﻿CREATE OR REPLACE REST WEBSERVICE ws_orders
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = XML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    RESOURCES (
+        VIEW bv_wo_orders FIELDS (
+            id : 'decimal', 
+            customer_code : 'text', 
+            status : 'text', 
+            date_placed : 'timestamp', 
+            date_delivered : 'timestamp', 
+            date_closed : 'timestamp'
+        )
+    )
+    OPTIONS (
+        VIEW bv_wo_orders XSLT ( 
+                OUTPUTXSLT = '{{"responses":{{"200":{{"description":"Success"}},"204":{{"description":"No results were returned"}},"400":{{"description":"Bad request"}},"401":{{"description":"Authentication failed"}},"403":{{"description":"Insufficient permissions to perform this request"}},"500":{{"description":"Runtime error"}}}}' ENABLED  )
+        APPLYOUTPUTXSLTTOERRORS
+        NULLVALUESASEMPTYXMLELEMENTS = false ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/09 - data services';
+

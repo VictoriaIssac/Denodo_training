@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_dual FOLDER = '/03 - derived views' AS SELECT dept_id AS dept_id, nest(empid) AS employee FROM bv_dual GROUP BY dept_id;
+
+ALTER VIEW dv_dual
+ LAYOUT (bv_dual = [20, 20, 200, 66]);
+

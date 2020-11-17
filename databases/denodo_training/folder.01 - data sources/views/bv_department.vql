@@ -1,0 +1,38 @@
+﻿CREATE OR REPLACE WRAPPER DF bv_department
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_department
+    OUTPUTSCHEMA (
+        department_id = 'Column0' (OPT),
+        department_name = 'Column1' (OPT),
+        manager_id = 'Column2' (OPT),
+        location_id = 'Column3' (OPT),
+        languages = 'Column4' (OPT),
+        employee_id = 'Column5' (OPT)
+    );
+
+CREATE OR REPLACE TABLE bv_department I18N au_cst (
+        department_id:text, 
+        department_name:text, 
+        manager_id:text, 
+        location_id:text, 
+        languages:text, 
+        employee_id:text
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_department(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD department_id (=,in) OPT ANY
+             ADD department_name (=,in) OPT ANY
+             ADD manager_id (=,in) OPT ANY
+             ADD location_id (=,in) OPT ANY
+             ADD languages (=,in) OPT ANY
+             ADD employee_id (=,in) OPT ANY
+        )
+        OUTPUTLIST (department_id, department_name, employee_id, languages, location_id, manager_id
+        )
+        WRAPPER (df bv_department)
+    );
+

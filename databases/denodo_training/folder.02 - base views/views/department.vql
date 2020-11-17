@@ -1,0 +1,30 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC department
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_new
+    CATALOGNAME='${databases.denodo_training.folder.02 - base views.views.jdbc.department.CATALOGNAME}' ESCAPE
+    SCHEMANAME='${databases.denodo_training.folder.02 - base views.views.jdbc.department.SCHEMANAME}' 
+    RELATIONNAME='department' 
+    OUTPUTSCHEMA (
+        id = 'id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        department = 'department' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE department I18N au_cst (
+        id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '4'), 
+        department:text (sourcetypesize = '10', sourcetypeid = '-15')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD department(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD department (any) OPT ANY
+        )
+        OUTPUTLIST (department, id
+        )
+        WRAPPER (jdbc department)
+    );
+

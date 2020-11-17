@@ -1,0 +1,51 @@
+﻿CREATE OR REPLACE REST WEBSERVICE bv_sales
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = XML
+    SUPPORTEDREPRESENTATIONS (XML)
+    VERBOSEERRORS = false
+    RESOURCES (
+        VIEW bv_sales FIELDS (
+            salesdata : 'ds_sales_salesdata_5345'
+        )
+    )
+    OPTIONS (
+        VIEW bv_sales XSLT ( 
+                OUTPUTXSLT = '<!DOCTYPE html
+  PUBLIC "XSLT-compat">
+<hmtl>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>error</title>
+   </head>
+   <root>
+      
+      <error>
+         
+         <message>Server Down</message>
+         
+         <status>500</status>
+         
+      </error>
+      
+      <error>
+         
+         <message>No data</message>
+         
+         <status>400</status>
+         
+      </error>
+      
+   </root>
+</hmtl>' DISABLED  )
+        APPLYOUTPUTXSLTTOERRORS
+        NULLVALUESASEMPTYXMLELEMENTS = false ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/09 - data services';
+

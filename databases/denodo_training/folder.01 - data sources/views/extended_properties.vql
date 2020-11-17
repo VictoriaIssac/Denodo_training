@@ -1,0 +1,42 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC extended_properties
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_new
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.extended_properties.CATALOGNAME}' ESCAPE
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.extended_properties.SCHEMANAME}' 
+    RELATIONNAME='extended_properties' 
+    OUTPUTSCHEMA (
+        class = 'class' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='3', sourcetypeid='-6', sourcetypename='tinyint')  NOT NULL SORTABLE,
+        class_desc = 'class_desc' :'java.lang.String' (OPT) (sourcetypesize='60', sourcetypeid='-9', sourcetypename='nvarchar')  SORTABLE,
+        major_id = 'major_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        minor_id = 'minor_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        name = 'name' :'java.lang.String' (OPT) (sourcetypesize='128', sourcetypeid='-9', sourcetypename='sysname')  NOT NULL NOT SORTABLE,
+        value = 'value' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='2147483647', sourcetypeid='-150', sourcetypename='sql_variant')  ESCAPE NOT SORTABLE
+    );
+
+CREATE OR REPLACE TABLE extended_properties I18N au_cst (
+        class:text (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '3', sourcetypeid = '12'), 
+        class_desc:int (sourcetypesize = '60', sourcetypeid = '4'), 
+        major_id:text (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '12'), 
+        minor_id:text (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '12'), 
+        name:text (sourcetypesize = '128', sourcetypeid = '-9'), 
+        value:text
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD extended_properties(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD class (any) OPT ANY
+             ADD class_desc (any) OPT ANY
+             ADD major_id (any) OPT ANY
+             ADD minor_id (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD value (any) OPT ANY
+        )
+        OUTPUTLIST (class, class_desc, major_id, minor_id, name, value
+        )
+        WRAPPER (jdbc extended_properties)
+    );
+

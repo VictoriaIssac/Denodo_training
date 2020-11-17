@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_invoices_cast FOLDER = '/2 - integration' AS SELECT to_date('EEE MMM dd HH:mm:ss z yyyy', date_invoice) AS date_invoice, iv_all_invoices.date_placed AS date_placed, iv_all_invoices.date_delivered AS date_delivered, iv_all_invoices.date_closed AS date_closed, iv_all_invoices.first_name AS first_name, iv_all_invoices.last_name AS last_name, iv_all_invoices.email AS email, iv_all_invoices.address AS address, iv_all_invoices.country AS country, iv_all_invoices.postal_code AS postal_code, iv_all_invoices.phone AS phone, iv_all_invoices.invoice AS invoice, iv_all_invoices.order AS order, iv_all_invoices.cost AS cost FROM iv_all_invoices;
+
+ALTER VIEW dv_invoices_cast
+ LAYOUT (iv_all_invoices = [20, 20, 200, 306]);
+

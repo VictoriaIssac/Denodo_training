@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW char1 FOLDER = '/03 - derived views' AS SELECT to_char('10') FROM dual;
+

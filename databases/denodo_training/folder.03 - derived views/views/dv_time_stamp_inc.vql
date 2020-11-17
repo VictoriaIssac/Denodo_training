@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_time_stamp_inc FOLDER = '/03 - derived views' AS SELECT bv_time.id AS id, bv_time_stamp.empid AS empid, bv_time_stamp.name AS name, bv_time_stamp.valid AS valid, bv_time_stamp.last_modified_date AS last_modified_date FROM bv_time AS bv_time FULL OUTER JOIN bv_time_stamp AS bv_time_stamp ON bv_time.id = bv_time_stamp.empid ;
+
+ALTER VIEW dv_time_stamp_inc
+ LAYOUT (bv_time = [20, 20, 200, 106], bv_time_stamp = [480, 40, 200, 106]);
+

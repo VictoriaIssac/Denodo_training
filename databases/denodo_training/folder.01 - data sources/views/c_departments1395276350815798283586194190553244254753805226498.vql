@@ -1,0 +1,42 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "C_DEPARTMENTS1395276350815798283586194190553244254753805226498"
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_victoria
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.c_departments1395276350815798283586194190553244254753805226498.CATALOGNAME}' 
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.c_departments1395276350815798283586194190553244254753805226498.SCHEMANAME}' 
+    RELATIONNAME='C_DEPARTMENTS1395276350815798283586194190553244254753805226498' 
+    OUTPUTSCHEMA (
+        department_id = 'department_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='4', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        department_name = 'department_name' :'java.lang.String' (OPT) (sourcetypesize='30', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        manager_id = 'manager_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='6', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        location_id = 'location_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='4', sourcetypeid='2', sourcetypename='numeric')  SORTABLE,
+        "expirationDate" = 'expirationDate' :'java.lang.Long' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='19', sourcetypeid='-5', sourcetypename='bigint')  SORTABLE,
+        "rowStatus" = 'rowStatus' :'java.lang.String' (OPT) (sourcetypesize='250', sourcetypeid='12', sourcetypename='varchar')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "C_DEPARTMENTS1395276350815798283586194190553244254753805226498" I18N au_cst (
+        department_id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '4', sourcetypeid = '4'), 
+        department_name:text (sourcetypesize = '30', sourcetypeid = '12'), 
+        manager_id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '6', sourcetypeid = '4'), 
+        location_id:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '4', sourcetypeid = '4'), 
+        "expirationDate":long (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '19', sourcetypeid = '-5'), 
+        "rowStatus":text (sourcetypesize = '250', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "C_DEPARTMENTS1395276350815798283586194190553244254753805226498"(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD department_id (any) OPT ANY
+             ADD department_name (any) OPT ANY
+             ADD manager_id (any) OPT ANY
+             ADD location_id (any) OPT ANY
+             ADD "expirationDate" (any) OPT ANY
+             ADD "rowStatus" (any) OPT ANY
+        )
+        OUTPUTLIST (department_id, department_name, "expirationDate", location_id, manager_id, "rowStatus"
+        )
+        WRAPPER (jdbc "C_DEPARTMENTS1395276350815798283586194190553244254753805226498")
+    );
+

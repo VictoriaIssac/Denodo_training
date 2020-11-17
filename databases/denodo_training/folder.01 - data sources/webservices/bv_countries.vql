@@ -1,0 +1,25 @@
+﻿CREATE OR REPLACE REST WEBSERVICE bv_countries
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)    AUTHENTICATION (BASIC
+    USER 'cward3'
+    PASSWORD 'eOAHnqxWKB/Nritgbqte6KP8FIcGJfuKCBTeVzfcJz8NuYEk4w0tmcY9ZtEzw2+nL7QxP2bMXv3IgTpZJnZ1pAbvsCcrhjfSkH812hZWMWuVTLhOlsYzaj9qgknBWPRk' ENCRYPTED )
+
+    RESOURCES (
+        VIEW bv_countries FIELDS (
+            "COUNTRY_ID" : 'text', 
+            "COUNTRY_NAME" : 'text', 
+            "REGION_ID" : 'decimal'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/01 - data sources';
+

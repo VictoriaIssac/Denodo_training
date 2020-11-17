@@ -1,0 +1,45 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "DEPARTMENTS"
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_human_resources
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.departments.SCHEMANAME}' 
+    RELATIONNAME='DEPARTMENTS' 
+    OUTPUTSCHEMA (
+        "DEPARTMENT_ID" = 'DEPARTMENT_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='4', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        "DEPARTMENT_NAME" = 'DEPARTMENT_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='30', sourcetypeid='12', sourcetypename='VARCHAR2')  NOT NULL SORTABLE,
+        "MANAGER_ID" = 'MANAGER_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='6', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        "LOCATION_ID" = 'LOCATION_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='4', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'DEPT_ID_PK' PRIMARY KEY ( 'DEPARTMENT_ID' )
+    CONSTRAINT 'DEPT_MGR_FK' FOREIGN KEY ( 'MANAGER_ID' ) 
+    REFERENCES 'HR'.'EMPLOYEES'( 'EMPLOYEE_ID' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'DEPT_LOC_FK' FOREIGN KEY ( 'LOCATION_ID' ) 
+    REFERENCES 'HR'.'LOCATIONS'( 'LOCATION_ID' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'DEPT_ID_PK' CLUSTER UNIQUE PRIMARY ( 'DEPARTMENT_ID' )
+    INDEX 'DEPT_LOCATION_IX' CLUSTER ( 'LOCATION_ID' );
+
+CREATE OR REPLACE TABLE "DEPARTMENTS" I18N au_cst (
+        "DEPARTMENT_ID":int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '4', sourcetypeid = '4'), 
+        "DEPARTMENT_NAME":text (sourcetyperadix = '10', sourcetypesize = '30', sourcetypeid = '12'), 
+        "MANAGER_ID":int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '6', sourcetypeid = '4'), 
+        "LOCATION_ID":int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '4', sourcetypeid = '4')
+    )
+    FOLDER = '/01 - data sources'
+    CONSTRAINT 'DEPT_ID_PK' PRIMARY KEY ( 'DEPARTMENT_ID' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "DEPARTMENTS"(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD "DEPARTMENT_ID" (any) OPT ANY
+             ADD "DEPARTMENT_NAME" (any) OPT ANY
+             ADD "MANAGER_ID" (any) OPT ANY
+             ADD "LOCATION_ID" (any) OPT ANY
+        )
+        OUTPUTLIST ("DEPARTMENT_ID", "DEPARTMENT_NAME", "LOCATION_ID", "MANAGER_ID"
+        )
+        WRAPPER (jdbc "DEPARTMENTS")
+    )
+    SMART_ONLY;
+

@@ -1,0 +1,37 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_time_stamp
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_support_site
+    SCHEMANAME='${databases.denodo_training.folder.02 - base views.views.jdbc.bv_time_stamp.SCHEMANAME}' ESCAPE
+    RELATIONNAME='TIME_STAMP' 
+    OUTPUTSCHEMA (
+        empid = 'EMPID' :'java.math.BigDecimal' (OPT) (sourcetyperadix='10', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        name = 'NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='20', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        valid = 'VALID' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='6', sourcetyperadix='10', sourcetypesize='11', sourcetypeid='93', sourcetypename='TIMESTAMP(6)')  SORTABLE,
+        last_modified_date = 'LAST_MODIFIED_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_time_stamp I18N au_cst (
+        empid:decimal (sourcetyperadix = '10', sourcetypeid = '3'), 
+        name:text (sourcetyperadix = '10', sourcetypesize = '20', sourcetypeid = '12'), 
+        valid:timestamp (sourcetypedecimals = '6', sourcetyperadix = '10', sourcetypesize = '11', sourcetypeid = '93'), 
+        last_modified_date:timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93')
+    )
+    FOLDER = '/02 - base views'
+    PRIMARY KEY ( 'empid' )
+    CACHE FULL INCREMENTAL 'last_modified_date > ''@LASTCACHEREFRESH'''
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_time_stamp(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD empid (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD valid (any) OPT ANY
+             ADD last_modified_date (any) OPT ANY
+        )
+        OUTPUTLIST (empid, last_modified_date, name, valid
+        )
+        WRAPPER (jdbc bv_time_stamp)
+    );
+

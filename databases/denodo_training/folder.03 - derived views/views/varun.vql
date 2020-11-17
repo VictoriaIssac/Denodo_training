@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW varun FOLDER = '/03 - derived views' AS SELECT cast('text', 1210.73) FROM dual();
+

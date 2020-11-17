@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW hi FOLDER = '/03 - derived views' AS SELECT last_name, hire_date AS "Hired", addmonth(hire_date, 6) AS "Evaluated" FROM employees WHERE department_id = 100 ORDER BY "Hired" ASC;
+

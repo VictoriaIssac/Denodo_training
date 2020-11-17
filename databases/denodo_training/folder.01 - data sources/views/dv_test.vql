@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW "DV_TEST" FOLDER = '/01 - data sources' AS SELECT "TEST2".empid AS empid, "TEST2".ename AS ename, "TEST2".salary AS salary, "TEST2".deptid AS deptid, "TEST1".name AS name, "TEST1".value AS value, "TEST1"."1" AS "1" FROM "TEST2" AS "TEST2" INNER JOIN "TEST1" AS "TEST1" ON "TEST2".ename = "TEST1".name ;
+
+ALTER VIEW "DV_TEST"
+ LAYOUT ("TEST2" = [20, 20, 200, 106], "TEST1" = [400, 66, 200, 86]);
+

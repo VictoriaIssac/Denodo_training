@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_user_roles FOLDER = '/03 - derived views' AS SELECT f_bv_user.displayname AS displayname, bv_group.cn AS cn, bv_group.distinguishedname AS distinguishedname, f_bv_user.samaccountname AS samaccountname, f_bv_user.userprincipalname AS userprincipalname FROM flatten_bv_user AS f_bv_user INNER JOIN bv_group AS bv_group ON f_bv_user.memberof = bv_group.distinguishedname  WHERE f_bv_user.displayname is not null ;
+
+ALTER VIEW dv_user_roles
+ LAYOUT (flatten_bv_user = [188, 222, 200, 106], bv_group = [640, 200, 200, 86]);
+

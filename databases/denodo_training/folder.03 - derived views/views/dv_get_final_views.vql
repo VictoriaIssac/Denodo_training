@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW dv_get_final_views FOLDER = '/03 - derived views' AS SELECT DISTINCT view_name, view_type, view_database_name FROM view_dependencies() v WHERE (v.view_database_name = 'denodo_training' AND v.depth = 1 AND v.view_name not in (SELECT dependency_name FROM view_dependencies() WHERE (dependency_database_name = v.view_database_name AND dependency_type = v.view_type AND depth = 1)));
+

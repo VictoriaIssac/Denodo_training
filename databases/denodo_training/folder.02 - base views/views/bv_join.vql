@@ -1,0 +1,41 @@
+﻿CREATE OR REPLACE WRAPPER JDBC dv_join
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_new
+    SQLSENTENCE='SELECT * FROM employee
+CROSS APPLY 
+(SELECT * FROM department WHERE department.id=employee.deptid)Tab'   
+    OUTPUTSCHEMA (
+        empid = 'empid' :'java.lang.Integer' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE NOT UPDATEABLE,
+        ename = 'ename' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='20', sourcetypeid='12', sourcetypename='varchar')  SORTABLE NOT UPDATEABLE,
+        salary = 'salary' :'java.lang.Double' (sourcetypedecimals='0', sourcetypesize='15', sourcetypeid='8', sourcetypename='float')  SORTABLE NOT UPDATEABLE,
+        deptid = 'deptid' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='12', sourcetypename='varchar')  SORTABLE NOT UPDATEABLE,
+        id = 'id' :'java.lang.Integer' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE NOT UPDATEABLE,
+        department = 'department' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE bv_join I18N au_cst (
+        empid:int (sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4'), 
+        ename:text (sourcetypedecimals = '0', sourcetypesize = '20', sourcetypeid = '12'), 
+        salary:double (sourcetypedecimals = '0', sourcetypesize = '15', sourcetypeid = '8'), 
+        deptid:text (sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '12', description = 'error'), 
+        id:int (sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '4', description = 'error'), 
+        department:text (sourcetypedecimals = '0', sourcetypesize = '10', sourcetypeid = '-15', description = 'error')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD dv_join(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD empid NOS ZERO ()
+             ADD ename NOS ZERO ()
+             ADD salary NOS ZERO ()
+             ADD deptid NOS ZERO ()
+             ADD id NOS ZERO ()
+             ADD department NOS ZERO ()
+        )
+        OUTPUTLIST (department, deptid, empid, ename, id, salary
+        )
+        WRAPPER (jdbc dv_join)
+    );
+

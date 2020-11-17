@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_jobs FOLDER = '/01 - data sources' AS SELECT employees.employee_id AS employee_id, employees.first_name AS first_name, employees.last_name AS last_name, employees.email AS email, employees.phone_number AS phone_number, employees.hire_date AS hire_date, employees.salary AS salary, employees.commission_pct AS commission_pct, employees.manager_id AS manager_id, employees.department_id AS department_id, jobs.job_id AS job_id, jobs.job_title AS job_title, jobs.min_salary AS min_salary, jobs.max_salary AS max_salary FROM employees AS employees INNER JOIN jobs AS jobs ON employees.job_id = jobs.job_id ;
+
+ALTER VIEW dv_jobs
+ LAYOUT (employees = [20, 20, 200, 225], jobs = [457, 106, 200, 106]);
+

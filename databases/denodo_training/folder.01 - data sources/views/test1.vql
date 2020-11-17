@@ -1,0 +1,33 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "TEST1"
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_victoria_copy
+    CATALOGNAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.test1.CATALOGNAME}' 
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.test1.SCHEMANAME}' 
+    RELATIONNAME='table2' 
+    OUTPUTSCHEMA (
+        name = 'name' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  SORTABLE,
+        value = 'value' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  ESCAPE SORTABLE,
+        "1" = '1' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "TEST1" I18N au_cst (
+        name:text (sourcetypesize = '10', sourcetypeid = '-15'), 
+        value:text (sourcetypesize = '10', sourcetypeid = '-15'), 
+        "1":text (sourcetypesize = '10', sourcetypeid = '-15')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "TEST1"(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD name (any) OPT ANY
+             ADD value (any) OPT ANY
+             ADD "1" (any) OPT ANY
+        )
+        OUTPUTLIST ("1", name, value
+        )
+        WRAPPER (jdbc "TEST1")
+    );
+

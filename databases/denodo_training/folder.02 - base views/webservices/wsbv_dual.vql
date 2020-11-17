@@ -1,0 +1,63 @@
+﻿CREATE OR REPLACE SOAP WEBSERVICE wsbv_dual
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    I18N  = au_cst
+    DATETYPEMAPPING DATE
+    NOWRAPARRAYS
+    RAISEFAULTONIDU
+    DONOTAPPLYOUTPUTXSLTTOERRORS
+    OUTPUT 
+        ( STYLE DOCUMENT )
+    OPERATION 'getBV_DUALByDEPT_IDAndEMPID' (
+        TYPE SELECT
+        SCHEMA VIEW bv_dual
+        VQL = 'SELECT dept_id, empid FROM bv_dual ^ExecuteIfIsNotNull("WHERE ",@WHEREEXPRESSION,"") CONTEXT (''i18n'' = ''au_cst''^ExecuteIfIsNotNull(", ",@VERBOSEERRORS,"")^ExecuteIfIsNotNull(", ",@CONTEXTEXPRESSION,""))'
+        INPUTS 'GetBV_DUALByDEPT_IDAndEMPID' (
+            'DEPT_ID' dept_id:'text' '=' 
+            'EMPID' empid:'text' '=' 
+        )
+        OUTPUT 
+            'BV_DUALReturn': Array of ( 'BV_DUALReturnRow': Register of (
+                dept_id : 'text',
+                empid : 'text'
+            ) (
+                    '/dept_id'='DEPT_ID',
+                    '/empid'='EMPID'))
+    )    OPERATION 'insertBV_DUAL' (
+        TYPE INSERT
+        SCHEMA VIEW bv_dual
+        VQL = 'INSERT INTO bv_dual (dept_id, empid) VALUES (@DEPT_ID, @EMPID) CONTEXT (''i18n'' = ''au_cst''^ExecuteIfIsNotNull(", ",@CONTEXTEXPRESSION,""))'
+        INPUTS 'InsertBV_DUAL' (
+            'DEPT_ID' dept_id:'text' '=' 
+            'EMPID' empid:'text' '=' 
+        )
+        OUTPUT 'long'
+    )    OPERATION 'deleteBV_DUAL' (
+        TYPE DELETE
+        SCHEMA VIEW bv_dual
+        VQL = 'DELETE FROM bv_dual ^ExecuteIfIsNotNull("WHERE ",@WHEREEXPRESSION,"") CONTEXT (''i18n'' = ''au_cst''^ExecuteIfIsNotNull(", ",@CONTEXTEXPRESSION,""))'
+        INPUTS 'DeleteBV_DUAL' (
+            'DEPT_ID' dept_id:'text' '=' 
+            'EMPID' empid:'text' '=' 
+        )
+        OUTPUT 'long'
+    )    OPERATION 'updateBV_DUAL' (
+        TYPE UPDATE
+        SCHEMA VIEW bv_dual
+        VQL = 'UPDATE bv_dual SET dept_id=@newDEPT_ID, empid=@newEMPID ^ExecuteIfIsNotNull("WHERE ",@WHEREEXPRESSION,"") CONTEXT (''i18n'' = ''au_cst''^ExecuteIfIsNotNull(", ",@CONTEXTEXPRESSION,""))'
+        INPUTS 'UpdateBV_DUAL' (
+            'DEPT_ID' dept_id:'text' '=' 
+            'EMPID' empid:'text' '=' 
+            SET 'newDEPT_ID' dept_id:'text' '=' 
+            SET 'newEMPID' empid:'text' '=' 
+        )
+        OUTPUT 'long'
+    )
+    FOLDER = '/02 - base views';
+

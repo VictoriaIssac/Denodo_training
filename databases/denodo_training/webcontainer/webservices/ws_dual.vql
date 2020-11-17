@@ -1,0 +1,5 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+UNDEPLOY IF EXISTS WEBSERVICE ws_dual;
+
+DEPLOY WEBSERVICE ws_dual LOGIN = '${databases.denodo_training.webcontainer.webservices.ws_dual.LOGIN}' PASSWORD = '${databases.denodo_training.webcontainer.webservices.ws_dual.PASSWORD}' ${databases.denodo_training.webcontainer.webservices.ws_dual.PASSWORD.ENCRYPTED};
+

@@ -1,0 +1,50 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "JOB_HISTORY"
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_human_resources
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.job_history.SCHEMANAME}' 
+    RELATIONNAME='JOB_HISTORY' 
+    OUTPUTSCHEMA (
+        "EMPLOYEE_ID" = 'EMPLOYEE_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='6', sourcetypeid='3', sourcetypename='NUMBER')  NOT NULL SORTABLE,
+        "START_DATE" = 'START_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  NOT NULL SORTABLE,
+        "END_DATE" = 'END_DATE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  NOT NULL SORTABLE,
+        "JOB_ID" = 'JOB_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='12', sourcetypename='VARCHAR2')  NOT NULL SORTABLE,
+        "DEPARTMENT_ID" = 'DEPARTMENT_ID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='4', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    )
+    CONSTRAINT 'JHIST_EMP_ID_ST_DATE_PK' PRIMARY KEY ( 'EMPLOYEE_ID' , 'START_DATE' )
+    CONSTRAINT 'JHIST_DEPT_FK' FOREIGN KEY ( 'DEPARTMENT_ID' ) 
+    REFERENCES 'HR'.'DEPARTMENTS'( 'DEPARTMENT_ID' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'JHIST_EMP_FK' FOREIGN KEY ( 'EMPLOYEE_ID' ) 
+    REFERENCES 'HR'.'EMPLOYEES'( 'EMPLOYEE_ID' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'JHIST_JOB_FK' FOREIGN KEY ( 'JOB_ID' ) 
+    REFERENCES 'HR'.'JOBS'( 'JOB_ID' )  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'JHIST_EMP_ID_ST_DATE_PK' CLUSTER UNIQUE PRIMARY ( 'EMPLOYEE_ID' , 'START_DATE' )
+    INDEX 'JHIST_DEPARTMENT_IX' CLUSTER ( 'DEPARTMENT_ID' )
+    INDEX 'JHIST_EMPLOYEE_IX' CLUSTER ( 'EMPLOYEE_ID' )
+    INDEX 'JHIST_JOB_IX' CLUSTER ( 'JOB_ID' );
+
+CREATE OR REPLACE TABLE "JOB_HISTORY" I18N au_cst (
+        "EMPLOYEE_ID":int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '6', sourcetypeid = '4'), 
+        "START_DATE":timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93'), 
+        "END_DATE":timestamp (sourcetyperadix = '10', sourcetypesize = '7', sourcetypeid = '93'), 
+        "JOB_ID":text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '12'), 
+        "DEPARTMENT_ID":int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '4', sourcetypeid = '4')
+    )
+    FOLDER = '/01 - data sources'
+    CONSTRAINT 'JHIST_EMP_ID_ST_DATE_PK' PRIMARY KEY ( 'EMPLOYEE_ID' , 'START_DATE' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "JOB_HISTORY"(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD "EMPLOYEE_ID" (any) OPT ANY
+             ADD "START_DATE" (any) OPT ANY
+             ADD "END_DATE" (any) OPT ANY
+             ADD "JOB_ID" (any) OPT ANY
+             ADD "DEPARTMENT_ID" (any) OPT ANY
+        )
+        OUTPUTLIST ("DEPARTMENT_ID", "EMPLOYEE_ID", "END_DATE", "JOB_ID", "START_DATE"
+        )
+        WRAPPER (jdbc "JOB_HISTORY")
+    );
+

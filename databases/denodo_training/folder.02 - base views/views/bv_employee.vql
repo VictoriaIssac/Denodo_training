@@ -1,0 +1,43 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC bv_employee
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_new
+    CATALOGNAME='${databases.denodo_training.folder.02 - base views.views.jdbc.bv_employee.CATALOGNAME}' ESCAPE
+    SCHEMANAME='${databases.denodo_training.folder.02 - base views.views.jdbc.bv_employee.SCHEMANAME}' 
+    RELATIONNAME='employee' 
+    OUTPUTSCHEMA (
+        empid = 'empid' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE,
+        ename = 'ename' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='20', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        salary = 'salary' :'java.lang.Double' (OPT) (sourcetypedecimals='0', sourcetyperadix='2', sourcetypesize='53', sourcetypeid='8', sourcetypename='float')  SORTABLE,
+        deptid = 'deptid' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='10', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        description = 'description' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='2147483647', sourcetypeid='2005', sourcetypename='varchar')  SORTABLE,
+        date = 'date' :'java.lang.String' (OPT) (sourcetypedecimals='0', sourcetyperadix='0', sourcetypesize='1073741823', sourcetypeid='2005', sourcetypename='nvarchar')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_employee I18N au_cst (
+        empid:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '4'), 
+        ename:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '20', sourcetypeid = '12'), 
+        salary:double (sourcetypedecimals = '0', sourcetyperadix = '2', sourcetypesize = '53', sourcetypeid = '8'), 
+        deptid:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '10', sourcetypeid = '12'), 
+        description:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '2147483647', sourcetypeid = '12'), 
+        date:text (sourcetypedecimals = '0', sourcetyperadix = '0', sourcetypesize = '1073741823', sourcetypeid = '-9')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_employee(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD empid (any) OPT ANY
+             ADD ename (any) OPT ANY
+             ADD salary (any) OPT ANY
+             ADD deptid (any) OPT ANY
+             ADD description (any) OPT ANY
+             ADD date (any) OPT ANY
+        )
+        OUTPUTLIST (date, deptid, description, empid, ename, salary
+        )
+        WRAPPER (jdbc bv_employee)
+    );
+

@@ -1,0 +1,32 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "REQUEST_NOTIFICATION3"
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_human_resources
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.request_notification3.SCHEMANAME}' 
+    RELATIONNAME='REQUEST_NOTIFICATION3' 
+    OUTPUTSCHEMA (
+        "SERVERNAME" = 'SERVERNAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        "HOST" = 'HOST' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE,
+        "PORT" = 'PORT' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='10', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "REQUEST_NOTIFICATION3" I18N au_cst (
+        "SERVERNAME":text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '12'), 
+        "HOST":text (sourcetyperadix = '10', sourcetypesize = '100', sourcetypeid = '12'), 
+        "PORT":text (sourcetyperadix = '10', sourcetypesize = '10', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "REQUEST_NOTIFICATION3"(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD "SERVERNAME" (any) OPT ANY
+             ADD "HOST" (any) OPT ANY
+             ADD "PORT" (any) OPT ANY
+        )
+        OUTPUTLIST ("HOST", "PORT", "SERVERNAME"
+        )
+        WRAPPER (jdbc "REQUEST_NOTIFICATION3")
+    );
+

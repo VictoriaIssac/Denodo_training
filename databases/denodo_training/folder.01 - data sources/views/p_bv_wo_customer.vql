@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_bv_wo_customer FOLDER = '/01 - data sources' AS SELECT id AS id, first_name AS first_name, sum(id) AS sum FROM bv_wo_customer GROUP BY id, first_name;
+
+ALTER VIEW p_bv_wo_customer
+ LAYOUT (bv_wo_customer = [20, 20, 285, 226]);
+

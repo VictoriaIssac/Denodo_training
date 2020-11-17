@@ -1,0 +1,37 @@
+﻿CREATE OR REPLACE SOAP WEBSERVICE ws_interactions_customer
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    I18N  = au_cst
+    DATETYPEMAPPING DATE
+    NOWRAPARRAYS
+    RAISEFAULTONIDU
+    DONOTAPPLYOUTPUTXSLTTOERRORS
+    OUTPUT 
+        ( STYLE DOCUMENT )
+    OPERATION 'getDV_INTERACTIONS_CUSTOMERByCUSTOMER_CODEAndINTERACTIONS' (
+        TYPE SELECT
+        SCHEMA VIEW dv_interactions_customer
+        VQL = 'SELECT interactions FROM dv_interactions_customer ^ExecuteIfIsNotNull("WHERE ",@WHEREEXPRESSION,"") CONTEXT (''i18n'' = ''au_cst''^ExecuteIfIsNotNull(", ",@VERBOSEERRORS,"")^ExecuteIfIsNotNull(", ",@CONTEXTEXPRESSION,""))'
+        INPUTS 'GetDV_INTERACTIONS_CUSTOMERByCUSTOMER_CODEAndINTERACTIONS' (
+            'CUSTOMER_CODE' customer_code:'text' '=' 
+        )
+        OUTPUT 
+            'DV_INTERACTIONS_CUSTOMERReturn': Array of ( 'getDV_INTERACTIONS_CUSTOMERByCUSTOMER_CODEAndINTERACTIONSRow': Register of (
+                interactions : '_array_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip'
+            ) (
+                    '/customer_code'='CUSTOMER_CODE',
+                    '/interactions'='INTERACTIONS':'_array_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip' / '_register_agent_id_interaction_date_global_case_id_interaction_phone_interaction_ip',
+                    '/interactions/agent_id'='AGENT_ID',
+                    '/interactions/global_case_id'='GLOBAL_CASE_ID',
+                    '/interactions/interaction_date'='INTERACTION_DATE',
+                    '/interactions/interaction_ip'='INTERACTION_IP',
+                    '/interactions/interaction_phone'='INTERACTION_PHONE'))
+    )
+    FOLDER = '/09 - data services';
+

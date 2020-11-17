@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW bv_u_bv FOLDER = '/01 - data sources' AS SELECT id, customer_code_internal, first_name, last_name, email, phone, main_address, main_postcode, main_country, registered_date, employee_id, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id FROM (SELECT * FROM bv_wo_customer UNION SELECT phone_number, commission_pct, email, first_name, last_name, hire_date, job_id, salary, department_id, manager_id, employee_id FROM bv_hr_employees);
+
+ALTER VIEW bv_u_bv
+ LAYOUT (bv_wo_customer = [20, 20, 200, 225], bv_hr_employees = [300, 28, 200, 225]);
+

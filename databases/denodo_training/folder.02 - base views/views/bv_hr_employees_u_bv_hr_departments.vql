@@ -1,0 +1,12 @@
+﻿CREATE OR REPLACE VIEW bv_hr_employees_u_bv_hr_departments FOLDER = '/02 - base views' AS SELECT employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id, department_name, location_id FROM (SELECT * FROM bv_hr_employees UNION SELECT manager_id, location_id, department_name, department_id FROM bv_hr_departments);
+
+ALTER VIEW bv_hr_employees_u_bv_hr_departments
+ LAYOUT (bv_hr_employees = [20, 20, 200, 225], bv_hr_departments = [568, 108, 200, 106]);
+
+ALTER VIEW bv_hr_employees_u_bv_hr_departments
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE DEFAULT
+    DECLARE CACHE INDEX vic UNIQUE  ON (employee_id)
+    DECLARE CACHE INDEX varun UNIQUE  ON (employee_id, manager_id)
+    DECLARE CACHE INDEX neew ON (department_id);
+

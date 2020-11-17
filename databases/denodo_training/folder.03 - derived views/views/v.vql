@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW v FOLDER = '/03 - derived views' AS SELECT now() FROM dual();
+

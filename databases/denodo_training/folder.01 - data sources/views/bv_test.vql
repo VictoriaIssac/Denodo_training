@@ -1,0 +1,26 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "bv_TEST"
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_oracle
+    SCHEMANAME='${databases.denodo_training.folder.01 - data sources.views.jdbc.bv_test.SCHEMANAME}' 
+    RELATIONNAME='TEST' 
+    OUTPUTSCHEMA (
+        "NAME" = 'NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='15', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "bv_TEST" I18N au_cst (
+        "NAME":text (sourcetyperadix = '10', sourcetypesize = '15', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "bv_TEST"(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD "NAME" (any) OPT ANY
+        )
+        OUTPUTLIST ("NAME"
+        )
+        WRAPPER (jdbc "bv_TEST")
+    );
+

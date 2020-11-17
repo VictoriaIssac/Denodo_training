@@ -1,0 +1,41 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC table3
+    FOLDER = '/02 - base views'
+    DATASOURCENAME=ds_support_site
+    SCHEMANAME='${databases.denodo_training.folder.02 - base views.views.jdbc.table3.SCHEMANAME}' ESCAPE
+    RELATIONNAME='TABLE3' 
+    OUTPUTSCHEMA (
+        numberdt = 'NUMBERDT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        intdt = 'INTDT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        smalldt = 'SMALLDT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        integerdt = 'INTEGERDT' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        numpres = 'NUMPRES' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='8', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE,
+        numpres1 = 'NUMPRES1' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='8', sourcetypeid='3', sourcetypename='NUMBER')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE table3 I18N au_cst (
+        numberdt:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '999999999', sourcetypeid = '-5'), 
+        intdt:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '999999999', sourcetypeid = '5'), 
+        smalldt:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38', sourcetypeid = '4'), 
+        integerdt:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '38888888', sourcetypeid = '4'), 
+        numpres:int (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '896969686', sourcetypeid = '-6'), 
+        numpres1:int (sourcetypedecimals = '2', sourcetyperadix = '10', sourcetypesize = '99999999', sourcetypeid = '-5')
+    )
+    FOLDER = '/02 - base views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD table3(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD numberdt (any) OPT ANY
+             ADD intdt (any) OPT ANY
+             ADD smalldt (any) OPT ANY
+             ADD integerdt (any) OPT ANY
+             ADD numpres (any) OPT ANY
+             ADD numpres1 (any) OPT ANY
+        )
+        OUTPUTLIST (intdt, integerdt, numberdt, numpres, numpres1, smalldt
+        )
+        WRAPPER (jdbc table3)
+    );
+

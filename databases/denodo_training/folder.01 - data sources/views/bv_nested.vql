@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW bv_nested FOLDER = '/01 - data sources' AS SELECT employees.employee_id AS employee_id, employees.first_name AS first_name, employees.last_name AS last_name, employees.email AS email, employees.phone_number AS phone_number, employees.hire_date AS hire_date, employees.salary AS salary, employees.commission_pct AS commission_pct, employees.manager_id AS manager_id, employees.department_id AS department_id, "DEPARTMENTS"."DEPARTMENT_NAME" AS "DEPARTMENT_NAME", "DEPARTMENTS"."LOCATION_ID" AS "LOCATION_ID" FROM employees AS employees INNER JOIN "DEPARTMENTS" AS "DEPARTMENTS" ON employees.department_id = "DEPARTMENTS"."DEPARTMENT_ID" ;
+
+ALTER VIEW bv_nested
+ LAYOUT (employees = [170, 40, 200, 225], "DEPARTMENTS" = [787, 75, 200, 106]);
+

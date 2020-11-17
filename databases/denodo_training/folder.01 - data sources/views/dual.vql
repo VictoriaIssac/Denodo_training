@@ -1,0 +1,24 @@
+﻿CREATE OR REPLACE WRAPPER JDBC dual
+    FOLDER = '/01 - data sources'
+    DATASOURCENAME=ds_oracle
+    SQLSENTENCE='select * from dual'   
+    OUTPUTSCHEMA (
+        "DUMMY" = 'DUMMY' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='1', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE dual I18N au_cst (
+        "DUMMY":text (sourcetypedecimals = '0', sourcetypesize = '1', sourcetypeid = '12')
+    )
+    FOLDER = '/01 - data sources'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD dual(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD "DUMMY" NOS ZERO ()
+        )
+        OUTPUTLIST ("DUMMY"
+        )
+        WRAPPER (jdbc dual)
+    );
+
