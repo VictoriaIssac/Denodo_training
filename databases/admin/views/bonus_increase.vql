@@ -1,0 +1,43 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "BONUS_INCREASE"
+    DATASOURCENAME="ds_Db2"
+    SCHEMANAME='${databases.admin.views.jdbc.bonus_increase.SCHEMANAME}' 
+    SPECIFICNAME='BONUS_INCREASE' 
+    PROCEDURENAME='BONUS_INCREASE' 
+    OUTPUTSCHEMA (
+        "RETURN_VALUE" = 'RETURN_VALUE' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='8', sourcetypesize='10', sourcetypeid='4', sourcetypename='INTEGER')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=5,
+        "P_BONUSFACTOR" = 'P_BONUSFACTOR' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='3', DEFAULTVALUE='1.0', sourcetypeid='3', sourcetypename='DECIMAL')  NOT NULL NOT SORTABLE PARAMINDEX=2 PARAMTYPE=1,
+        "P_BONUSMAXSUMFORDEPT" = 'P_BONUSMAXSUMFORDEPT' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='9', DEFAULTVALUE='2.0', sourcetypeid='3', sourcetypename='DECIMAL')  NOT NULL NOT SORTABLE PARAMINDEX=3 PARAMTYPE=1,
+        "P_DEPTSWITHOUTNEWBONUSES" = 'P_DEPTSWITHOUTNEWBONUSES' :'java.lang.String' (sourcetypesize='255', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL NOT SORTABLE PARAMINDEX=4 PARAMTYPE=4,
+        "P_COUNTDEPTSVIEWED" = 'P_COUNTDEPTSVIEWED' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='INTEGER')  NOT NULL NOT SORTABLE PARAMINDEX=5 PARAMTYPE=4,
+        "P_COUNTDEPTSBONUSCHANGED" = 'P_COUNTDEPTSBONUSCHANGED' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='INTEGER')  NOT NULL NOT SORTABLE PARAMINDEX=6 PARAMTYPE=4,
+        "P_ERRORMSG" = 'P_ERRORMSG' :'java.lang.String' (sourcetypesize='255', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL NOT SORTABLE PARAMINDEX=7 PARAMTYPE=4
+    );
+
+CREATE OR REPLACE TABLE "BONUS_INCREASE" I18N au_cst (
+        "RETURN_VALUE":int (sourcetypeid = '4', sourcetyperadix = '8', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        "P_BONUSFACTOR":decimal (extern, sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '2', sourcetypesize = '3'), 
+        "P_BONUSMAXSUMFORDEPT":decimal (extern, sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '2', sourcetypesize = '9'), 
+        "P_DEPTSWITHOUTNEWBONUSES":text (sourcetypeid = '12', sourcetypesize = '255'), 
+        "P_COUNTDEPTSVIEWED":int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        "P_COUNTDEPTSBONUSCHANGED":int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        "P_ERRORMSG":text (sourcetypeid = '12', sourcetypesize = '255')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "BONUS_INCREASE"(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD "RETURN_VALUE" NOS ZERO ()
+             ADD "P_BONUSFACTOR" (=,is null) OBL ONE
+             ADD "P_BONUSMAXSUMFORDEPT" (=,is null) OBL ONE
+             ADD "P_DEPTSWITHOUTNEWBONUSES" NOS ZERO ()
+             ADD "P_COUNTDEPTSVIEWED" NOS ZERO ()
+             ADD "P_COUNTDEPTSBONUSCHANGED" NOS ZERO ()
+             ADD "P_ERRORMSG" NOS ZERO ()
+        )
+        OUTPUTLIST ("P_BONUSFACTOR", "P_BONUSMAXSUMFORDEPT", "P_COUNTDEPTSBONUSCHANGED", "P_COUNTDEPTSVIEWED", "P_DEPTSWITHOUTNEWBONUSES", "P_ERRORMSG", "RETURN_VALUE"
+        )
+        WRAPPER (jdbc "BONUS_INCREASE")
+    );
+

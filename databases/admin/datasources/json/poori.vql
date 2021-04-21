@@ -1,0 +1,9 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JSON poori
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.admin.datasources.json.poori.ROUTE.HTTP.URL}'
+    HEADERS (
+        'Accept'='html'
+    )
+    AUTHENTICATION OFF
+    PROXY OFF;
+

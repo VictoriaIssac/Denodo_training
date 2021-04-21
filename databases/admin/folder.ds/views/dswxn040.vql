@@ -1,0 +1,219 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC dswxn040_6919
+    FOLDER = '/ds'
+    DATASOURCENAME=ubs_mainframe_db2
+    SCHEMANAME='${databases.admin.folder.ds.views.jdbc.dswxn040_6919.SCHEMANAME}' ESCAPE
+    SPECIFICNAME='DSWXN040' 
+    PROCEDURENAME='DSWXN040' 
+    OUTPUTSCHEMA (
+        return_value = 'RETURN_VALUE' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='8', sourcetypesize='10', sourcetypeid='4', sourcetypename='INTEGER')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=5,
+        i_input = 'I_INPUT' :'java.lang.String' (sourcetypesize='1000', DEFAULTVALUE='I', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL NOT SORTABLE PARAMINDEX=2 PARAMTYPE=1,
+        o_return_code_sql = 'O_RETURN_CODE_SQL' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='INTEGER')  NOT NULL NOT SORTABLE PARAMINDEX=3 PARAMTYPE=4,
+        o_return_msg_sql = 'O_RETURN_MSG_SQL' :'java.lang.String' (sourcetypesize='240', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL NOT SORTABLE PARAMINDEX=4 PARAMTYPE=4,
+        id_60 = '47' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_59 = '10' :'java.time.LocalDate' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='DATE')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_58 = '14' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='250', sourcetypeid='12', sourcetypename='VARCHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_57 = '15' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='15', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_56 = '59' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_55 = '13' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='15', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_54 = '12' :'java.lang.Short' (sourcetypedecimals='0', sourcetypesize='5', sourcetypeid='5', sourcetypename='SMALLINT')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_53 = '52' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_52 = '49' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_51 = '61' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_50 = '54' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_49 = '56' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_48 = '11' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='8', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_47 = '4' :'java.math.BigDecimal' (sourcetypedecimals='4', sourcetypesize='7', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_46 = '25' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='15', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_45 = '24' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='15', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_44 = '1' :'java.lang.Long' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_43 = '39' :'java.lang.Short' (sourcetypedecimals='0', sourcetypesize='5', sourcetypeid='5', sourcetypename='SMALLINT')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_42 = '31' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_41 = '44' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='30', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_40 = '53' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_39 = '36' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='30', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_38 = '34' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='8', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_37 = '20' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_36 = '16' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='30', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_35 = '57' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_34 = '60' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_33 = '6' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='15', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_32 = '43' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='100', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_31 = '37' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_30 = '17' :'java.time.LocalDate' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='DATE')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_29 = '55' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_28 = '40' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_27 = '46' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_26 = '38' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='8', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_25 = '19' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_24 = '23' :'java.time.LocalDateTime' (sourcetypedecimals='6', sourcetypesize='26', sourcetypeid='93', sourcetypename='TIMESTAMP')  ESCAPE NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_23 = '32' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='100', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_22 = '41' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='30', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_21 = '8' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='3', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_20 = '22' :'java.time.LocalDateTime' (sourcetypedecimals='6', sourcetypesize='26', sourcetypeid='93', sourcetypename='TIMESTAMP')  ESCAPE NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_19 = '33' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='8', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_18 = '5' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='15', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_17 = '18' :'java.time.LocalDate' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='DATE')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_16 = '42' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='100', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_15 = '45' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_14 = '2' :'java.time.LocalDate' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='DATE')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_13 = '21' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_12 = '27' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='50', sourcetypeid='1', sourcetypename='CHAR')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_11 = '3' :'java.math.BigDecimal' (sourcetypedecimals='4', sourcetypesize='7', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_10 = '48' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_9 = '26' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='15', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_8 = '51' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_7 = '58' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_6 = '28' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_5 = '29' :'java.time.LocalDate' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='DATE')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_4 = '35' :'java.lang.Short' (sourcetypedecimals='0', sourcetypesize='5', sourcetypeid='5', sourcetypename='SMALLINT')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_3 = '30' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_2 = '50' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='19', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_1 = '7' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='15', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        id_0 = '9' :'java.math.BigDecimal' (sourcetypedecimals='2', sourcetypesize='15', sourcetypeid='3', sourcetypename='DECIMAL')  ESCAPE SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1'
+    );
+
+CREATE OR REPLACE TABLE dswxn040 I18N us_est (
+        return_value:int (sourcetypeid = '4', sourcetyperadix = '8', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        i_input:text (extern, sourcetypeid = '12', sourcetypesize = '1000'), 
+        o_return_code_sql:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        o_return_msg_sql:text (sourcetypeid = '1', sourcetypesize = '240'), 
+        id_60:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_59:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        id_58:text (sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '250'), 
+        id_57:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '15'), 
+        id_56:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_55:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '15'), 
+        id_54:int (sourcetypeid = '5', sourcetypedecimals = '0', sourcetypesize = '5'), 
+        id_53:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_52:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_51:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_50:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_49:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_48:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '8'), 
+        id_47:decimal (sourcetypeid = '3', sourcetypedecimals = '4', sourcetypesize = '7'), 
+        id_46:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '15'), 
+        id_45:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '15'), 
+        id_44:long (sourcetypeid = '-5', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        id_43:int (sourcetypeid = '5', sourcetypedecimals = '0', sourcetypesize = '5'), 
+        id_42:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_41:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '30'), 
+        id_40:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_39:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '30'), 
+        id_38:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '8'), 
+        id_37:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_36:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '30'), 
+        id_35:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_34:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_33:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '15'), 
+        id_32:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '100'), 
+        id_31:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_30:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        id_29:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_28:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_27:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_26:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '8'), 
+        id_25:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_24:timestamp (sourcetypeid = '93', sourcetypedecimals = '6', sourcetypesize = '26'), 
+        id_23:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '100'), 
+        id_22:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '30'), 
+        id_21:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '3'), 
+        id_20:timestamp (sourcetypeid = '93', sourcetypedecimals = '6', sourcetypesize = '26'), 
+        id_19:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '8'), 
+        id_18:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '15'), 
+        id_17:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        id_16:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '100'), 
+        id_15:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_14:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        id_13:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        id_12:text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '50'), 
+        id_11:decimal (sourcetypeid = '3', sourcetypedecimals = '4', sourcetypesize = '7'), 
+        id_10:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_9:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '15'), 
+        id_8:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_7:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_6:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_5:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        id_4:int (sourcetypeid = '5', sourcetypedecimals = '0', sourcetypesize = '5'), 
+        id_3:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_2:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '19'), 
+        id_1:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '15'), 
+        id_0:decimal (sourcetypeid = '3', sourcetypedecimals = '2', sourcetypesize = '15')
+    )
+    FOLDER = '/ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD dswxn040(
+        I18N us_est
+        CONSTRAINTS (
+             ADD return_value NOS ZERO ()
+             ADD i_input (=,is null) OBL ONE
+             ADD o_return_code_sql NOS ZERO ()
+             ADD o_return_msg_sql NOS ZERO ()
+             ADD id_60 NOS ZERO ()
+             ADD id_59 NOS ZERO ()
+             ADD id_58 NOS ZERO ()
+             ADD id_57 NOS ZERO ()
+             ADD id_56 NOS ZERO ()
+             ADD id_55 NOS ZERO ()
+             ADD id_54 NOS ZERO ()
+             ADD id_53 NOS ZERO ()
+             ADD id_52 NOS ZERO ()
+             ADD id_51 NOS ZERO ()
+             ADD id_50 NOS ZERO ()
+             ADD id_49 NOS ZERO ()
+             ADD id_48 NOS ZERO ()
+             ADD id_47 NOS ZERO ()
+             ADD id_46 NOS ZERO ()
+             ADD id_45 NOS ZERO ()
+             ADD id_44 NOS ZERO ()
+             ADD id_43 NOS ZERO ()
+             ADD id_42 NOS ZERO ()
+             ADD id_41 NOS ZERO ()
+             ADD id_40 NOS ZERO ()
+             ADD id_39 NOS ZERO ()
+             ADD id_38 NOS ZERO ()
+             ADD id_37 NOS ZERO ()
+             ADD id_36 NOS ZERO ()
+             ADD id_35 NOS ZERO ()
+             ADD id_34 NOS ZERO ()
+             ADD id_33 NOS ZERO ()
+             ADD id_32 NOS ZERO ()
+             ADD id_31 NOS ZERO ()
+             ADD id_30 NOS ZERO ()
+             ADD id_29 NOS ZERO ()
+             ADD id_28 NOS ZERO ()
+             ADD id_27 NOS ZERO ()
+             ADD id_26 NOS ZERO ()
+             ADD id_25 NOS ZERO ()
+             ADD id_24 NOS ZERO ()
+             ADD id_23 NOS ZERO ()
+             ADD id_22 NOS ZERO ()
+             ADD id_21 NOS ZERO ()
+             ADD id_20 NOS ZERO ()
+             ADD id_19 NOS ZERO ()
+             ADD id_18 NOS ZERO ()
+             ADD id_17 NOS ZERO ()
+             ADD id_16 NOS ZERO ()
+             ADD id_15 NOS ZERO ()
+             ADD id_14 NOS ZERO ()
+             ADD id_13 NOS ZERO ()
+             ADD id_12 NOS ZERO ()
+             ADD id_11 NOS ZERO ()
+             ADD id_10 NOS ZERO ()
+             ADD id_9 NOS ZERO ()
+             ADD id_8 NOS ZERO ()
+             ADD id_7 NOS ZERO ()
+             ADD id_6 NOS ZERO ()
+             ADD id_5 NOS ZERO ()
+             ADD id_4 NOS ZERO ()
+             ADD id_3 NOS ZERO ()
+             ADD id_2 NOS ZERO ()
+             ADD id_1 NOS ZERO ()
+             ADD id_0 NOS ZERO ()
+        )
+        OUTPUTLIST (i_input, id_0, id_1, id_10, id_11, id_12, id_13, id_14, id_15, id_16, id_17, id_18, id_19, id_2, id_20, id_21, id_22, id_23, id_24, id_25, id_26, id_27, id_28, id_29, id_3, id_30, id_31, id_32, id_33, id_34, id_35, id_36, id_37, id_38, id_39, id_4, id_40, id_41, id_42, id_43, id_44, id_45, id_46, id_47, id_48, id_49, id_5, id_50, id_51, id_52, id_53, id_54, id_55, id_56, id_57, id_58, id_59, id_6, id_60, id_7, id_8, id_9, o_return_code_sql, o_return_msg_sql, return_value
+        )
+        WRAPPER (jdbc dswxn040_6919)
+    );
+

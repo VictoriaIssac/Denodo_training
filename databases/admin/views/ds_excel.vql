@@ -1,0 +1,97 @@
+﻿CREATE OR REPLACE TABLE ds_excel I18N in_ist (
+        salescompanyname:text (sourcetypeid = '12'), 
+        datasourcemonth:localdate (sourcetypeid = '91'), 
+        "Year":text (sourcetypeid = '12'), 
+        "Month":text (sourcetypeid = '12'), 
+        "Model":text (sourcetypeid = '12'), 
+        "Serial number":text (sourcetypeid = '12'), 
+        "Registration date":text (sourcetypeid = '12'), 
+        "Partner":text (sourcetypeid = '12'), 
+        "End user":text (sourcetypeid = '12'), 
+        "Device scope (Name)":text (sourcetypeid = '12'), 
+        "Device scope (Group)":text (sourcetypeid = '12'), 
+        "Country":text (sourcetypeid = '12'), 
+        "Total pages":double (sourcetypeid = '8'), 
+        "Total BW":double (sourcetypeid = '8'), 
+        "Total Color":double (sourcetypeid = '8'), 
+        "Region":text (sourcetypeid = '12'), 
+        "Territory":text (sourcetypeid = '12'), 
+        "Reseller Device Status":text (sourcetypeid = '12'), 
+        "End-User Size":text (sourcetypeid = '12'), 
+        "SUB BU":text (sourcetypeid = '12'), 
+        "A4/A3":text (sourcetypeid = '12'), 
+        "MFP/SFP":text (sourcetypeid = '12'), 
+        "End-user1":double (sourcetypeid = '8'), 
+        "Colour/Mono":text (sourcetypeid = '12'), 
+        "Registration Month":text (sourcetypeid = '12'), 
+        "Month report":localdate (sourcetypeid = '91'), 
+        "Valid":text (sourcetypeid = '12'), 
+        "VARIABLENAME":text (sourcetypeid = '12'), 
+        parentfolder:text (sourcetypeid = '12'), 
+        "relativePath":text (sourcetypeid = '12'), 
+        filename:text (sourcetypeid = '12'), 
+        extension:text (sourcetypeid = '12'), 
+        fullpath:text (sourcetypeid = '12'), 
+        filetype:text (sourcetypeid = '12'), 
+        hidden:boolean (sourcetypeid = '16'), 
+        datemodified:text (sourcetypeid = '12'), 
+        canread:boolean (sourcetypeid = '16'), 
+        canwrite:boolean (sourcetypeid = '16'), 
+        canexecute:boolean (sourcetypeid = '16'), 
+        size:double (sourcetypeid = '8'), 
+        recursive:boolean (sourcetypeid = '16'), 
+        sheet_name:text (sourcetypeid = '12')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_excel(
+        I18N in_ist
+        CONSTRAINTS (
+             ADD salescompanyname (any) OPT ANY
+             ADD datasourcemonth (any) OPT ANY
+             ADD "Year" (any) OPT ANY
+             ADD "Month" (any) OPT ANY
+             ADD "Model" (any) OPT ANY
+             ADD "Serial number" (any) OPT ANY
+             ADD "Registration date" (any) OPT ANY
+             ADD "Partner" (any) OPT ANY
+             ADD "End user" (any) OPT ANY
+             ADD "Device scope (Name)" (any) OPT ANY
+             ADD "Device scope (Group)" (any) OPT ANY
+             ADD "Country" (any) OPT ANY
+             ADD "Total pages" (any) OPT ANY
+             ADD "Total BW" (any) OPT ANY
+             ADD "Total Color" (any) OPT ANY
+             ADD "Region" (any) OPT ANY
+             ADD "Territory" (any) OPT ANY
+             ADD "Reseller Device Status" (any) OPT ANY
+             ADD "End-User Size" (any) OPT ANY
+             ADD "SUB BU" (any) OPT ANY
+             ADD "A4/A3" (any) OPT ANY
+             ADD "MFP/SFP" (any) OPT ANY
+             ADD "End-user1" (any) OPT ANY
+             ADD "Colour/Mono" (any) OPT ANY
+             ADD "Registration Month" (any) OPT ANY
+             ADD "Month report" (any) OPT ANY
+             ADD "Valid" (any) OPT ANY
+             ADD "VARIABLENAME" (any) OPT ANY
+             ADD parentfolder (any) OPT ANY
+             ADD "relativePath" (any) OPT ANY
+             ADD filename (any) OPT ANY
+             ADD extension (any) OPT ANY
+             ADD fullpath (any) OPT ANY
+             ADD filetype (any) OPT ANY
+             ADD hidden (any) OPT ANY
+             ADD datemodified (any) OPT ANY
+             ADD canread (any) OPT ANY
+             ADD canwrite (any) OPT ANY
+             ADD canexecute (any) OPT ANY
+             ADD size (any) OPT ANY
+             ADD recursive (any) OPT ANY
+             ADD sheet_name (any) OPT ANY
+        )
+        OUTPUTLIST ("A4/A3", "Colour/Mono", "Country", "Device scope (Group)", "Device scope (Name)", "End user", "End-User Size", "End-user1", "MFP/SFP", "Model", "Month", "Month report", "Partner", "Region", "Registration Month", "Registration date", "Reseller Device Status", "SUB BU", "Serial number", "Territory", "Total BW", "Total Color", "Total pages", "VARIABLENAME", "Valid", "Year", canexecute, canread, canwrite, datasourcemonth, datemodified, extension, filename, filetype, fullpath, hidden, parentfolder, recursive, "relativePath", salescompanyname, sheet_name, size
+        )
+        WRAPPER (custom ds_excel)
+    );
+

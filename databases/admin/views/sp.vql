@@ -1,0 +1,31 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "SP"
+    DATASOURCENAME="ds_Db2"
+    SCHEMANAME='${databases.admin.views.jdbc.sp.SCHEMANAME}' 
+    SPECIFICNAME='SQL200424122207007' 
+    PROCEDURENAME='SP' 
+    OUTPUTSCHEMA (
+        "RETURN_VALUE" = 'RETURN_VALUE' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='8', sourcetypesize='10', sourcetypeid='4', sourcetypename='INTEGER')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=5,
+        "ORG" = 'ORG' :'java.lang.String' (sourcetypesize='6', DEFAULTVALUE='''JOHN''', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL NOT SORTABLE PARAMINDEX=2 PARAMTYPE=1,
+        "FIRSTNME" = 'FIRSTNME' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='12', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1'
+    );
+
+CREATE OR REPLACE TABLE "SP" I18N au_cst (
+        "RETURN_VALUE":int (sourcetypeid = '4', sourcetyperadix = '8', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        "ORG":text (extern, sourcetypeid = '1', sourcetypesize = '6'), 
+        "FIRSTNME":text (sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '12')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "SP"(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD "RETURN_VALUE" NOS ZERO ()
+             ADD "ORG" (=,is null) OBL ONE
+             ADD "FIRSTNME" NOS ZERO ()
+        )
+        OUTPUTLIST ("FIRSTNME", "ORG", "RETURN_VALUE"
+        )
+        WRAPPER (jdbc "SP")
+    );
+

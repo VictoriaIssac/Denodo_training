@@ -1,0 +1,41 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "STOR"
+    DATASOURCENAME="ds_Db2"
+    SCHEMANAME='${databases.admin.views.jdbc.stor.SCHEMANAME}' 
+    SPECIFICNAME='SQL200424140147425' 
+    PROCEDURENAME='STOR' 
+    OUTPUTSCHEMA (
+        "RETURN_VALUE" = 'RETURN_VALUE' :'java.lang.Integer' (sourcetypedecimals='0', sourcetyperadix='8', sourcetypesize='10', sourcetypeid='4', sourcetypename='INTEGER')  NOT NULL NOT SORTABLE PARAMINDEX=1 PARAMTYPE=5,
+        "ORG" = 'ORG' :'java.lang.String' (sourcetypesize='10', DEFAULTVALUE='l', sourcetypeid='1', sourcetypename='CHAR')  NOT NULL NOT SORTABLE PARAMINDEX=2 PARAMTYPE=1,
+        "B_NAME" = 'B_NAME' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='100', sourcetypeid='1', sourcetypename='CHAR')  SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        "OLO" = 'O' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='2', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        "B_ID" = 'B_ID' :'java.lang.Integer' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='4', sourcetypename='INTEGER')  SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1',
+        "EMPTY" = 'EMPTY' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='1', sourcetypeid='12', sourcetypename='VARCHAR')  NOT NULL SORTABLE RESULTSETINDEX=1 PARAMTYPE=0 FROMFLATTEN='RESULT_1'
+    );
+
+CREATE OR REPLACE TABLE "STOR" I18N au_est (
+        "RETURN_VALUE":int (sourcetypeid = '4', sourcetyperadix = '8', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        "ORG":int (sourcetypeid = '3', sourcetypesize = '10'), 
+        "B_NAME":text (sourcetypeid = '1', sourcetypedecimals = '0', sourcetypesize = '100'), 
+        "OLO":text (sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '2'), 
+        "B_ID":int (sourcetypeid = '4', sourcetypedecimals = '0', sourcetypesize = '10'), 
+        "EMPTY":text (sourcetypeid = '12', sourcetypedecimals = '0', sourcetypesize = '1')
+    )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "STOR"(
+        I18N au_est
+        CONSTRAINTS (
+             ADD "RETURN_VALUE" NOS ZERO ()
+             ADD "ORG" (=,is null) OBL ONE
+             ADD "B_NAME" NOS ZERO ()
+             ADD "OLO" NOS ZERO ()
+             ADD "B_ID" NOS ZERO ()
+             ADD "EMPTY" NOS ZERO ()
+        )
+        OUTPUTLIST ("B_ID", "B_NAME", "EMPTY", "OLO", "ORG", "RETURN_VALUE"
+        )
+        WRAPPER (jdbc "STOR")
+    );
+

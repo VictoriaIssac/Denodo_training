@@ -1,0 +1,59 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE CUSTOM ds_excel
+    CLASSNAME='com.denodo.vdb.contrib.wrapper.xls.ExcelWrapper';
+
+CREATE OR REPLACE WRAPPER CUSTOM ds_excel
+    DATASOURCENAME=ds_excel
+    PARAMETERS (
+      'Type of file' = 'Excel 97-2003 (*.xls)',
+      'File location' = ROUTE LOCAL 'LocalConnection' '${databases.admin.views.custom.ds_excel.File location.ROUTE.LOCAL.PATH}',
+      'Extract data from all sheets' = true,
+      'Extract sheet name as a new column' = true,
+      'Has headers' = true,
+      'Stream tuples' = false
+    )
+    OUTPUTSCHEMA (
+        salescompanyname = 'salescompanyname' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        datasourcemonth = 'datasourcemonth' : 'java.time.LocalDate' (OPT) (sourcetypeid='91')  SORTABLE,
+        "Year" = 'Year' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Month" = 'Month' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Model" = 'Model' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Serial number" = 'Serial number' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Registration date" = 'Registration date' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Partner" = 'Partner' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "End user" = 'End user' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Device scope (Name)" = 'Device scope (Name)' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Device scope (Group)" = 'Device scope (Group)' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Country" = 'Country' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Total pages" = 'Total pages' : 'java.lang.Double' (OPT) (sourcetypeid='8')  SORTABLE,
+        "Total BW" = 'Total BW' : 'java.lang.Double' (OPT) (sourcetypeid='8')  SORTABLE,
+        "Total Color" = 'Total Color' : 'java.lang.Double' (OPT) (sourcetypeid='8')  SORTABLE,
+        "Region" = 'Region' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Territory" = 'Territory' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Reseller Device Status" = 'Reseller Device Status' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "End-User Size" = 'End-User Size' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "SUB BU" = 'SUB BU' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "A4/A3" = 'A4/A3' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "MFP/SFP" = 'MFP/SFP' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "End-user1" = 'End-user1' : 'java.lang.Double' (OPT) (sourcetypeid='8')  SORTABLE,
+        "Colour/Mono" = 'Colour/Mono' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Registration Month" = 'Registration Month' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "Month report" = 'Month report' : 'java.time.LocalDate' (OPT) (sourcetypeid='91')  SORTABLE,
+        "Valid" = 'Valid' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "VARIABLENAME" = 'VARIABLENAME' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        parentfolder = 'parentfolder' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        "relativePath" = 'relativePath' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        filename = 'filename' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        extension = 'extension' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        fullpath = 'fullpath' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        filetype = 'filetype' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        hidden = 'hidden' : 'java.lang.Boolean' (OPT) (sourcetypeid='16')  SORTABLE,
+        datemodified = 'datemodified' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        canread = 'canread' : 'java.lang.Boolean' (OPT) (sourcetypeid='16')  SORTABLE,
+        canwrite = 'canwrite' : 'java.lang.Boolean' (OPT) (sourcetypeid='16')  SORTABLE,
+        canexecute = 'canexecute' : 'java.lang.Boolean' (OPT) (sourcetypeid='16')  SORTABLE,
+        size = 'size' : 'java.lang.Double' (OPT) (sourcetypeid='8')  SORTABLE,
+        recursive = 'recursive' : 'java.lang.Boolean' (OPT) (sourcetypeid='16')  SORTABLE,
+        sheet_name = 'sheet_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE
+    );
+
